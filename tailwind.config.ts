@@ -77,11 +77,34 @@ export default {
 				md: 'calc(var(--radius) - 2px)',
 				sm: 'calc(var(--radius) - 4px)'
 			},
+			fontFamily: {
+				'sans': [
+					'Inter',
+					'SF Pro Display', 
+					'-apple-system',
+					'BlinkMacSystemFont',
+					'system-ui',
+					'Segoe UI',
+					'Roboto',
+					'Helvetica Neue',
+					'Arial',
+					'sans-serif'
+				],
+				'display': [
+					'SF Pro Display',
+					'Inter', 
+					'-apple-system',
+					'BlinkMacSystemFont',
+					'system-ui',
+					'sans-serif'
+				]
+			},
 			fontSize: {
-				'xl-accessible': ['1.375rem', { lineHeight: '1.6' }],
-				'2xl-accessible': ['1.75rem', { lineHeight: '1.4' }],
-				'3xl-accessible': ['2.25rem', { lineHeight: '1.3' }],
-				'4xl-accessible': ['3rem', { lineHeight: '1.2' }]
+				'xl-accessible': ['1.375rem', { lineHeight: '1.6', fontWeight: '500' }],
+				'2xl-accessible': ['1.75rem', { lineHeight: '1.4', fontWeight: '600' }],
+				'3xl-accessible': ['2.25rem', { lineHeight: '1.3', fontWeight: '600' }],
+				'4xl-accessible': ['3rem', { lineHeight: '1.2', fontWeight: '700' }],
+				'5xl-accessible': ['3.75rem', { lineHeight: '1.1', fontWeight: '800' }]
 			},
 			keyframes: {
 				'accordion-down': {

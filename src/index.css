@@ -135,13 +135,35 @@
     @apply bg-background text-foreground font-sans antialiased;
     font-size: 18px; /* Larger base font for 50+ users */
     line-height: 1.6;
+    font-feature-settings: 'kern' 1, 'liga' 1, 'calt' 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
   }
   
-  /* Improved readability for older users */
+  /* Improved readability for older users with Apple-style typography */
   h1, h2, h3, h4, h5, h6 {
-    @apply text-foreground;
+    @apply text-foreground font-display;
     line-height: 1.3;
     font-weight: 600;
+    letter-spacing: -0.025em; /* Apple-style tight letter spacing */
+  }
+  
+  /* Enhanced text hierarchy */
+  h1 { 
+    font-weight: 800; 
+    letter-spacing: -0.035em;
+  }
+  
+  h2, h3 { 
+    font-weight: 700; 
+    letter-spacing: -0.03em;
+  }
+  
+  /* Apple-style button text */
+  button {
+    font-weight: 500;
+    letter-spacing: -0.01em;
   }
   
   /* Focus styles for accessibility */
