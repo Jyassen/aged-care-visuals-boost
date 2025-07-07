@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Phone, Menu, X } from "lucide-react";
 import { useState } from "react";
+import CaptureForm from "@/components/CaptureForm";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -42,9 +43,13 @@ const Header = () => {
                 347-305-2260
               </a>
             </div>
-            <Button size="lg" className="bg-gradient-primary hover:bg-primary-hover text-lg px-6 py-3">
-              Free Consultation
-            </Button>
+            <CaptureForm 
+              trigger={
+                <Button size="lg" className="bg-gradient-primary hover:bg-primary-hover text-lg px-6 py-3">
+                  Free Consultation
+                </Button>
+              }
+            />
           </div>
 
           {/* Mobile Menu Button */}
@@ -88,9 +93,13 @@ const Header = () => {
                 <Phone className="h-5 w-5 mr-2" />
                 347-305-2260
               </a>
-              <Button className="w-full bg-gradient-primary hover:bg-primary-hover text-lg py-3">
-                Free Consultation
-              </Button>
+              <CaptureForm 
+                trigger={
+                  <Button className="w-full bg-gradient-primary hover:bg-primary-hover text-lg py-3">
+                    Free Consultation
+                  </Button>
+                }
+              />
             </div>
           </div>
         )}

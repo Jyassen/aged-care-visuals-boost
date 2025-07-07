@@ -9,37 +9,28 @@ import {
   UserCheck,
   CheckCircle
 } from "lucide-react";
+import CaptureForm from "@/components/CaptureForm";
 
 const services = [
   {
-    icon: FileText,
-    title: "Understand Your Current Health Plan",
-    description: "Get clear, easy-to-understand explanations of your existing coverage and what it costs you each month."
-  },
-  {
     icon: Search,
-    title: "Explore Medicare Options",
-    description: "Learn the differences between Medicare Advantage, Supplement plans, and other coverage options in simple terms."
+    title: "Coverage Clarity",
+    description: "Get clarity on your existing coverage and what it costs you. Learn the differences between Medicare Advantage, Supplement plans, and other coverage options."
   },
   {
-    icon: MapPin,
-    title: "Evaluate Local Plans",
-    description: "Find and compare Medicare plans available in your specific area that you may qualify for."
+    icon: FileText,
+    title: "Plan Comparison",
+    description: "Find and compare Medicare plans available in your area that you may qualify for. See if you qualify for additional benefits beyond Original Medicare coverage."
   },
   {
     icon: PillBottle,
-    title: "Lower Medication Costs",
-    description: "Discover programs and plans that can help significantly reduce your prescription drug costs."
-  },
-  {
-    icon: Gift,
-    title: "Maximize Your Benefits",
-    description: "See if you qualify for additional benefits beyond Original Medicare coverage, like dental and vision."
+    title: "Prescription Savings",
+    description: "Discover programs that can help reduce your prescription drug costs. We'll review your medications and find plans that offer the best coverage."
   },
   {
     icon: UserCheck,
-    title: "Get Expert Advice",
-    description: "Navigate the healthcare system with best practices and guidance from experienced Medicare specialists."
+    title: "Healthcare Navigation",
+    description: "Navigate the healthcare system with best practices from experienced specialists. Ensure your doctors are in-network and understand your coverage."
   }
 ];
 
@@ -50,15 +41,15 @@ const ServicesSection = () => {
         {/* Section Header */}
         <div className="text-center space-y-4 mb-16">
           <h2 className="text-3xl-accessible md:text-4xl-accessible font-bold text-foreground">
-            Why Choose YourMedGuy?
+            What We Help You Discover
           </h2>
           <p className="text-xl-accessible text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-            We make Medicare simple and help you find the coverage that's right for your needs and budget.
+            Get clarity on your coverage options and find the Medicare plan that fits your unique needs and budget.
           </p>
         </div>
 
         {/* Services Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
           {services.map((service, index) => (
             <Card key={index} className="bg-gradient-card border-0 shadow-medium hover:shadow-strong transition-all duration-300 group">
               <CardContent className="p-8 text-center space-y-6">
@@ -91,12 +82,16 @@ const ServicesSection = () => {
             <p className="text-xl-accessible text-primary-foreground/90 max-w-2xl mx-auto">
               Our Medicare specialists are here to help you navigate your options with no fees, no pressure, and no hidden costs.
             </p>
-            <Button 
-              size="lg" 
-              className="bg-accent hover:bg-accent/90 text-accent-foreground text-xl px-12 py-4 shadow-strong"
-            >
-              Get Started Today
-            </Button>
+            <CaptureForm 
+              trigger={
+                <Button 
+                  size="lg" 
+                  className="bg-accent hover:bg-accent/90 text-accent-foreground text-xl px-12 py-4 shadow-strong"
+                >
+                  Get Started Today
+                </Button>
+              }
+            />
           </CardContent>
         </Card>
       </div>

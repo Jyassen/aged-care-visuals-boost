@@ -1,34 +1,28 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Phone, Calendar, FileCheck, Smile } from "lucide-react";
+import CaptureForm from "@/components/CaptureForm";
 
 const steps = [
   {
     step: "1",
     icon: Phone,
-    title: "Call or Submit Form",
-    description: "Reach out to us by phone or fill out our simple contact form. We'll schedule a convenient time to talk.",
+    title: "STEP 1: Contact Us",
+    description: "Call us or fill out our form. We'll schedule a convenient time to discuss your Medicare needs and current coverage.",
     color: "bg-primary"
   },
   {
     step: "2", 
-    icon: Calendar,
-    title: "Free Consultation",
-    description: "Speak with a licensed Medicare specialist who will review your current coverage and understand your needs.",
+    icon: FileCheck,
+    title: "STEP 2: Plan Review",
+    description: "We'll compare plans from major insurance companies, review your medications, and check if your doctors are in-network.",
     color: "bg-accent"
   },
   {
     step: "3",
-    icon: FileCheck,
-    title: "Compare Options",
-    description: "We'll show you available plans in your area, explain the differences, and help you compare costs and benefits.",
-    color: "bg-warning"
-  },
-  {
-    step: "4",
     icon: Smile,
-    title: "Enroll & Relax",
-    description: "Once you choose the right plan, we'll help with enrollment and be there for ongoing support whenever you need us.",
+    title: "STEP 3: Easy Enrollment",
+    description: "Once you've chosen the best plan for your needs, we'll handle the enrollment process and ensure you understand your new coverage.",
     color: "bg-success"
   }
 ];
@@ -43,12 +37,12 @@ const HowItWorksSection = () => {
             How It Works
           </h2>
           <p className="text-xl-accessible text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-            Getting the right Medicare coverage is easier than you think. Here's our simple 4-step process:
+            Getting the right Medicare coverage is easier than you think. Here's our simple 3-step process:
           </p>
         </div>
 
         {/* Steps */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
           {steps.map((step, index) => (
             <div key={index} className="relative">
               <Card className="bg-gradient-card border-0 shadow-medium hover:shadow-strong transition-all duration-300 h-full">
@@ -104,12 +98,16 @@ const HowItWorksSection = () => {
             </div>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <Button 
-                size="lg" 
-                className="bg-gradient-primary hover:bg-primary-hover text-xl px-12 py-4 shadow-strong"
-              >
-                Start Your Free Consultation
-              </Button>
+              <CaptureForm 
+                trigger={
+                  <Button 
+                    size="lg" 
+                    className="bg-gradient-primary hover:bg-primary-hover text-xl px-12 py-4 shadow-strong"
+                  >
+                    Start Your Free Consultation
+                  </Button>
+                }
+              />
               <div className="text-center sm:text-left">
                 <p className="text-sm text-muted-foreground">Or call us directly</p>
                 <a 

@@ -6,6 +6,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Shield, Award, Users, Phone } from "lucide-react";
 import heroImage from "@/assets/hero-image.jpg";
+import CaptureForm from "@/components/CaptureForm";
 
 const HeroSection = () => {
   return (
@@ -26,32 +27,31 @@ const HeroSection = () => {
           <div className="text-white space-y-8">
             <div className="space-y-4">
               <h1 className="text-4xl-accessible md:text-5xl font-bold leading-tight">
-                Find Medicare Solutions That Fit Your
-                <span className="text-accent"> Budget & Lifestyle</span>
+                Find the Right Medicare Plan for You
               </h1>
               <p className="text-xl-accessible text-white/90 leading-relaxed">
-                Whether you're new to Medicare or searching for better coverage, speak with a local licensed Medicare specialist who can simplify the process and give you peace of mind.
+                Get personalized help navigating Medicare options with a licensed agent. Compare plans, understand your benefits, and enroll with confidence.
               </p>
             </div>
 
             {/* Trust Indicators */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
               <div className="flex items-center space-x-3 text-white/90">
-                <Shield className="h-8 w-8 text-accent" />
+                <Shield className="h-8 w-8 text-blue-400" />
                 <div>
                   <p className="font-semibold text-lg">Licensed</p>
                   <p className="text-sm">Certified Agents</p>
                 </div>
               </div>
               <div className="flex items-center space-x-3 text-white/90">
-                <Award className="h-8 w-8 text-accent" />
+                <Award className="h-8 w-8 text-blue-400" />
                 <div>
                   <p className="font-semibold text-lg">No Cost</p>
                   <p className="text-sm">Free Service</p>
                 </div>
               </div>
               <div className="flex items-center space-x-3 text-white/90">
-                <Users className="h-8 w-8 text-accent" />
+                <Users className="h-8 w-8 text-blue-400" />
                 <div>
                   <p className="font-semibold text-lg">Local</p>
                   <p className="text-sm">Area Experts</p>
@@ -61,20 +61,34 @@ const HeroSection = () => {
 
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-4">
-              <Button 
-                size="lg" 
-                className="bg-accent hover:bg-accent/90 text-accent-foreground text-xl px-8 py-4 shadow-strong"
-              >
-                Get Started Now
-              </Button>
+              <CaptureForm 
+                trigger={
+                  <Button 
+                    size="lg" 
+                    className="bg-accent hover:bg-accent/90 text-accent-foreground text-xl px-8 py-4 shadow-strong"
+                  >
+                    Get Your Free Consultation
+                  </Button>
+                }
+              />
               <Button 
                 variant="outline" 
                 size="lg" 
                 className="border-2 border-white text-white hover:bg-white hover:text-primary text-xl px-8 py-4"
+                asChild
               >
-                <Phone className="h-5 w-5 mr-2" />
-                Call 347-305-2260
+                <a href="tel:347-305-2260">
+                  <Phone className="h-5 w-5 mr-2" />
+                  Call 347-305-2260
+                </a>
               </Button>
+            </div>
+
+            {/* Disclaimer Banner */}
+            <div className="bg-yellow-100 border border-yellow-400 rounded-lg p-4 text-yellow-800 text-sm">
+              <p>
+                <strong>Important:</strong> We do not offer every plan available in your area. Currently we represent organizations which offer products in your area. Please contact Medicare.gov, 1-800-MEDICARE, or your local State Health Insurance Program to get information on all your options.
+              </p>
             </div>
           </div>
 
