@@ -77,7 +77,7 @@ const HowItWorksSection = () => {
               {index < steps.length - 1 && (
                 <div className="hidden lg:block absolute top-1/2 -right-4 transform -translate-y-1/2 z-10">
                   <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center shadow-medium">
-                    <div className="w-0 h-0 border-l-[6px] border-l-transparent border-r-[6px] border-r-transparent border-t-[8px] border-t-primary-foreground transform rotate-90"></div>
+                    <div className="w-0 h-0 border-l-[8px] border-l-primary-foreground border-r-0 border-t-[6px] border-t-transparent border-b-[6px] border-b-transparent"></div>
                   </div>
                 </div>
               )}
