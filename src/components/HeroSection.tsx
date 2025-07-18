@@ -10,62 +10,64 @@ import CaptureForm from "@/components/CaptureForm";
 
 const HeroSection = () => {
   return (
-    <section className="relative min-h-screen flex items-center">
-      {/* Background Image with Overlay */}
+    <section className="relative min-h-screen flex items-center overflow-hidden">
+      {/* Background Image with Optimized Loading */}
       <div className="absolute inset-0 z-0">
         <img 
           src={heroImage} 
           alt="Healthcare professionals helping seniors" 
-          className="w-full h-full object-cover"
+          className="w-full h-full object-cover object-center"
+          loading="eager"
+          decoding="async"
         />
-        <div className="absolute inset-0 bg-gradient-hero opacity-90"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-blue-900/90 via-blue-800/80 to-blue-900/90"></div>
       </div>
 
-      <div className="container mx-auto px-4 py-16 relative z-10">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
-          {/* Hero Content */}
-          <div className="text-white space-y-8">
-            <div className="space-y-4">
-              <h1 className="text-4xl-accessible md:text-5xl font-bold leading-tight">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20 relative z-10 w-full">
+        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 xl:gap-16 items-center">
+          {/* Hero Content - Mobile-first optimization */}
+          <div className="text-white space-y-6 lg:space-y-8 order-2 lg:order-1">
+            <div className="space-y-4 lg:space-y-6">
+              <h1 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight tracking-tight">
                 Find the Right Medicare Plan for You
               </h1>
-              <p className="text-xl-accessible text-white/90 leading-relaxed">
+              <p className="text-lg sm:text-xl lg:text-2xl text-blue-100 leading-relaxed max-w-2xl">
                 Get personalized help navigating Medicare options with a licensed agent. Compare plans, understand your benefits, and enroll with confidence.
               </p>
             </div>
 
-            {/* Trust Indicators */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-              <div className="flex items-center space-x-3 text-white/90">
-                <Shield className="h-8 w-8 text-blue-400" />
+            {/* Trust Indicators - Improved mobile layout */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
+              <div className="flex items-center space-x-3 text-blue-100 bg-white/10 backdrop-blur-sm rounded-lg p-3 sm:p-4">
+                <Shield className="h-8 w-8 sm:h-10 sm:w-10 text-blue-300 flex-shrink-0" />
                 <div>
-                  <p className="font-semibold text-lg">Licensed</p>
-                  <p className="text-sm">Certified Agents</p>
+                  <p className="font-semibold text-base sm:text-lg text-white">Licensed</p>
+                  <p className="text-sm text-blue-200">Certified Agents</p>
                 </div>
               </div>
-              <div className="flex items-center space-x-3 text-white/90">
-                <Award className="h-8 w-8 text-blue-400" />
+              <div className="flex items-center space-x-3 text-blue-100 bg-white/10 backdrop-blur-sm rounded-lg p-3 sm:p-4">
+                <Award className="h-8 w-8 sm:h-10 sm:w-10 text-blue-300 flex-shrink-0" />
                 <div>
-                  <p className="font-semibold text-lg">No Cost</p>
-                  <p className="text-sm">Free Service</p>
+                  <p className="font-semibold text-base sm:text-lg text-white">No Cost</p>
+                  <p className="text-sm text-blue-200">Free Service</p>
                 </div>
               </div>
-              <div className="flex items-center space-x-3 text-white/90">
-                <Users className="h-8 w-8 text-blue-400" />
+              <div className="flex items-center space-x-3 text-blue-100 bg-white/10 backdrop-blur-sm rounded-lg p-3 sm:p-4">
+                <Users className="h-8 w-8 sm:h-10 sm:w-10 text-blue-300 flex-shrink-0" />
                 <div>
-                  <p className="font-semibold text-lg">Local</p>
-                  <p className="text-sm">Area Experts</p>
+                  <p className="font-semibold text-base sm:text-lg text-white">Local</p>
+                  <p className="text-sm text-blue-200">Area Experts</p>
                 </div>
               </div>
             </div>
 
-            {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row gap-4">
+            {/* CTA Buttons - Responsive spacing */}
+            <div className="flex flex-col sm:flex-row gap-4 lg:gap-6 pt-4">
               <CaptureForm 
                 trigger={
                   <Button 
                     size="lg" 
-                    className="bg-accent hover:bg-accent/90 text-accent-foreground text-xl px-8 py-4 shadow-strong"
+                    className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-bold text-lg sm:text-xl px-6 sm:px-8 py-4 sm:py-5 shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1"
                   >
                     Get Your Free Consultation
                   </Button>
@@ -74,87 +76,87 @@ const HeroSection = () => {
               <Button 
                 variant="outline" 
                 size="lg" 
-                className="border-2 border-white text-white hover:bg-white hover:text-primary text-xl px-8 py-4"
+                className="border-2 border-white text-white hover:bg-white hover:text-blue-900 font-semibold text-lg sm:text-xl px-6 sm:px-8 py-4 sm:py-5 backdrop-blur-sm transition-all duration-300"
                 asChild
               >
-                <a href="tel:347-305-2260">
+                <a href="tel:347-305-2260" className="flex items-center justify-center">
                   <Phone className="h-5 w-5 mr-2" />
                   Call 347-305-2260
                 </a>
               </Button>
             </div>
 
-            {/* Disclaimer Banner */}
-            <div className="bg-yellow-100 border border-yellow-400 rounded-lg p-4 text-yellow-800 text-sm">
+            {/* Disclaimer Banner - Better mobile styling */}
+            <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 text-yellow-800 text-sm sm:text-base leading-relaxed shadow-sm">
               <p>
-                <strong>Important:</strong> We do not offer every plan available in your area. Currently we represent organizations which offer products in your area. Please contact Medicare.gov, 1-800-MEDICARE, or your local State Health Insurance Program to get information on all your options.
+                <strong className="font-semibold">Important:</strong> We do not offer every plan available in your area. Currently we represent organizations which offer products in your area. Please contact Medicare.gov, 1-800-MEDICARE, or your local State Health Insurance Program to get information on all your options.
               </p>
             </div>
           </div>
 
-          {/* Contact Form Card */}
-          <Card id="contact" className="bg-white/95 backdrop-blur-sm p-8 shadow-strong">
+          {/* Contact Form Card - Improved mobile experience */}
+          <Card id="contact" className="bg-white/95 backdrop-blur-sm p-6 sm:p-8 shadow-2xl border-0 order-1 lg:order-2">
             <div className="space-y-6">
               <div className="text-center space-y-2">
-                <h3 className="text-2xl-accessible font-bold text-foreground">
+                <h3 className="text-2xl sm:text-3xl font-bold text-gray-900">
                   Get Your Free Consultation
                 </h3>
-                <p className="text-muted-foreground text-lg">
+                <p className="text-gray-600 text-base sm:text-lg">
                   Speak with a Medicare specialist today
                 </p>
               </div>
 
               <form className="space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <Label htmlFor="firstName" className="text-lg font-medium">First Name</Label>
+                    <Label htmlFor="firstName" className="text-base font-medium text-gray-700">First Name</Label>
                     <Input
                       id="firstName"
                       type="text"
                       placeholder="Enter your first name"
-                      className="text-lg py-3 px-4"
+                      className="text-base py-3 px-4 border-gray-300 focus:border-blue-500 focus:ring-blue-500"
                       required
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="lastName" className="text-lg font-medium">Last Name</Label>
+                    <Label htmlFor="lastName" className="text-base font-medium text-gray-700">Last Name</Label>
                     <Input
                       id="lastName"
                       type="text"
                       placeholder="Enter your last name"
-                      className="text-lg py-3 px-4"
+                      className="text-base py-3 px-4 border-gray-300 focus:border-blue-500 focus:ring-blue-500"
                       required
                     />
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <Label htmlFor="phone" className="text-lg font-medium">Phone Number</Label>
+                    <Label htmlFor="phone" className="text-base font-medium text-gray-700">Phone Number</Label>
                     <Input
                       id="phone"
                       type="tel"
                       placeholder="(555) 123-4567"
-                      className="text-lg py-3 px-4"
+                      className="text-base py-3 px-4 border-gray-300 focus:border-blue-500 focus:ring-blue-500"
                       required
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="email" className="text-lg font-medium">Email</Label>
+                    <Label htmlFor="email" className="text-base font-medium text-gray-700">Email</Label>
                     <Input
                       id="email"
                       type="email"
                       placeholder="your@email.com"
-                      className="text-lg py-3 px-4"
+                      className="text-base py-3 px-4 border-gray-300 focus:border-blue-500 focus:ring-blue-500"
                       required
                     />
                   </div>
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="bestTime" className="text-lg font-medium">Best Time to Call</Label>
+                  <Label htmlFor="bestTime" className="text-base font-medium text-gray-700">Best Time to Call</Label>
                   <Select>
-                    <SelectTrigger className="text-lg py-3 px-4">
+                    <SelectTrigger className="text-base py-3 px-4 border-gray-300 focus:border-blue-500 focus:ring-blue-500">
                       <SelectValue placeholder="Select preferred time" />
                     </SelectTrigger>
                     <SelectContent>
@@ -167,22 +169,22 @@ const HeroSection = () => {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="message" className="text-lg font-medium">Message (Optional)</Label>
+                  <Label htmlFor="message" className="text-base font-medium text-gray-700">Message (Optional)</Label>
                   <Textarea
                     id="message"
                     placeholder="Tell us about your Medicare needs..."
-                    className="text-lg py-3 px-4 min-h-[120px]"
+                    className="text-base py-3 px-4 min-h-[100px] border-gray-300 focus:border-blue-500 focus:ring-blue-500 resize-none"
                   />
                 </div>
 
                 <Button 
                   type="submit" 
-                  className="w-full bg-gradient-primary hover:bg-primary-hover text-xl py-4 shadow-medium"
+                  className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-bold text-lg py-4 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-0.5"
                 >
                   Meet Your MedGuy
                 </Button>
 
-                <p className="text-sm text-muted-foreground text-center leading-relaxed">
+                <p className="text-sm text-gray-500 text-center leading-relaxed">
                   By submitting your information, you consent to receive communications from YourMedGuy. 
                   This includes calls, emails, and text messages about Medicare plans and special offers.
                 </p>
