@@ -7,7 +7,7 @@ const testimonials = [
   {
     id: 1,
     name: "Elizabeth R.",
-    location: "Riverside, CA",
+    location: "Brooklyn, NY",
     rating: 5,
     text: "Thank you for making my Medicare enrollment process easy. I appreciate the time you took to explain all of my options. I will recommend you to all of my Medicare friends!",
     planType: "Medicare Advantage"
@@ -15,7 +15,7 @@ const testimonials = [
   {
     id: 2,
     name: "Robert M.",
-    location: "Phoenix, AZ",
+    location: "Queens, NY",
     rating: 5,
     text: "The service was outstanding! They found me a plan that saved me over $200 per month compared to what I was paying. The agent was knowledgeable and patient with all my questions.",
     planType: "Medicare Supplement"
@@ -23,7 +23,7 @@ const testimonials = [
   {
     id: 3,
     name: "Margaret S.",
-    location: "Tampa, FL",
+    location: "Manhattan, NY",
     rating: 5,
     text: "I was so confused about Medicare options until I called YourMedGuy. They made everything clear and helped me choose the perfect plan for my needs and budget. Highly recommended!",
     planType: "Prescription Drug Plan"
@@ -31,7 +31,7 @@ const testimonials = [
   {
     id: 4,
     name: "James T.",
-    location: "Dallas, TX",
+    location: "Bronx, NY",
     rating: 5,
     text: "Professional, courteous, and incredibly helpful. They took the stress out of choosing Medicare coverage and found me excellent benefits at a great price. Thank you!",
     planType: "Medicare Advantage"
