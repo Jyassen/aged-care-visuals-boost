@@ -1,4 +1,4 @@
-# YourMedGuy Website
+# YourMedGuy Website - Medicare Made Simple
 
 ## Project info
 
