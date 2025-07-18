@@ -1,5 +1,4 @@
 import { Button } from "@/components/ui/button";
-
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -8,8 +7,70 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Shield, Award, Users, Phone } from "lucide-react";
 import heroImage from "@/assets/hero-image.jpg";
 import CaptureForm from "@/components/CaptureForm";
+import { useState } from "react";
 
 const HeroSection = () => {
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    phone: '',
+    email: '',
+    bestTime: '',
+    message: ''
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState('');
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const handleSelectChange = (value) => {
+    setFormData(prev => ({
+      ...prev,
+      bestTime: value
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setSubmitStatus('');
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        setSubmitStatus('success');
+        setFormData({
+          firstName: '',
+          lastName: '',
+          phone: '',
+          email: '',
+          bestTime: '',
+          message: ''
+        });
+      } else {
+        setSubmitStatus('error');
+      }
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      setSubmitStatus('error');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden">
       {/* Background Image with Optimized Loading */}
@@ -107,15 +168,18 @@ const HeroSection = () => {
                 </p>
               </div>
 
-              <form className="space-y-6">
+              <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="space-y-2">
                     <Label htmlFor="firstName" className="text-base font-medium text-gray-700">First Name</Label>
                     <Input
                       id="firstName"
+                      name="firstName"
                       type="text"
                       placeholder="Enter your first name"
                       className="text-base py-3 px-4 border-gray-300 focus:border-blue-500 focus:ring-blue-500"
+                      value={formData.firstName}
+                      onChange={handleInputChange}
                       required
                     />
                   </div>
@@ -123,9 +187,12 @@ const HeroSection = () => {
                     <Label htmlFor="lastName" className="text-base font-medium text-gray-700">Last Name</Label>
                     <Input
                       id="lastName"
+                      name="lastName"
                       type="text"
                       placeholder="Enter your last name"
                       className="text-base py-3 px-4 border-gray-300 focus:border-blue-500 focus:ring-blue-500"
+                      value={formData.lastName}
+                      onChange={handleInputChange}
                       required
                     />
                   </div>
@@ -136,9 +203,12 @@ const HeroSection = () => {
                     <Label htmlFor="phone" className="text-base font-medium text-gray-700">Phone Number</Label>
                     <Input
                       id="phone"
+                      name="phone"
                       type="tel"
                       placeholder="(555) 123-4567"
                       className="text-base py-3 px-4 border-gray-300 focus:border-blue-500 focus:ring-blue-500"
+                      value={formData.phone}
+                      onChange={handleInputChange}
                       required
                     />
                   </div>
@@ -146,9 +216,12 @@ const HeroSection = () => {
                     <Label htmlFor="email" className="text-base font-medium text-gray-700">Email</Label>
                     <Input
                       id="email"
+                      name="email"
                       type="email"
                       placeholder="your@email.com"
                       className="text-base py-3 px-4 border-gray-300 focus:border-blue-500 focus:ring-blue-500"
+                      value={formData.email}
+                      onChange={handleInputChange}
                       required
                     />
                   </div>
@@ -156,7 +229,7 @@ const HeroSection = () => {
 
                 <div className="space-y-2">
                   <Label htmlFor="bestTime" className="text-base font-medium text-gray-700">Best Time to Call</Label>
-                  <Select>
+                  <Select value={formData.bestTime} onValueChange={handleSelectChange}>
                     <SelectTrigger className="text-base py-3 px-4 border-gray-300 focus:border-blue-500 focus:ring-blue-500">
                       <SelectValue placeholder="Select preferred time" />
                     </SelectTrigger>
@@ -173,16 +246,50 @@ const HeroSection = () => {
                   <Label htmlFor="message" className="text-base font-medium text-gray-700">Message (Optional)</Label>
                   <Textarea
                     id="message"
+                    name="message"
                     placeholder="Tell us about your Medicare needs..."
                     className="text-base py-3 px-4 min-h-[100px] border-gray-300 focus:border-blue-500 focus:ring-blue-500 resize-none"
+                    value={formData.message}
+                    onChange={handleInputChange}
                   />
                 </div>
 
+                {submitStatus === 'success' && (
+                  <div className="bg-green-50 border border-green-200 rounded-lg p-4 text-green-800">
+                    <div className="flex items-center">
+                      <div className="flex-shrink-0">
+                        <svg className="h-5 w-5 text-green-400" viewBox="0 0 20 20" fill="currentColor">
+                          <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                        </svg>
+                      </div>
+                      <div className="ml-3">
+                        <p className="text-sm font-medium">Thank you! We'll call you within 24 hours.</p>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {submitStatus === 'error' && (
+                  <div className="bg-red-50 border border-red-200 rounded-lg p-4 text-red-800">
+                    <div className="flex items-center">
+                      <div className="flex-shrink-0">
+                        <svg className="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor">
+                          <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+                        </svg>
+                      </div>
+                      <div className="ml-3">
+                        <p className="text-sm font-medium">Something went wrong. Please try again or call us directly.</p>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
                 <Button 
                   type="submit" 
-                  className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-bold text-lg py-4 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-0.5"
+                  disabled={isSubmitting}
+                  className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-bold text-lg py-4 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
                 >
-                  Meet Your MedGuy
+                  {isSubmitting ? 'Sending...' : 'Meet Your MedGuy'}
                 </Button>
 
                 <p className="text-sm text-gray-500 text-center leading-relaxed">
