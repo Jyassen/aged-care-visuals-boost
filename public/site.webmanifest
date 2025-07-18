@@ -1,0 +1,22 @@
+{
+  "name": "YourMedGuy - Medicare Made Simple",
+  "short_name": "YourMedGuy",
+  "description": "Get expert Medicare guidance from licensed specialists. Free consultations, local plans, lower costs.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#2563eb",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/favicon-16x16.svg",
+      "sizes": "16x16",
+      "type": "image/svg+xml"
+    }
+  ]
+} 
