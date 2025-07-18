@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -28,7 +29,7 @@ const HeroSection = () => {
           {/* Hero Content - Mobile-first optimization */}
           <div className="text-white space-y-6 lg:space-y-8 order-2 lg:order-1">
             <div className="space-y-4 lg:space-y-6">
-              <h1 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight tracking-tight">
+              <h1 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight tracking-tight text-white">
                 Find the Right Medicare Plan for You
               </h1>
               <p className="text-lg sm:text-xl lg:text-2xl text-blue-100 leading-relaxed max-w-2xl">
