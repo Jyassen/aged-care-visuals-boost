@@ -1,45 +1,42 @@
 import { Card, CardContent } from "@/components/ui/card";
+import { Shield, DollarSign, Users, Clock, CheckCircle, Star } from "lucide-react";
 
-const partners = [
+const benefits = [
   {
-    name: "Blue Cross Blue Shield",
-    logo: "🛡️", // Using emoji as placeholder for actual logos
-    description: "Comprehensive Medicare plans"
+    icon: Shield,
+    title: "Licensed & Certified",
+    description: "All our agents are state-licensed Medicare specialists",
+    color: "from-blue-600 to-blue-700"
   },
   {
-    name: "Anthem",
-    logo: "🏥",
-    description: "Medicare Advantage options"
+    icon: DollarSign,
+    title: "No Cost to You",
+    description: "Our services are completely free - we're paid by the insurance companies",
+    color: "from-green-500 to-green-600"
   },
   {
-    name: "Aetna",
-    logo: "❤️",
-    description: "Health & wellness focused"
+    icon: Users,
+    title: "Independent Brokers",
+    description: "We represent multiple carriers to find you the best options",
+    color: "from-purple-500 to-purple-600"
   },
   {
-    name: "Humana",
-    logo: "🌟",
-    description: "Medicare supplement plans"
+    icon: Clock,
+    title: "Save Time",
+    description: "We do the research and comparison shopping for you",
+    color: "from-orange-500 to-orange-600"
   },
   {
-    name: "UnitedHealthcare",
-    logo: "🔵",
-    description: "Nationwide coverage"
+    icon: CheckCircle,
+    title: "Personalized Service",
+    description: "One-on-one guidance tailored to your specific needs",
+    color: "from-teal-500 to-teal-600"
   },
   {
-    name: "Kaiser Permanente",
-    logo: "🏢",
-    description: "Integrated care model"
-  },
-  {
-    name: "Cigna",
-    logo: "⚡",
-    description: "Prescription drug plans"
-  },
-  {
-    name: "Molina Healthcare",
-    logo: "🌅",
-    description: "Community-focused care"
+    icon: Star,
+    title: "Ongoing Support",
+    description: "We're here to help throughout your Medicare journey",
+    color: "from-indigo-500 to-indigo-600"
   }
 ];
 
@@ -50,29 +47,30 @@ const PartnersSection = () => {
         {/* Section Header */}
         <div className="text-center space-y-4 sm:space-y-6 mb-12 sm:mb-16">
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 text-balance">
-            Allow Us to Save You Time and Money!
+            Why Choose YourMedGuy?
           </h2>
           <p className="text-lg sm:text-xl lg:text-2xl text-gray-600 max-w-4xl mx-auto leading-relaxed text-pretty">
-            We shop multiple carriers, help you understand your options, and find you the best plans with the lowest premiums.
+            As independent Medicare brokers, we work for you - not the insurance companies. 
+            Let us save you time and money by finding the perfect plan.
           </p>
         </div>
 
-        {/* Partner Logos Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6 sm:gap-8 mb-12">
-          {partners.map((partner, index) => (
+        {/* Benefits Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mb-12">
+          {benefits.map((benefit, index) => (
             <Card 
               key={index} 
               className="bg-white border border-gray-200 shadow-md hover:shadow-lg transition-all duration-300 group"
             >
-              <CardContent className="p-6 text-center space-y-3">
-                <div className="text-4xl group-hover:scale-110 transition-transform duration-300">
-                  {partner.logo}
+              <CardContent className="p-6 text-center space-y-4">
+                <div className={`w-16 h-16 mx-auto rounded-xl bg-gradient-to-r ${benefit.color} flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-md`}>
+                  <benefit.icon className="h-8 w-8 text-white" />
                 </div>
-                <h3 className="font-semibold text-gray-900 text-sm sm:text-base leading-tight">
-                  {partner.name}
+                <h3 className="font-semibold text-gray-900 text-lg leading-tight">
+                  {benefit.title}
                 </h3>
-                <p className="text-xs sm:text-sm text-gray-600">
-                  {partner.description}
+                <p className="text-sm text-gray-600 leading-relaxed">
+                  {benefit.description}
                 </p>
               </CardContent>
             </Card>
@@ -81,10 +79,18 @@ const PartnersSection = () => {
 
         {/* Trust Statement */}
         <div className="text-center bg-blue-50 rounded-2xl p-6 sm:p-8">
-          <p className="text-lg sm:text-xl text-blue-900 font-medium max-w-3xl mx-auto">
-            As independent brokers, we work with all major insurance carriers to find you the perfect Medicare plan at the best price - 
-            <span className="font-bold"> at absolutely no cost to you!</span>
-          </p>
+          <div className="max-w-4xl mx-auto space-y-4">
+            <h3 className="text-2xl sm:text-3xl font-bold text-blue-900">
+              We Shop All Major Medicare Plans For You
+            </h3>
+            <p className="text-lg sm:text-xl text-blue-800 font-medium">
+              We work with all the major insurance carriers in your area to compare plans, benefits, and costs. 
+              Our goal is simple: find you the best Medicare coverage at the best price.
+            </p>
+            <p className="text-base text-blue-700">
+              <span className="font-bold">Best of all:</span> Our expert guidance costs you absolutely nothing!
+            </p>
+          </div>
         </div>
       </div>
     </section>
