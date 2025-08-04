@@ -56,30 +56,48 @@ const CaptureForm = ({
     setIsSubmitting(true);
     
     try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      toast({
-        title: "Thank you for your interest!",
-        description: "We'll contact you within 24 hours to discuss your Medicare needs.",
+      // Make actual API call to send email
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          firstName: formData.firstName,
+          lastName: formData.lastName,
+          phone: formData.phone,
+          email: formData.email,
+          bestTime: formData.bestTimeToCall,
+          message: `Age Range: ${formData.ageRange}\nZip Code: ${formData.zipCode}\nCare Type: ${formData.careType}\n\nMessage: ${formData.message}`
+        }),
       });
-      
-      setIsOpen(false);
-      setFormData({
-        firstName: "",
-        lastName: "",
-        phone: "",
-        email: "",
-        zipCode: "",
-        ageRange: "",
-        bestTimeToCall: "",
-        careType: "",
-        message: ""
-      });
+
+      if (response.ok) {
+        toast({
+          title: "Thank you for your interest!",
+          description: "We'll contact you within 24 hours to discuss your Medicare needs.",
+        });
+        
+        setIsOpen(false);
+        setFormData({
+          firstName: "",
+          lastName: "",
+          phone: "",
+          email: "",
+          zipCode: "",
+          ageRange: "",
+          bestTimeToCall: "",
+          careType: "",
+          message: ""
+        });
+      } else {
+        throw new Error('Failed to send form');
+      }
     } catch (error) {
+      console.error('Error submitting form:', error);
       toast({
         title: "Something went wrong",
-        description: "Please try again or call us directly.",
+        description: "Please try again or call us directly at 347-305-2260.",
         variant: "destructive",
       });
     } finally {
