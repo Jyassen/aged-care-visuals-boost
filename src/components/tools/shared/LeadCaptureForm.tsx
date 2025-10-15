@@ -184,10 +184,7 @@ export default function LeadCaptureForm({ source, context, onSuccess }: LeadCapt
         
         {/* Disclaimer - CMS/HIPAA aligned */}
         <p className="text-[10px] text-gray-500 text-center leading-relaxed">
-          By submitting, you agree to be contacted by a licensed insurance agent from YourMedGuy about Medicare plan options. 
-          You consent to calls, emails, or texts; consent is not a condition of purchase. YourMedGuy is not affiliated with 
-          or endorsed by the U.S. government or the federal Medicare program. Your information may be used to provide plan 
-          comparisons and is protected under HIPAA to the extent applicable.
+          By submitting, you agree to be contacted by a licensed insurance agent from YourMedGuy about Medicare plan options by phone, email, or text. Consent is not a condition of purchase. YourMedGuy is not affiliated with or endorsed by the U.S. government or the federal Medicare program.
         </p>
       </form>
     </Card>

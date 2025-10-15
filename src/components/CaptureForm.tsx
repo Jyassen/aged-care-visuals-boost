@@ -257,8 +257,7 @@ const CaptureForm = ({
             </Button>
             
             <p className="text-xs text-gray-500 text-center leading-relaxed">
-              By submitting your contact information, you consent to receive communications from YourMedGuy. 
-              We respect your privacy and will never share your information with third parties.
+              By submitting your information, you agree to be contacted by a licensed insurance agent from YourMedGuy about Medicare plan options by phone, email, or text. Consent is not a condition of purchase. YourMedGuy is not affiliated with or endorsed by the U.S. government or the federal Medicare program.
             </p>
           </div>
         </form>

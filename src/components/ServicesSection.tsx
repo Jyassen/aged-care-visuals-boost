@@ -92,12 +92,12 @@ const ServicesSection = () => {
                   All of these services are available at
                 </h3>
                 <div className="text-3xl sm:text-4xl lg:text-6xl font-black text-yellow-300 uppercase tracking-wide drop-shadow-lg">
-                  Absolutely No Cost to You
+                  No Cost for Advisory Services
                 </div>
               </div>
               
               <p className="text-lg sm:text-xl lg:text-2xl text-blue-100 max-w-3xl mx-auto leading-relaxed text-pretty">
-                Our Medicare specialists are here to help you navigate your options with no fees, no pressure, and no hidden costs.
+                Our Medicare advisory services have no fees, no pressure, and no hidden costs. Plan premiums and costs are set by carriers and vary by plan and county.
               </p>
               
               <div className="pt-4">

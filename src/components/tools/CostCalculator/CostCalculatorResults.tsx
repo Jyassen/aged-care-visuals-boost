@@ -63,7 +63,7 @@ export default function CostCalculatorResults({ estimate, onReset }: CostCalcula
       'Medicare Advantage Plan Premium': {
         title: 'Real NY 2026 Medicare Advantage Plan Premiums',
         items: [
-          { label: '$0 Premium Plans (Most Popular)', amount: 'Healthfirst, Elderplan, VIP Value, True Choice' },
+          { label: '$0 Premium Plans (Commonly selected)', amount: 'Healthfirst, Elderplan, VIP Value, True Choice' },
           { label: 'Low Premium Plans ($25-$40)', amount: 'VNS EasyCare ($25), Anthem ($24), Humana ($37)' },
           { label: 'Mid Premium Plans ($50-$80)', amount: 'EmblemHealth VIP Gold ($54), Aetna Premier ($81)' },
           { label: 'What\'s Included', amount: 'Part D prescription coverage' },
@@ -315,7 +315,7 @@ export default function CostCalculatorResults({ estimate, onReset }: CostCalcula
           <div className="border border-gray-200 rounded-lg p-4">
             <div className="flex justify-between items-start">
               <div>
-                <p className="font-medium text-gray-900">Plan G (Most popular)</p>
+                <p className="font-medium text-gray-900">Plan G (Commonly selected)</p>
                 <p className="text-sm text-gray-600 mt-1">Robust coverage; buy Part D separately</p>
               </div>
               <div className="text-right">
@@ -407,7 +407,7 @@ export default function CostCalculatorResults({ estimate, onReset }: CostCalcula
             Want a Detailed, Personalized Analysis?
           </h3>
           <p className="text-gray-700 mb-6">
-            Get a free consultation to discuss your specific situation and find the best plan for YOUR needs.
+            Get a free consultation to discuss your situation and explore plan options suitable for your needs.
           </p>
           <Button
             onClick={() => setShowLeadCapture(true)}

@@ -151,7 +151,7 @@ const HeroSection = () => {
             {/* Disclaimer Banner - Better mobile styling */}
             <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 text-yellow-800 text-sm sm:text-base leading-relaxed shadow-sm">
               <p>
-                <strong className="font-semibold">Important:</strong> We do not offer every plan available in your area. Currently we represent organizations which offer products in your area. Please contact Medicare.gov, 1-800-MEDICARE, or your local State Health Insurance Program to get information on all your options.
+                <strong className="font-semibold">Important:</strong> We do not offer every plan available in your area. Any information we provide is limited to the plans we do offer. Please contact Medicare.gov or 1-800-MEDICARE (1-800-633-4227), TTY: 1-877-486-2048, 24 hours a day/7 days a week, to get information on all your options.
               </p>
             </div>
           </div>

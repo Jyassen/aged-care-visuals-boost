@@ -183,7 +183,7 @@ function generateRecommendations(
   // Recommendation for fair/poor health status
   if (input.healthStatus === 'poor' || input.healthStatus === 'fair') {
     recommendations.push(
-      'A Medicare Supplement (Medigap) plan might provide better coverage for your healthcare needs with more predictable costs'
+      'A Medicare Supplement (Medigap) plan may offer more predictable costs; compare benefits to your needs'
     );
   }
   
@@ -197,13 +197,13 @@ function generateRecommendations(
   // Recommendation for excellent health
   if (input.healthStatus === 'excellent' && input.prescriptionCount <= 2) {
     recommendations.push(
-      'With your good health, a zero-premium Medicare Advantage plan could be a cost-effective option'
+      'With your good health, a zero-premium Medicare Advantage plan may be a cost-effective option'
     );
   }
   
   // Always include consultation CTA
   recommendations.push(
-    'Schedule a free consultation to explore all plan options available in your area and find the best fit for YOUR specific needs'
+    'Schedule a free consultation to review plan options available in your area and identify options suitable for your needs'
   );
   
   return recommendations;
