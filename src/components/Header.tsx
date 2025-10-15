@@ -24,19 +24,19 @@ const Header = () => {
           {/* Desktop Navigation - Hidden on mobile for performance */}
           <nav className="hidden lg:flex items-center space-x-8">
             <a 
-              href="#services" 
+              href="/#services" 
               className="text-gray-700 hover:text-blue-600 transition-colors duration-200 font-medium text-base"
             >
               Why Choose Us
             </a>
             <a 
-              href="#how-it-works" 
+              href="/#how-it-works" 
               className="text-gray-700 hover:text-blue-600 transition-colors duration-200 font-medium text-base"
             >
               How It Works
             </a>
             <a 
-              href="#contact" 
+              href="/#contact" 
               className="text-gray-700 hover:text-blue-600 transition-colors duration-200 font-medium text-base"
             >
               Get Help
@@ -105,21 +105,21 @@ const Header = () => {
           <div className="py-4 space-y-4">
             <nav className="flex flex-col space-y-3">
               <a 
-                href="#services" 
+                href="/#services" 
                 className="text-gray-700 hover:text-blue-600 transition-colors duration-200 font-medium text-base py-2 px-2 rounded-md hover:bg-gray-50 touch-manipulation"
                 onClick={() => setIsMenuOpen(false)}
               >
                 Why Choose Us
               </a>
               <a 
-                href="#how-it-works" 
+                href="/#how-it-works" 
                 className="text-gray-700 hover:text-blue-600 transition-colors duration-200 font-medium text-base py-2 px-2 rounded-md hover:bg-gray-50 touch-manipulation"
                 onClick={() => setIsMenuOpen(false)}
               >
                 How It Works
               </a>
               <a 
-                href="#contact" 
+                href="/#contact" 
                 className="text-gray-700 hover:text-blue-600 transition-colors duration-200 font-medium text-base py-2 px-2 rounded-md hover:bg-gray-50 touch-manipulation"
                 onClick={() => setIsMenuOpen(false)}
               >
