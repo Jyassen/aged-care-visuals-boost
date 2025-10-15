@@ -96,7 +96,7 @@ const HeroSection = () => {
               <p className="mt-2 text-2xl sm:text-3xl lg:text-4xl font-semibold text-amber-300 leading-snug">
                 Review Your 2026 Options in Long Island
               </p>
-              <p className="text-base sm:text-lg lg:text-xl text-amber-300 leading-relaxed max-w-2xl">
+              <p className="text-base sm:text-lg lg:text-xl text-white leading-relaxed max-w-2xl">
                 Keep your doctors and cut surprises. Get a free 15 minute Medicare review with a licensed agent. We will check networks, medications, and costs with no pressure and no fees. Serving Nassau and Suffolk County.
               </p>
             </div>
