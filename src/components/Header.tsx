@@ -11,15 +11,15 @@ const Header = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 lg:h-20">
           {/* Logo - Optimized for mobile-first */}
-          <div className="flex items-center space-x-2 min-w-0">
-            <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-r from-blue-600 to-blue-700 rounded-xl flex items-center justify-center flex-shrink-0">
+          <a href="/" className="flex items-center space-x-2 min-w-0 group">
+            <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-r from-blue-600 to-blue-700 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:shadow">
               <span className="text-white font-bold text-sm sm:text-lg">M</span>
             </div>
             <div className="min-w-0">
-              <h1 className="text-lg sm:text-xl font-bold text-gray-900 truncate">YourMedGuy</h1>
+              <h1 className="text-lg sm:text-xl font-bold text-gray-900 truncate group-hover:text-blue-700">YourMedGuy</h1>
               <p className="text-xs sm:text-sm text-gray-600 hidden sm:block">Medicare Made Simple</p>
             </div>
-          </div>
+          </a>
 
           {/* Desktop Navigation - Hidden on mobile for performance */}
           <nav className="hidden lg:flex items-center space-x-8">
