@@ -9,10 +9,10 @@ export default async function handler(req, res) {
   }
 
   try {
-    const { firstName, lastName, phone, email, bestTime, message } = req.body;
+    const { firstName, lastName, phone, email, bestTime, message, source, context } = req.body;
 
     // Validate required fields
-    if (!firstName || !lastName || !phone || !email) {
+    if (!firstName || !lastName || !phone) {
       return res.status(400).json({ message: 'Missing required fields' });
     }
 
@@ -42,6 +42,13 @@ export default async function handler(req, res) {
             </div>
           ` : ''}
 
+          ${context ? `
+            <div style="background-color: #eff6ff; padding: 20px; border-radius: 8px; margin: 20px 0;">
+              <h3 style="color: #1e40af; margin-top: 0;">Tool Results & Context</h3>
+              <pre style="white-space: pre-wrap; font-size: 12px; color: #374151; font-family: monospace;">${typeof context === 'string' ? context : JSON.stringify(JSON.parse(context), null, 2)}</pre>
+            </div>
+          ` : ''}
+
           <div style="border-top: 1px solid #e5e7eb; padding-top: 20px; margin-top: 20px;">
             <p style="color: #6b7280; font-size: 14px;">
               <strong>Submitted:</strong> ${new Date().toLocaleString('en-US', { 
@@ -51,7 +58,7 @@ export default async function handler(req, res) {
               })}
             </p>
             <p style="color: #6b7280; font-size: 14px;">
-              <strong>Source:</strong> YourMedGuy.com Contact Form
+              <strong>Source:</strong> ${source || 'YourMedGuy.com Contact Form'}
             </p>
           </div>
 

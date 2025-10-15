@@ -34,7 +34,7 @@ const BenefitsSection = () => {
             Additional Benefits You May Qualify For
           </h2>
           <p className="text-xl-accessible text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-            Discover the extra benefits that could be included in your Medicare plan beyond basic medical coverage.
+            Discover the extra benefits that could be included in your Medicare plan beyond basic medical coverage. See options available in Long Island.
           </p>
         </div>
 

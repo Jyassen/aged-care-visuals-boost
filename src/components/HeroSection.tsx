@@ -91,10 +91,10 @@ const HeroSection = () => {
           <div className="text-white space-y-6 lg:space-y-8 order-2 lg:order-1">
             <div className="space-y-4 lg:space-y-6">
               <h1 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight tracking-tight text-white">
-                Find the Right Medicare Plan for You
+                Medicare Made Simple - Review Your 2026 Options in Long Island
               </h1>
               <p className="text-lg sm:text-xl lg:text-2xl text-blue-100 leading-relaxed max-w-2xl">
-                Get personalized help navigating Medicare options with a licensed agent. Compare plans, understand your benefits, and enroll with confidence.
+                Keep your doctors and cut surprises. Get a free 15-minute Medicare review with a licensed agent. We will check networks, medications, and costs - no pressure, no fees. Serving Nassau and Suffolk County.
               </p>
             </div>
 

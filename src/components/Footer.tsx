@@ -47,7 +47,7 @@ const Footer = () => {
               </a>
               <div className="flex items-start space-x-3 text-primary-foreground/90 text-lg">
                 <MapPin className="h-5 w-5 mt-1" />
-                <span>Serving Medicare Recipients Nationwide</span>
+                <span>Serving Long Island: Nassau and Suffolk County</span>
               </div>
             </div>
           </div>

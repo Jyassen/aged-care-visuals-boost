@@ -22,3 +22,14 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Local documentation (keep private)
+README-WORKFLOW.md
+
+# Project-specific large and private directories/files
+YourMedGuy Curosr docs/
+playwright-report/
+scrape/
+test-results/
+**/.venv/
+*.pdf

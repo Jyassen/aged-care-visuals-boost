@@ -1,0 +1,60 @@
+{
+  "url": "http://localhost:8080",
+  "status": 200,
+  "title": "YourMedGuy - Medicare Made Simple | Free Medicare Consultation",
+  "metaDescription": "Get expert Medicare guidance from licensed specialists. Free consultations, local plans, lower costs. Serving 50+ adults nationwide. Call 347-305-2260 today.",
+  "metaRobots": null,
+  "canonical": null,
+  "ogTags": [
+    {
+      "property": "og:title",
+      "content": "YourMedGuy - Medicare Made Simple | Free Medicare Consultation"
+    },
+    {
+      "property": "og:description",
+      "content": "Get expert Medicare guidance from licensed specialists. Free consultations, local plans, lower costs. Serving 50+ adults nationwide."
+    },
+    {
+      "property": "og:type",
+      "content": "website"
+    },
+    {
+      "property": "og:image",
+      "content": "https://lovable.dev/opengraph-image-p98pqg.png"
+    }
+  ],
+  "twitterTags": [
+    {
+      "name": "twitter:card",
+      "content": "summary_large_image"
+    },
+    {
+      "name": "twitter:site",
+      "content": "@lovable_dev"
+    },
+    {
+      "name": "twitter:image",
+      "content": "https://lovable.dev/opengraph-image-p98pqg.png"
+    }
+  ],
+  "headings": {
+    "h1": [],
+    "h2": [],
+    "h3": []
+  },
+  "linksSummary": {
+    "total": 0,
+    "internal": 0,
+    "external": 0
+  },
+  "links": [],
+  "imagesSummary": {
+    "total": 0,
+    "missingAlt": 0,
+    "eagerLoaded": 0
+  },
+  "images": [],
+  "jsonLdCount": 0,
+  "wordCount": 0,
+  "timestamp": "2025-10-12T20:49:27.428Z"
+}

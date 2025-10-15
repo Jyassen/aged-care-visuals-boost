@@ -16,6 +16,22 @@ const faqs = [
   {
     question: "What should I have ready when I call to enroll?",
     answer: "When calling to enroll, please have your red, white, and blue Medicare ID card with you. It's also helpful to have a list of your current medications and the names of your doctors if you'd like to check if they're covered under the plan. Having these details will ensure a smooth enrollment process."
+  },
+  {
+    question: "Is my drug spending capped at $2,100 in 2026?",
+    answer: "Yes, for covered formulary drugs only. Uncovered medications do not count toward the cap. We will help you verify for your exact meds."
+  },
+  {
+    question: "My hospital is leaving my MA plan - can I switch?",
+    answer: "Often during AEP (Oct 15 - Dec 7). Some states provide SEPs for major network losses - keep your notices and we will walk you through options."
+  },
+  {
+    question: "Should I switch from Plan G to Plan N?",
+    answer: "It depends on underwriting and usage. Plan N can lower premiums if you qualify; we will review tradeoffs and eligibility with you."
+  },
+  {
+    question: "PPO to HMO: what's the impact?",
+    answer: "HMOs have tighter networks and often require referrals. We will verify your providers and key facilities before you decide."
   }
 ];
 

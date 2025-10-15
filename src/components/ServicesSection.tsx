@@ -48,7 +48,7 @@ const ServicesSection = () => {
             What We Help You Discover
           </h2>
           <p className="text-lg sm:text-xl lg:text-2xl text-gray-600 max-w-4xl mx-auto leading-relaxed text-pretty">
-            Get clarity on your coverage options and find the Medicare plan that fits your unique needs and budget.
+            Get clarity on your coverage options and find the Medicare plan that fits your unique needs and budget. Local support for Nassau and Suffolk County.
           </p>
         </div>
 
