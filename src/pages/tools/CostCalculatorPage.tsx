@@ -22,7 +22,7 @@ export default function CostCalculatorPage() {
           <div className="max-w-4xl mx-auto">
             {/* Hero Content */}
             <div className="text-center text-white mb-8">
-              <h1 className="inline-block border-4 border-amber-500 bg-amber-500 px-4 py-2 text-white text-4xl md:text-5xl font-bold mb-4">
+              <h1 className="inline-block rounded-md border-4 border-amber-700 bg-amber-600 px-5 py-2.5 text-black text-4xl md:text-5xl font-extrabold mb-4 shadow-lg shadow-amber-800/20">
                 What Will Medicare Cost YOU?
               </h1>
               <p className="text-xl md:text-2xl text-blue-100 mb-6">
