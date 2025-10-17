@@ -88,7 +88,7 @@ const HeroSection = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20 relative z-10 w-full">
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 xl:gap-16 items-center">
           {/* Hero Content - Mobile-first optimization */}
-          <div className="text-white space-y-6 lg:space-y-8 order-2 lg:order-1">
+          <div className="text-white space-y-6 lg:space-y-8 order-1 lg:order-1">
             <div className="space-y-4 lg:space-y-6">
               <h1 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight tracking-tight text-white">
                 Medicare Made Simple
@@ -160,7 +160,7 @@ const HeroSection = () => {
           </div>
 
           {/* Contact Form Card - Improved mobile experience */}
-          <Card id="contact" className="bg-white/95 backdrop-blur-sm p-6 sm:p-8 shadow-2xl border-0 order-1 lg:order-2">
+          <Card id="contact" className="bg-white/95 backdrop-blur-sm p-6 sm:p-8 shadow-2xl border-0 order-2 lg:order-2">
             <div className="space-y-6">
               <div className="text-center space-y-2">
                 <h3 className="text-2xl sm:text-3xl font-bold text-gray-900">
