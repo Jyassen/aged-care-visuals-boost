@@ -202,7 +202,7 @@ function generateRecommendations(
   
   // Always include consultation CTA
   recommendations.push(
-    'Schedule a free consultation to review plan options available in your area and identify options suitable for your needs'
+    'Book a consultation to review plan options available in your area and identify options suitable for your needs'
   );
   
   return recommendations;

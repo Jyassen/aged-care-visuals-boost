@@ -28,8 +28,8 @@ type FormData = {
 
 const CaptureForm = ({ 
   trigger, 
-  title = "Get Your Free Consultation",
-  description = "Let us help you find the perfect Medicare plan for your needs"
+  title = "Book Your Consultation",
+  description = "Let us help you find the right Medicare plan for your needs"
 }: CaptureFormProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);

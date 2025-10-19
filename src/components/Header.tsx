@@ -61,7 +61,7 @@ const Header = () => {
                   size="lg" 
                   className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold px-6 py-3 shadow-md hover:shadow-lg transition-all duration-200"
                 >
-                  Free Consultation
+                  Book Consultation
                 </Button>
               }
             />
@@ -138,7 +138,7 @@ const Header = () => {
               <CaptureForm 
                 trigger={
                   <Button className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold py-3 text-base shadow-md hover:shadow-lg transition-all duration-200">
-                    Free Consultation
+                    Book Consultation
                   </Button>
                 }
               />

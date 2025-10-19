@@ -19,8 +19,8 @@ test.describe('Medicare Cost Calculator', () => {
     // Check that the form is visible
     await expect(page.getByText('Calculate Your Medicare Costs')).toBeVisible();
     
-    // Check trust indicators
-    await expect(page.getByText('100% Free')).toBeVisible();
+    // Check trust indicators (updated wording)
+    await expect(page.getByText('Quick Estimate')).toBeVisible();
     await expect(page.getByText('No Obligation')).toBeVisible();
     await expect(page.getByText('Instant Results')).toBeVisible();
   });
@@ -119,11 +119,11 @@ test.describe('Medicare Cost Calculator', () => {
     // Wait for results
     await page.waitForTimeout(600);
     
-    // Click the consultation CTA
-    await page.getByRole('button', { name: /Get My Free Consultation/i }).click();
+    // Click the consultation CTA (updated wording)
+    await page.getByRole('button', { name: /Talk to an Agent/i }).click();
     
-    // Check that lead capture form appears
-    await expect(page.getByText('Schedule Your Free Consultation')).toBeVisible();
+    // Check that lead capture form appears (updated heading)
+    await expect(page.getByText('Schedule Your Consultation')).toBeVisible();
     
     // Check form fields
     await expect(page.locator('input#firstName')).toBeVisible();

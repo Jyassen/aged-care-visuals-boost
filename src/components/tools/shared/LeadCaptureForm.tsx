@@ -97,7 +97,7 @@ export default function LeadCaptureForm({ source, context, onSuccess }: LeadCapt
       {/* Header */}
       <div className="text-center mb-6">
         <h3 className="text-2xl font-bold text-gray-900 mb-2">
-          Schedule Your Free Consultation
+          Schedule Your Consultation
         </h3>
         <p className="text-gray-600">
           Let's discuss your results and find the perfect plan for you
@@ -179,7 +179,7 @@ export default function LeadCaptureForm({ source, context, onSuccess }: LeadCapt
           className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 font-bold text-lg py-6"
           disabled={isSubmitting}
         >
-          {isSubmitting ? 'Submitting...' : 'Schedule My Free Consultation'}
+          {isSubmitting ? 'Submitting...' : 'Schedule My Consultation'}
         </Button>
         
         {/* Disclaimer - CMS/HIPAA aligned */}

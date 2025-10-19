@@ -407,14 +407,14 @@ export default function CostCalculatorResults({ estimate, onReset }: CostCalcula
             Want a Detailed, Personalized Analysis?
           </h3>
           <p className="text-gray-700 mb-6">
-            Get a free consultation to discuss your situation and explore plan options suitable for your needs.
+            Talk with a licensed agent about your situation and explore plan options tailored to your needs.
           </p>
           <Button
             onClick={() => setShowLeadCapture(true)}
             size="lg"
             className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-bold text-lg px-8 py-6"
           >
-            Get My Free Consultation
+            Talk to an Agent
           </Button>
           <p className="text-sm text-gray-600 mt-4">
             No pressure • No obligation • Licensed local experts

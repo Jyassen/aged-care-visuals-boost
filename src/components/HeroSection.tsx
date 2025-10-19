@@ -97,7 +97,7 @@ const HeroSection = () => {
                 Review Your 2026 Options in Long Island
               </p>
               <p className="text-base sm:text-lg lg:text-xl text-white leading-relaxed max-w-2xl">
-                Keep your doctors and cut surprises. Get a free 15 minute Medicare review with a licensed agent. We will check networks, medications, and costs with no pressure and no fees. Serving Nassau and Suffolk County.
+                Keep your doctors and cut surprises. Book a quick 15 minute Medicare review with a licensed agent. We’ll check doctors, medicines, and costs with no pressure. Serving Nassau and Suffolk County.
               </p>
             </div>
 
@@ -113,8 +113,8 @@ const HeroSection = () => {
               <div className="flex items-center space-x-3 text-blue-100 bg-white/10 backdrop-blur-sm rounded-lg p-3 sm:p-4">
                 <Award className="h-8 w-8 sm:h-10 sm:w-10 text-blue-300 flex-shrink-0" />
                 <div>
-                  <p className="font-semibold text-base sm:text-lg text-white">No Cost</p>
-                  <p className="text-sm text-blue-200">Free Service</p>
+                  <p className="font-semibold text-base sm:text-lg text-white">No Obligation</p>
+                  <p className="text-sm text-blue-200">No Pressure</p>
                 </div>
               </div>
               <div className="flex items-center space-x-3 text-blue-100 bg-white/10 backdrop-blur-sm rounded-lg p-3 sm:p-4">
@@ -134,7 +134,7 @@ const HeroSection = () => {
                     size="lg" 
                     className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-bold text-lg sm:text-xl px-6 sm:px-8 py-4 sm:py-5 shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1"
                   >
-                    Get Your Free Consultation
+                    Book Your Consultation
                   </Button>
                 }
               />
@@ -164,7 +164,7 @@ const HeroSection = () => {
             <div className="space-y-6">
               <div className="text-center space-y-2">
                 <h3 className="text-2xl sm:text-3xl font-bold text-gray-900">
-                  Get Your Free Consultation
+                  Get Your Consultation
                 </h3>
                 <p className="text-gray-600 text-base sm:text-lg">
                   Speak with a Medicare specialist today

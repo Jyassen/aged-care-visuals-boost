@@ -97,7 +97,7 @@ const Footer = () => {
                 <Button 
                   className="bg-accent hover:bg-accent/90 text-accent-foreground text-lg px-8 py-3 w-full shadow-strong"
                 >
-                  Free Consultation
+                  Book Consultation
                 </Button>
               }
             />

@@ -1,0 +1,84 @@
+[
+  {
+    "source": "Trustpilot",
+    "url": "https://www.trustpilot.com/review/ehealthmedicare.com",
+    "date": null,
+    "rating": null,
+    "title": null,
+    "text": "Agent explained options clearly and helped me understand Medicare—very helpful.",
+    "themeTags": [
+      "agent_expertise",
+      "clarity",
+      "education"
+    ],
+    "agentMentioned": null,
+    "consultationStage": "initial_consult",
+    "location": null,
+    "evidence": "quoted fragment from Trustpilot page"
+  },
+  {
+    "source": "Trustpilot",
+    "url": "https://www.trustpilot.com/review/ehealthmedicare.com",
+    "date": null,
+    "rating": null,
+    "title": null,
+    "text": "Felt pressured to switch plans; too many follow-up calls.",
+    "themeTags": [
+      "sales_pressure",
+      "excessive_followup"
+    ],
+    "agentMentioned": null,
+    "consultationStage": "post_consult_sales",
+    "location": null,
+    "evidence": "paraphrase of recurring complaints"
+  },
+  {
+    "source": "BBB",
+    "url": "https://www.bbb.org/us/tx/austin/profile/health-insurance/ehealthinsurance-services-inc-0825-1000229651/customer-reviews",
+    "date": null,
+    "rating": null,
+    "title": null,
+    "text": "Confusing marketing emails implying plan cancellation.",
+    "themeTags": [
+      "misleading_marketing",
+      "communication"
+    ],
+    "agentMentioned": null,
+    "consultationStage": "marketing_pre_consult",
+    "location": null,
+    "evidence": "complaint summaries on BBB"
+  },
+  {
+    "source": "ConsumerAffairs",
+    "url": "https://www.consumeraffairs.com/insurance/ehealth.html",
+    "date": null,
+    "rating": null,
+    "title": null,
+    "text": "Was told doctor was in network; later found out not covered.",
+    "themeTags": [
+      "network_accuracy",
+      "expectation_mismatch"
+    ],
+    "agentMentioned": null,
+    "consultationStage": "plan_selection",
+    "location": null,
+    "evidence": "ConsumerAffairs review summaries"
+  },
+  {
+    "source": "Reddit",
+    "url": "https://www.reddit.com/search?q=ehealth%20medicare%20consultation",
+    "date": null,
+    "rating": null,
+    "title": null,
+    "text": "Mixed experiences; some good hand-holding, others aggressive sales.",
+    "themeTags": [
+      "mixed_experiences",
+      "sales_pressure",
+      "supportive_agents"
+    ],
+    "agentMentioned": null,
+    "consultationStage": "various",
+    "location": null,
+    "evidence": "Reddit anecdotal threads"
+  }
+]
