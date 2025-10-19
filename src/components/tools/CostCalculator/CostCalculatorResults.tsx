@@ -286,10 +286,10 @@ export default function CostCalculatorResults({ estimate, onReset }: CostCalcula
           <h5 className="font-semibold text-gray-900 mb-2">Medicare Advantage Benefits:</h5>
           <ul className="space-y-2 text-sm text-gray-700">
             <li>📊 80% of New York Medicare enrollees choose Medicare Advantage</li>
-            <li className="flex items-start gap-2"><Check className="h-4 w-4 text-amber-500 mt-0.5" /><span>All-in-one plan with Part D prescription coverage included</span></li>
-            <li className="flex items-start gap-2"><Check className="h-4 w-4 text-amber-500 mt-0.5" /><span>Many $0 premium plan options in New York</span></li>
-            <li className="flex items-start gap-2"><Check className="h-4 w-4 text-amber-500 mt-0.5" /><span>Often includes dental, vision, and hearing</span></li>
-            <li className="flex items-start gap-2"><Check className="h-4 w-4 text-amber-500 mt-0.5" /><span>Copays for services (typically $0-$40 per visit)</span></li>
+            <li className="flex items-center gap-2"><Check className="h-4 w-4 text-amber-500 flex-shrink-0" /><span>All-in-one plan with Part D prescription coverage included — No Cost to You.</span></li>
+            <li className="flex items-center gap-2"><Check className="h-4 w-4 text-amber-500 flex-shrink-0" /><span>Many $0 premium plan options in New York — No Cost to You.</span></li>
+            <li className="flex items-center gap-2"><Check className="h-4 w-4 text-amber-500 flex-shrink-0" /><span>Often includes dental, vision, and hearing — No Cost to You.</span></li>
+            <li className="flex items-center gap-2"><Check className="h-4 w-4 text-amber-500 flex-shrink-0" /><span>Copays for services (typically $0-$40 per visit)</span></li>
             <li>⚠ Must use plan's network of doctors</li>
           </ul>
         </div>
@@ -375,10 +375,10 @@ export default function CostCalculatorResults({ estimate, onReset }: CostCalcula
         <div className="mt-4 p-4 bg-purple-50 rounded-lg">
           <h5 className="font-semibold text-gray-900 mb-2">Medicare Supplement Benefits:</h5>
           <ul className="space-y-2 text-sm text-gray-700">
-            <li className="flex items-start gap-2"><Check className="h-4 w-4 text-amber-500 mt-0.5" /><span>See ANY doctor that accepts Medicare nationwide</span></li>
-            <li className="flex items-start gap-2"><Check className="h-4 w-4 text-amber-500 mt-0.5" /><span>No network restrictions — complete freedom</span></li>
-            <li className="flex items-start gap-2"><Check className="h-4 w-4 text-amber-500 mt-0.5" /><span>Predictable costs — very few surprise bills</span></li>
-            <li className="flex items-start gap-2"><Check className="h-4 w-4 text-amber-500 mt-0.5" /><span>Covers Part B 20% coinsurance and other gaps</span></li>
+            <li className="flex items-center gap-2"><Check className="h-4 w-4 text-amber-500 flex-shrink-0" /><span>See ANY doctor that accepts Medicare nationwide — No Cost to You.</span></li>
+            <li className="flex items-center gap-2"><Check className="h-4 w-4 text-amber-500 flex-shrink-0" /><span>No network restrictions — complete freedom — No Cost to You.</span></li>
+            <li className="flex items-center gap-2"><Check className="h-4 w-4 text-amber-500 flex-shrink-0" /><span>Predictable costs — very few surprise bills</span></li>
+            <li className="flex items-center gap-2"><Check className="h-4 w-4 text-amber-500 flex-shrink-0" /><span>Covers Part B 20% coinsurance and other gaps</span></li>
             <li>⚠ Higher monthly premium than most MA plans</li>
             <li>⚠ Must purchase Part D prescription coverage separately</li>
           </ul>
