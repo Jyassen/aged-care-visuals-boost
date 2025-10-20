@@ -4,6 +4,7 @@
  */
 
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -26,6 +27,7 @@ interface LeadCaptureFormProps {
  */
 export default function LeadCaptureForm({ source, context, onSuccess }: LeadCaptureFormProps) {
   const { toast } = useToast();
+  const navigate = useNavigate();
   
   // Form state
   const [formData, setFormData] = useState({
@@ -74,17 +76,18 @@ export default function LeadCaptureForm({ source, context, onSuccess }: LeadCapt
           });
         }
         
+        // Navigate to thank you page for conversion tracking
+        navigate(`/thank-you?src=${encodeURIComponent(source)}`);
+
         // Call success callback if provided
-        if (onSuccess) {
-          onSuccess();
-        }
+        if (onSuccess) onSuccess();
       } else {
         throw new Error('Failed to submit');
       }
     } catch (error) {
       toast({
         title: "Something went wrong",
-        description: "Please try again or call us at 347-305-2260",
+        description: "Please try again or call us at 888-355-1085",
         variant: "destructive",
       });
     } finally {

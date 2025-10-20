@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -34,6 +35,7 @@ const CaptureForm = ({
   const [isOpen, setIsOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
+  const navigate = useNavigate();
   
   const [formData, setFormData] = useState<FormData>({
     firstName: "",
@@ -90,6 +92,9 @@ const CaptureForm = ({
           careType: "",
           message: ""
         });
+
+        // Redirect to thank-you page for conversion tracking
+        navigate(`/thank-you?src=homepage-dialog`);
       } else {
         throw new Error('Failed to send form');
       }
@@ -97,7 +102,7 @@ const CaptureForm = ({
       console.error('Error submitting form:', error);
       toast({
         title: "Something went wrong",
-        description: "Please try again or call us directly at 347-305-2260.",
+        description: "Please try again or call us directly at 888-355-1085.",
         variant: "destructive",
       });
     } finally {

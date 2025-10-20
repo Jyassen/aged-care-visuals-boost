@@ -3,7 +3,12 @@ import { Phone, Menu, X } from "lucide-react";
 import { useState } from "react";
 import CaptureForm from "@/components/CaptureForm";
 
-const Header = () => {
+type HeaderProps = {
+  /** When true, hides the primary "Book Consultation" CTA (desktop and mobile menu) */
+  hideBookButton?: boolean;
+};
+
+const Header = ({ hideBookButton = false }: HeaderProps) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
@@ -48,23 +53,25 @@ const Header = () => {
             <div className="text-right">
               <p className="text-sm text-gray-500">Call Now</p>
               <a 
-                href="tel:347-305-2260" 
+                href="tel:888-355-1085" 
                 className="text-lg font-semibold text-blue-600 hover:text-blue-700 flex items-center transition-colors duration-200"
               >
                 <Phone className="h-4 w-4 mr-1" />
-                347-305-2260
+                888-355-1085
               </a>
             </div>
-            <CaptureForm 
-              trigger={
-                <Button 
-                  size="lg" 
-                  className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold px-6 py-3 shadow-md hover:shadow-lg transition-all duration-200"
-                >
-                  Book Consultation
-                </Button>
-              }
-            />
+            {!hideBookButton && (
+              <CaptureForm 
+                trigger={
+                  <Button 
+                    size="lg" 
+                    className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold px-6 py-3 shadow-md hover:shadow-lg transition-all duration-200"
+                  >
+                    Book Consultation
+                  </Button>
+                }
+              />
+            )}
           </div>
 
           {/* Mobile CTA + Menu Button */}
@@ -129,19 +136,21 @@ const Header = () => {
             
             <div className="pt-4 border-t border-gray-200 space-y-3">
               <a 
-                href="tel:347-305-2260" 
+                href="tel:888-355-1085" 
                 className="flex items-center text-blue-600 font-semibold text-lg hover:text-blue-700 transition-colors duration-200 touch-manipulation py-2"
               >
                 <Phone className="h-5 w-5 mr-2" />
-                347-305-2260
+                888-355-1085
               </a>
-              <CaptureForm 
-                trigger={
-                  <Button className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold py-3 text-base shadow-md hover:shadow-lg transition-all duration-200">
-                    Book Consultation
-                  </Button>
-                }
-              />
+              {!hideBookButton && (
+                <CaptureForm 
+                  trigger={
+                    <Button className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold py-3 text-base shadow-md hover:shadow-lg transition-all duration-200">
+                      Book Consultation
+                    </Button>
+                  }
+                />
+              )}
             </div>
           </div>
         </div>

@@ -8,8 +8,10 @@ import { Shield, Award, Users, Phone } from "lucide-react";
 import heroImage from "@/assets/hero-image.jpg";
 import CaptureForm from "@/components/CaptureForm";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const HeroSection = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -60,6 +62,9 @@ const HeroSection = () => {
           bestTime: '',
           message: ''
         });
+
+        // Redirect to thank-you page for conversion tracking
+        navigate(`/thank-you?src=homepage-inline`);
       } else {
         setSubmitStatus('error');
       }
@@ -144,9 +149,9 @@ const HeroSection = () => {
                 className="border-2 border-white text-white hover:bg-white hover:text-blue-900 font-semibold text-lg sm:text-xl px-6 sm:px-8 py-4 sm:py-5 backdrop-blur-sm transition-all duration-300"
                 asChild
               >
-                <a href="tel:347-305-2260" className="flex items-center justify-center">
+                <a href="tel:888-355-1085" className="flex items-center justify-center">
                   <Phone className="h-5 w-5 mr-2" />
-                  Call 347-305-2260
+                  Call 888-355-1085
                 </a>
               </Button>
             </div>

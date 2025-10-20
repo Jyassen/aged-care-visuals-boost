@@ -32,11 +32,11 @@ const Footer = () => {
             <h4 className="text-xl-accessible font-semibold">Contact Us</h4>
             <div className="space-y-4">
               <a 
-                href="tel:347-305-2260" 
+                href="tel:888-355-1085" 
                 className="flex items-center space-x-3 text-primary-foreground/90 hover:text-accent transition-colors text-lg"
               >
                 <Phone className="h-5 w-5" />
-                <span>347-305-2260</span>
+                <span>888-355-1085</span>
               </a>
               <a 
                 href="mailto:help@yourmedguy.com" 

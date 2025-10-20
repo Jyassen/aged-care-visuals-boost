@@ -111,11 +111,11 @@ const HowItWorksSection = () => {
               <div className="text-center sm:text-left">
                 <p className="text-sm text-muted-foreground">Or call us directly</p>
                 <a 
-                  href="tel:347-305-2260" 
+                  href="tel:888-355-1085" 
                   className="text-xl-accessible font-semibold text-primary hover:text-primary-hover flex items-center justify-center sm:justify-start"
                 >
                   <Phone className="h-5 w-5 mr-2" />
-                  347-305-2260
+                  888-355-1085
                 </a>
               </div>
             </div>
