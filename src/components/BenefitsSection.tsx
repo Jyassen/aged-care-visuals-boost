@@ -1,5 +1,6 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Heart, Eye, Dumbbell, ShoppingCart } from "lucide-react";
+import type { SiteRegion } from "@/types/site.types";
 
 const benefits = [
   {
@@ -24,7 +25,16 @@ const benefits = [
   }
 ];
 
-const BenefitsSection = () => {
+type BenefitsSectionProps = {
+  region: SiteRegion;
+};
+
+const BenefitsSection = ({ region }: BenefitsSectionProps) => {
+  const regionDescMap: Record<SiteRegion, string> = {
+    longisland: 'Long Island',
+    statenisland: 'Staten Island',
+    nyc: 'New York City',
+  };
   return (
     <section className="py-20 bg-background">
       <div className="container mx-auto px-4">
@@ -34,7 +44,7 @@ const BenefitsSection = () => {
             Additional Benefits You May Qualify For
           </h2>
           <p className="text-xl-accessible text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-            Discover the extra benefits that could be included in your Medicare plan beyond basic medical coverage. See options available in Long Island.
+            {`Discover the extra benefits that could be included in your Medicare plan beyond basic medical coverage. See options available in ${regionDescMap[region]}.`}
           </p>
         </div>
 

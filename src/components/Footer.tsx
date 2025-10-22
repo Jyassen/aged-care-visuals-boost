@@ -1,8 +1,18 @@
 import { Button } from "@/components/ui/button";
 import { Phone, Mail, MapPin, Clock, Shield, ExternalLink } from "lucide-react";
 import CaptureForm from "@/components/CaptureForm";
+import type { SiteRegion } from "@/types/site.types";
 
-const Footer = () => {
+type FooterProps = {
+  region?: SiteRegion;
+};
+
+const Footer = ({ region = 'nyc' }: FooterProps) => {
+  const serviceAreaMap: Record<SiteRegion, string> = {
+    longisland: 'Serving Long Island: Nassau and Suffolk County',
+    statenisland: 'Serving Staten Island',
+    nyc: 'Serving New York City: All five boroughs',
+  };
   return (
     <footer className="bg-gradient-to-br from-primary to-primary/90 text-primary-foreground">
       <div className="container mx-auto px-4 py-16">
@@ -47,7 +57,7 @@ const Footer = () => {
               </a>
               <div className="flex items-start space-x-3 text-primary-foreground/90 text-lg">
                 <MapPin className="h-5 w-5 mt-1" />
-                <span>Serving Long Island: Nassau and Suffolk County</span>
+                <span>{serviceAreaMap[region]}</span>
               </div>
             </div>
           </div>

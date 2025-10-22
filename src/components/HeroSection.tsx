@@ -9,8 +9,13 @@ import heroImage from "@/assets/hero-image.jpg";
 import CaptureForm from "@/components/CaptureForm";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import type { SiteRegion } from "@/types/site.types";
 
-const HeroSection = () => {
+type HeroSectionProps = {
+  region: SiteRegion;
+};
+
+const HeroSection = ({ region }: HeroSectionProps) => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     firstName: '',
@@ -76,6 +81,18 @@ const HeroSection = () => {
     }
   };
 
+  const regionLabelMap: Record<SiteRegion, string> = {
+    longisland: 'Long Island',
+    statenisland: 'Staten Island',
+    nyc: 'New York City',
+  };
+
+  const serviceAreaMap: Record<SiteRegion, string> = {
+    longisland: 'Serving Nassau and Suffolk County.',
+    statenisland: 'Serving Staten Island.',
+    nyc: 'Serving all five boroughs.',
+  };
+
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden">
       {/* Background Image with Optimized Loading */}
@@ -99,10 +116,10 @@ const HeroSection = () => {
                 Medicare Made Simple
               </h1>
               <p className="mt-2 text-2xl sm:text-3xl lg:text-4xl font-semibold text-amber-300 leading-snug">
-                Review Your 2026 Options in Long Island
+                {`Review Your 2026 Options in ${regionLabelMap[region]}`}
               </p>
               <p className="text-base sm:text-lg lg:text-xl text-white leading-relaxed max-w-2xl">
-                Keep your doctors and cut surprises. Book a quick 15 minute Medicare review with a licensed agent. We’ll check doctors, medicines, and costs with no pressure. Serving Nassau and Suffolk County.
+                {`Keep your doctors and cut surprises. Book a quick 15 minute Medicare review with a licensed agent. We’ll check doctors, medicines, and costs with no pressure. ${serviceAreaMap[region]}`}
               </p>
             </div>
 

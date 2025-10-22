@@ -10,6 +10,7 @@ import {
   CheckCircle
 } from "lucide-react";
 import CaptureForm from "@/components/CaptureForm";
+import type { SiteRegion } from "@/types/site.types";
 
 const services = [
   {
@@ -38,7 +39,16 @@ const services = [
   }
 ];
 
-const ServicesSection = () => {
+type ServicesSectionProps = {
+  region: SiteRegion;
+};
+
+const ServicesSection = ({ region }: ServicesSectionProps) => {
+  const regionSupportMap: Record<SiteRegion, string> = {
+    longisland: 'Local support for Nassau and Suffolk County.',
+    statenisland: 'Local support for Staten Island.',
+    nyc: 'Local support across all five boroughs.',
+  };
   return (
     <section id="services" className="py-12 sm:py-16 lg:py-20 bg-gradient-to-br from-gray-50 to-blue-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -48,7 +58,7 @@ const ServicesSection = () => {
             What We Help You Discover
           </h2>
           <p className="text-lg sm:text-xl lg:text-2xl text-gray-600 max-w-4xl mx-auto leading-relaxed text-pretty">
-            Get clarity on your coverage options and find the Medicare plan that fits your unique needs and budget. Local support for Nassau and Suffolk County.
+            {`Get clarity on your coverage options and find the Medicare plan that fits your unique needs and budget. ${regionSupportMap[region]}`}
           </p>
         </div>
 
