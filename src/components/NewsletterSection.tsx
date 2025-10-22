@@ -1,10 +1,56 @@
+import { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Mail, Shield } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
 
 const NewsletterSection = () => {
+  const { toast } = useToast();
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email) return;
+    setIsSubmitting(true);
+
+    try {
+      const pageUrl = typeof window !== 'undefined' ? window.location.href : '';
+      const response = await fetch('/api/subscribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ firstName, lastName, email, pageUrl }),
+      });
+
+      if (response.ok) {
+        toast({
+          title: "You're on the list!",
+          description: "Thanks for subscribing. Watch your inbox for helpful tips.",
+        });
+        setFirstName("");
+        setLastName("");
+        setEmail("");
+        if (typeof window !== 'undefined') {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+      } else {
+        throw new Error('Failed to subscribe');
+      }
+    } catch (err) {
+      toast({
+        title: "Subscription failed",
+        description: "Please try again in a moment.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <section className="py-12 sm:py-16 lg:py-20 bg-gradient-to-br from-blue-50 to-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -57,7 +103,7 @@ const NewsletterSection = () => {
 
               {/* Form Side */}
               <div className="space-y-6">
-                <form className="space-y-6">
+                <form className="space-y-6" onSubmit={handleSubmit}>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div className="space-y-2">
                       <Label htmlFor="newsletter-first-name" className="text-base font-medium text-gray-700">
@@ -69,6 +115,8 @@ const NewsletterSection = () => {
                         placeholder="Enter your first name"
                         className="text-base py-3 px-4 border-gray-300 focus:border-blue-500 focus:ring-blue-500"
                         required
+                        value={firstName}
+                        onChange={(e) => setFirstName(e.target.value)}
                       />
                     </div>
                     <div className="space-y-2">
@@ -81,6 +129,8 @@ const NewsletterSection = () => {
                         placeholder="Enter your last name"
                         className="text-base py-3 px-4 border-gray-300 focus:border-blue-500 focus:ring-blue-500"
                         required
+                        value={lastName}
+                        onChange={(e) => setLastName(e.target.value)}
                       />
                     </div>
                   </div>
@@ -95,14 +145,17 @@ const NewsletterSection = () => {
                       placeholder="Enter your email address"
                       className="text-base py-3 px-4 border-gray-300 focus:border-blue-500 focus:ring-blue-500"
                       required
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
                     />
                   </div>
 
                   <Button 
                     type="submit" 
                     className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-bold text-lg py-4 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-0.5"
+                    disabled={isSubmitting}
                   >
-                    Subscribe
+                    {isSubmitting ? 'Subscribing…' : 'Subscribe'}
                   </Button>
                 </form>
 

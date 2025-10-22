@@ -49,12 +49,13 @@ const HeroSection = ({ region }: HeroSectionProps) => {
     setSubmitStatus('');
 
     try {
+      const pageUrl = typeof window !== 'undefined' ? window.location.href : '';
       const response = await fetch('/api/contact', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({ ...formData, pageUrl }),
       });
 
       if (response.ok) {

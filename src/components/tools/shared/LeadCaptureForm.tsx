@@ -49,6 +49,7 @@ export default function LeadCaptureForm({ source, context, onSuccess }: LeadCapt
     setIsSubmitting(true);
     
     try {
+      const pageUrl = typeof window !== 'undefined' ? window.location.href : '';
       const response = await fetch('/api/contact', {
         method: 'POST',
         headers: { 
@@ -59,6 +60,7 @@ export default function LeadCaptureForm({ source, context, onSuccess }: LeadCapt
           source: source,
           context: JSON.stringify(context),
           message: `Lead from ${source} tool`,
+          pageUrl,
         }),
       });
       

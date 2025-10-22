@@ -59,6 +59,7 @@ const CaptureForm = ({
     
     try {
       // Make actual API call to send email
+      const pageUrl = typeof window !== 'undefined' ? window.location.href : '';
       const response = await fetch('/api/contact', {
         method: 'POST',
         headers: {
@@ -70,7 +71,8 @@ const CaptureForm = ({
           phone: formData.phone,
           email: formData.email,
           bestTime: formData.bestTimeToCall,
-          message: `Age Range: ${formData.ageRange}\nZip Code: ${formData.zipCode}\nCare Type: ${formData.careType}\n\nMessage: ${formData.message}`
+          message: `Age Range: ${formData.ageRange}\nZip Code: ${formData.zipCode}\nCare Type: ${formData.careType}\n\nMessage: ${formData.message}`,
+          pageUrl,
         }),
       });
 

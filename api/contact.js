@@ -9,7 +9,7 @@ export default async function handler(req, res) {
   }
 
   try {
-    const { firstName, lastName, phone, email, bestTime, message, source, context } = req.body;
+    const { firstName, lastName, phone, email, bestTime, message, source, context, pageUrl } = req.body;
 
     // Validate required fields
     if (!firstName || !lastName || !phone) {
@@ -46,6 +46,12 @@ export default async function handler(req, res) {
             <div style="background-color: #eff6ff; padding: 20px; border-radius: 8px; margin: 20px 0;">
               <h3 style="color: #1e40af; margin-top: 0;">Tool Results & Context</h3>
               <pre style="white-space: pre-wrap; font-size: 12px; color: #374151; font-family: monospace;">${typeof context === 'string' ? context : JSON.stringify(JSON.parse(context), null, 2)}</pre>
+            </div>
+          ` : ''}
+
+          ${pageUrl ? `
+            <div style="background-color: #ecfeff; padding: 16px; border-radius: 8px; margin: 16px 0;">
+              <p style="margin:0; color:#0f172a; font-size:14px;"><strong>Page URL:</strong> <a href="${pageUrl}" style="color:#1e40af;">${pageUrl}</a></p>
             </div>
           ` : ''}
 
