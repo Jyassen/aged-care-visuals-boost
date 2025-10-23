@@ -32,4 +32,6 @@ playwright-report/
 scrape/
 test-results/
 **/.venv/
+# Ignore PDFs by default, but allow public guides to be tracked
 *.pdf
+!public/guides/*.pdf

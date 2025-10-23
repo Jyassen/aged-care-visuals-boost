@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Phone, Menu, X } from "lucide-react";
 import { useState } from "react";
+import { useLocation } from "react-router-dom";
 import CaptureForm from "@/components/CaptureForm";
 
 type HeaderProps = {
@@ -10,6 +11,8 @@ type HeaderProps = {
 
 const Header = ({ hideBookButton = false }: HeaderProps) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const location = useLocation();
+  const isHomePage = location.pathname === '/' || location.pathname === '/longisland' || location.pathname === '/statenisland';
 
   return (
     <header className="bg-white/95 backdrop-blur-sm border-b border-gray-200 sticky top-0 z-50 shadow-sm transition-all duration-300">
@@ -29,19 +32,19 @@ const Header = ({ hideBookButton = false }: HeaderProps) => {
           {/* Desktop Navigation - Hidden on mobile for performance */}
           <nav className="hidden lg:flex items-center space-x-8">
             <a 
-              href="#services" 
+              href={isHomePage ? "#services" : "/#services"}
               className="text-gray-700 hover:text-blue-600 transition-colors duration-200 font-medium text-base"
             >
               Why Choose Us
             </a>
             <a 
-              href="#how-it-works" 
+              href={isHomePage ? "#how-it-works" : "/#how-it-works"}
               className="text-gray-700 hover:text-blue-600 transition-colors duration-200 font-medium text-base"
             >
               How It Works
             </a>
             <a 
-              href="#contact" 
+              href={isHomePage ? "#contact" : "/#contact"}
               className="text-gray-700 hover:text-blue-600 transition-colors duration-200 font-medium text-base"
             >
               Get Help
@@ -112,21 +115,21 @@ const Header = ({ hideBookButton = false }: HeaderProps) => {
           <div className="py-4 space-y-4">
             <nav className="flex flex-col space-y-3">
               <a 
-                href="#services" 
+                href={isHomePage ? "#services" : "/#services"}
                 className="text-gray-700 hover:text-blue-600 transition-colors duration-200 font-medium text-base py-2 px-2 rounded-md hover:bg-gray-50 touch-manipulation"
                 onClick={() => setIsMenuOpen(false)}
               >
                 Why Choose Us
               </a>
               <a 
-                href="#how-it-works" 
+                href={isHomePage ? "#how-it-works" : "/#how-it-works"}
                 className="text-gray-700 hover:text-blue-600 transition-colors duration-200 font-medium text-base py-2 px-2 rounded-md hover:bg-gray-50 touch-manipulation"
                 onClick={() => setIsMenuOpen(false)}
               >
                 How It Works
               </a>
               <a 
-                href="#contact" 
+                href={isHomePage ? "#contact" : "/#contact"}
                 className="text-gray-700 hover:text-blue-600 transition-colors duration-200 font-medium text-base py-2 px-2 rounded-md hover:bg-gray-50 touch-manipulation"
                 onClick={() => setIsMenuOpen(false)}
               >

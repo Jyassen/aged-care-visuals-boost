@@ -7,6 +7,8 @@ import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import CostCalculatorPage from "./pages/tools/CostCalculatorPage";
 import ThankYou from "./pages/ThankYou";
+import MedicareStarterKit from "./pages/MedicareStarterKit";
+import ThankYouMedicareKit from "./pages/ThankYouMedicareKit";
 
 const queryClient = new QueryClient();
 
@@ -22,6 +24,8 @@ const App = () => (
           <Route path="/statenisland" element={<Index />} />
           <Route path="/tools/cost-calculator" element={<CostCalculatorPage />} />
           <Route path="/thank-you" element={<ThankYou />} />
+          <Route path="/medicarestarterkit" element={<MedicareStarterKit />} />
+          <Route path="/thank-you-medicare-kit" element={<ThankYouMedicareKit />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
