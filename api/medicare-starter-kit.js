@@ -41,6 +41,10 @@ export default async function handler(req, res) {
             </p>
           </div>
           <p>If you have questions or need personalized help, <a href="tel:888-355-1085" style="color: #1e40af;">call us at 888-355-1085</a> – our licensed advisors are here to assist.</p>
+          <p style="text-align: center; margin: 30px 0;">
+            Or visit our site to get more information:<br><br>
+            <a href="https://yourmedguy.com" style="display: inline-block; background: linear-gradient(to right, #2563eb, #1e40af); color: white; padding: 14px 32px; text-decoration: none; border-radius: 8px; font-weight: bold; font-size: 16px;">Visit YourMedGuy.com</a>
+          </p>
           <p style="color: #666; font-size: 14px;">Best regards,<br>The YourMedGuy Team</p>
           <div style="border-top: 1px solid #eee; padding-top: 20px; margin-top: 20px; font-size: 12px; color: #999;">
             <p>You received this email because you requested the NY Medicare Starter Kit.</p>
