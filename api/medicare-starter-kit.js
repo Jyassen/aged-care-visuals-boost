@@ -13,7 +13,8 @@ export default async function handler(req, res) {
       return res.status(400).json({ message: 'Missing required fields' });
     }
 
-    const baseUrl = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'https://yourmedguy.com';
+    // Always use production URL for PDF links to avoid Vercel auth issues
+    const baseUrl = 'https://yourmedguy.com';
 
     // Send the starter kit to the user with download links
     await resend.emails.send({
