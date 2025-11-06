@@ -6,14 +6,17 @@
 import { useEffect, useState } from 'react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Check, Calendar, DollarSign, ChevronDown, ChevronUp, X } from 'lucide-react';
-import { CostEstimate } from '@/types/medicare.types';
+import { Check, Calendar, DollarSign, ChevronDown, ChevronUp, X, Download } from 'lucide-react';
+import { CostEstimate, CostCalculatorInput } from '@/types/medicare.types';
 import LeadCaptureForm from '../shared/LeadCaptureForm';
 import CaptureForm from '@/components/CaptureForm';
+import { generateCalculatorPDF } from './pdfGenerator.utils';
 
 interface CostCalculatorResultsProps {
   /** Calculated cost estimate to display */
   estimate: CostEstimate;
+  /** User inputs from calculator form (for PDF generation) */
+  inputs: CostCalculatorInput | null;
   /** Callback to reset calculator and show form again */
   onReset: () => void;
 }
@@ -21,7 +24,7 @@ interface CostCalculatorResultsProps {
 /**
  * Displays Medicare cost calculation results with breakdown and CTA
  */
-export default function CostCalculatorResults({ estimate, onReset }: CostCalculatorResultsProps) {
+export default function CostCalculatorResults({ estimate, inputs, onReset }: CostCalculatorResultsProps) {
   const [showLeadCapture, setShowLeadCapture] = useState(false);
   const [expandedSections, setExpandedSections] = useState<Record<number, boolean>>({});
   const [showMidPagePopup, setShowMidPagePopup] = useState(false);
@@ -221,6 +224,21 @@ export default function CostCalculatorResults({ estimate, onReset }: CostCalcula
           <p className="text-sm text-gray-600 max-w-3xl mx-auto mt-3">
             Note: This estimate does not include other medical costs you may have such as labs, blood tests, MRI/CT scans, or outpatient procedures. For detailed costs, speak with one of our experienced licensed brokers.
           </p>
+          
+          {/* PDF Download Button */}
+          {inputs && (
+            <div className="mt-6 flex justify-center">
+              <Button
+                onClick={() => generateCalculatorPDF(estimate, inputs)}
+                variant="outline"
+                size="lg"
+                className="flex items-center gap-2 border-2 border-blue-600 text-blue-600 hover:bg-blue-50"
+              >
+                <Download className="h-5 w-5" />
+                Download PDF Report
+              </Button>
+            </div>
+          )}
         </div>
       </Card>
       

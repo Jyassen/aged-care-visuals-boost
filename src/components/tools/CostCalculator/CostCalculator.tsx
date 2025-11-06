@@ -20,11 +20,15 @@ export default function CostCalculator() {
   // State for calculation in progress
   const [isCalculating, setIsCalculating] = useState(false);
   
+  // State for user inputs (needed for PDF generation)
+  const [calculatorInput, setCalculatorInput] = useState<CostCalculatorInput | null>(null);
+  
   /**
    * Handles calculation request from form
    * Simulates processing time and calculates costs
    */
   const handleCalculate = async (input: CostCalculatorInput) => {
+    setCalculatorInput(input);
     setIsCalculating(true);
     
     // Simulate API call / processing time
@@ -62,14 +66,14 @@ export default function CostCalculator() {
     <div className="max-w-4xl mx-auto py-8 px-4">
       {!estimate ? (
         <CostCalculatorForm 
-          onCalculate={handleCalculate} 
-          isCalculating={isCalculating}
+          onCalculate={handleCalculate}
         />
       ) : (
         // Key on a changing value so the results component remounts cleanly each time
         <CostCalculatorResults 
           key={`${estimate.totalMonthly.min}-${estimate.totalMonthly.max}`}
-          estimate={estimate} 
+          estimate={estimate}
+          inputs={calculatorInput}
           onReset={handleReset}
         />
       )}

@@ -16,14 +16,14 @@ const steps = [
     icon: FileCheck,
     title: "STEP 2: Plan Review",
     description: "We'll compare plans from major insurance companies, review your medications, and check if your doctors are in-network.",
-    color: "bg-accent"
+    color: "bg-primary"
   },
   {
     step: "3",
     icon: Smile,
     title: "STEP 3: Easy Enrollment",
     description: "Once you've chosen the best plan for your needs, we'll handle the enrollment process and ensure you understand your new coverage.",
-    color: "bg-success"
+    color: "bg-primary"
   }
 ];
 
