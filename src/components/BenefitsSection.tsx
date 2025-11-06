@@ -59,7 +59,62 @@ const BenefitsSection = ({ region }: BenefitsSectionProps) => {
         </div>
 
         {/* Interactive Benefits Display */}
-        <div className="grid lg:grid-cols-2 gap-6 lg:gap-8">
+        
+        {/* Mobile Layout - Tiles with images inline */}
+        <div className="lg:hidden space-y-6">
+          {benefits.map((benefit, index) => (
+            <div key={index} className="space-y-4">
+              <button
+                onClick={() => setHoveredIndex(index)}
+                onMouseEnter={() => setHoveredIndex(index)}
+                className={`w-full text-left p-6 sm:p-8 rounded-2xl transition-all duration-300 ${
+                  hoveredIndex === index
+                    ? 'bg-blue-600 shadow-2xl scale-[1.02]'
+                    : 'bg-white border-2 border-gray-200 hover:border-blue-300 shadow-lg hover:shadow-xl'
+                }`}
+              >
+                <div className="space-y-4">
+                  <div className="flex items-center space-x-4">
+                    <div className={`flex-shrink-0 w-14 h-14 sm:w-16 sm:h-16 rounded-xl flex items-center justify-center transition-all duration-300 ${
+                      hoveredIndex === index
+                        ? 'bg-white/20'
+                        : 'bg-blue-100'
+                    }`}>
+                      <benefit.icon className={`h-7 w-7 sm:h-8 sm:w-8 ${
+                        hoveredIndex === index ? 'text-white' : 'text-blue-600'
+                      }`} />
+                    </div>
+                    <h3 className={`text-xl sm:text-2xl font-bold flex-1 ${
+                      hoveredIndex === index ? 'text-white' : 'text-gray-900'
+                    }`}>
+                      {benefit.title}
+                    </h3>
+                  </div>
+                  
+                  {hoveredIndex === index && (
+                    <p className="text-base sm:text-lg text-white leading-relaxed pl-[72px] sm:pl-[80px]">
+                      {benefit.description}
+                    </p>
+                  )}
+                </div>
+              </button>
+              
+              {/* Image below each tile on mobile */}
+              <div className="relative h-[300px] sm:h-[400px] rounded-2xl overflow-hidden shadow-xl">
+                <img 
+                  src={benefit.image}
+                  alt={benefit.title}
+                  className="w-full h-full object-cover"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Desktop Layout - Two column with changing image */}
+        <div className="hidden lg:grid lg:grid-cols-2 gap-6 lg:gap-8">
           {/* Left Side - Benefit Tiles */}
           <div className="space-y-4">
             {benefits.map((benefit, index) => (

@@ -64,7 +64,7 @@ const ServicesSection = ({ region }: ServicesSectionProps) => {
         {/* Headline Above Image */}
         <div className="text-center mb-8 sm:mb-10 lg:mb-12">
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight tracking-tight text-gray-900">
-            You're Not Alone, Let's Make Sense of It All
+            You're Not Alone, <br className="sm:hidden" />Let's Make Sense of It All
           </h2>
         </div>
 
