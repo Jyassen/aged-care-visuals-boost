@@ -74,6 +74,8 @@ const ServicesSection = ({ region }: ServicesSectionProps) => {
             src="/images/elderly-couple.jpg" 
             alt="Senior couple reviewing Medicare documents together, finding clarity and peace of mind"
             className="w-full h-full object-cover rounded-2xl"
+            loading="eager"
+            decoding="async"
           />
           {/* Black gradient overlay for text readability */}
           <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent rounded-2xl"></div>
@@ -165,6 +167,8 @@ const ServicesSection = ({ region }: ServicesSectionProps) => {
                     src="/images/portrait-smiling-businesswoman-with-headset.png" 
                     alt="Friendly Medicare advisor ready to help"
                     className="w-full max-w-[1650px] h-auto object-contain drop-shadow-2xl"
+                    loading="lazy"
+                    decoding="async"
                   />
                 </div>
               </div>

@@ -106,6 +106,8 @@ const BenefitsSection = ({ region }: BenefitsSectionProps) => {
               src={currentBenefit.image}
               alt={currentBenefit.title}
               className="w-full h-full object-cover transition-all duration-500 ease-in-out"
+              loading="lazy"
+              decoding="async"
             />
           </div>
         </div>
