@@ -1,5 +1,6 @@
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Phone, Mail, MapPin, Clock, Shield, ExternalLink } from "lucide-react";
+import { Phone, Mail, MapPin, Shield, ExternalLink } from "lucide-react";
 import CaptureForm from "@/components/CaptureForm";
 import type { SiteRegion } from "@/types/site.types";
 
@@ -126,10 +127,10 @@ const Footer = ({ region = 'nyc' }: FooterProps) => {
               </p>
             </div>
             <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-6 text-primary-foreground/80 text-sm">
-              <a href="#privacy" className="hover:text-accent transition-colors">Privacy Policy</a>
-              <a href="#terms" className="hover:text-accent transition-colors">Terms of Service</a>
-              <a href="#compliance" className="hover:text-accent transition-colors">Compliance Information</a>
-              <a href="#accessibility" className="hover:text-accent transition-colors">Accessibility</a>
+              <Link to="/privacy-policy" className="hover:text-accent transition-colors">Privacy Policy</Link>
+              <Link to="/terms-of-service" className="hover:text-accent transition-colors">Terms of Service</Link>
+              <Link to="/legal" className="hover:text-accent transition-colors">Legal Documents</Link>
+              <Link to="/accessibility" className="hover:text-accent transition-colors">Accessibility</Link>
             </div>
           </div>
         </div>
