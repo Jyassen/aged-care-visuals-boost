@@ -16,6 +16,7 @@ import LegalDocuments from "./pages/legal/LegalDocuments";
 import CookiePolicy from "./pages/legal/CookiePolicy";
 import ConsentToContact from "./pages/legal/ConsentToContact";
 import HipaaCompliance from "./pages/legal/HipaaCompliance";
+import ScrollToTop from "./components/ScrollToTop";
 
 const queryClient = new QueryClient();
 
@@ -25,6 +26,7 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
+        <ScrollToTop />
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/longisland" element={<Index />} />
