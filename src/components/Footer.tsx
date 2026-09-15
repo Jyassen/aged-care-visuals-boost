@@ -65,10 +65,24 @@ const Footer = ({ region = 'nyc' }: FooterProps) => {
 
           {/* Medicare Resources */}
           <div className="space-y-4">
-            <h4 className="text-lg font-semibold text-accent">Medicare Resources</h4>
+            <h4 className="text-lg font-semibold text-accent">Free Tools & Guides</h4>
             <div className="space-y-2">
-              <a 
-                href="https://www.medicare.gov" 
+              <Link
+                to="/tools/cost-calculator"
+                className="flex items-center text-primary-foreground/80 hover:text-accent transition-colors"
+              >
+                <ExternalLink className="h-4 w-4 mr-2" />
+                Medicare Cost Calculator
+              </Link>
+              <Link
+                to="/medicarestarterkit"
+                className="flex items-center text-primary-foreground/80 hover:text-accent transition-colors"
+              >
+                <ExternalLink className="h-4 w-4 mr-2" />
+                Free NY Medicare Starter Kit
+              </Link>
+              <a
+                href="https://www.medicare.gov"
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="flex items-center text-primary-foreground/80 hover:text-accent transition-colors"
@@ -108,7 +122,7 @@ const Footer = ({ region = 'nyc' }: FooterProps) => {
                 <Button 
                   className="bg-accent hover:bg-accent/90 text-accent-foreground text-lg px-8 py-3 w-full shadow-strong"
                 >
-                  Book Consultation
+                  Book My Free Review
                 </Button>
               }
             />

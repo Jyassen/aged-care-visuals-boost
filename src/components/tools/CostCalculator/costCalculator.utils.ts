@@ -5,11 +5,13 @@
 
 import { CostCalculatorInput, CostEstimate, CostBreakdown } from '@/types/medicare.types';
 
-/** 
- * Medicare Part B Standard Premium for 2025 (confirmed)
- * Official Rate: $185.00/month
+/**
+ * Medicare Part B Standard Premium for 2026 (confirmed by CMS)
+ * Official Rate: $202.90/month (up from $185.00 in 2025)
+ * Source: CMS "2026 Medicare Parts A & B Premiums and Deductibles" fact sheet
+ * Note: 2027 Part B rates are typically announced in November — update then.
  */
-export const PART_B_PREMIUM_2025 = 185.00; // Confirmed 2025 rate
+export const PART_B_PREMIUM_2026 = 202.90; // Confirmed 2026 rate
 
 /**
  * Premium ranges based on health status
@@ -119,8 +121,8 @@ export function calculateMedicareCosts(input: CostCalculatorInput): CostEstimate
   const breakdown: CostBreakdown[] = [
     {
       category: 'Medicare Part B Premium',
-      amount: PART_B_PREMIUM_2025,
-      description: 'Standard Medicare Part B premium (2025)',
+      amount: PART_B_PREMIUM_2026,
+      description: 'Standard Medicare Part B premium (2026)',
     },
     {
       category: 'Medicare Advantage Plan Premium',
@@ -148,7 +150,7 @@ export function calculateMedicareCosts(input: CostCalculatorInput): CostEstimate
       max: basePremium.max,
       average: averagePremium,
     },
-    partBPremium: PART_B_PREMIUM_2025,
+    partBPremium: PART_B_PREMIUM_2026,
     prescriptionCosts: prescriptionRange,
     totalMonthly: monthlyTotal,
     totalAnnual: {

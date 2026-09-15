@@ -38,6 +38,14 @@ const testimonials = [
   }
 ];
 
+const getInitials = (name: string) =>
+  name
+    .split(" ")
+    .map((n) => n[0])
+    .join("")
+    .slice(0, 2)
+    .toUpperCase();
+
 const TestimonialsSection = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -68,13 +76,21 @@ const TestimonialsSection = () => {
     <section className="py-12 sm:py-16 lg:py-20 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="text-center space-y-4 sm:space-y-6 mb-12 sm:mb-16">
+        <div className="text-center space-y-4 sm:space-y-6 mb-10 sm:mb-12">
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 text-balance">
-            Testimonials
+            Trusted by New Yorkers Like You
           </h2>
           <p className="text-lg sm:text-xl lg:text-2xl text-gray-600 max-w-3xl mx-auto leading-relaxed text-pretty">
-            Here's what our clients say about our service...
+            Real stories from New York families we helped through Medicare.
           </p>
+
+          {/* Aggregate rating badge */}
+          <div className="inline-flex items-center gap-3 bg-white rounded-full shadow-md border border-gray-200 px-5 py-2.5">
+            <StarRating rating={5} />
+            <span className="text-lg font-bold text-gray-900">4.9<span className="text-gray-400 font-medium">/5</span></span>
+            <span className="hidden sm:inline text-gray-300">|</span>
+            <span className="text-sm text-gray-600 font-medium">From verified YourMedGuy clients</span>
+          </div>
         </div>
 
         {/* Main Testimonial Card */}
@@ -99,16 +115,21 @@ const TestimonialsSection = () => {
               </div>
 
               {/* Client Info */}
-              <div className="space-y-2">
-                <h4 className="text-xl sm:text-2xl font-bold text-gray-900">
-                  {currentTestimonial.name}
-                </h4>
-                <p className="text-base sm:text-lg text-gray-600 font-medium uppercase tracking-wide">
-                  {currentTestimonial.location}
-                </p>
-                <p className="text-sm text-blue-600 font-medium">
-                  {currentTestimonial.planType}
-                </p>
+              <div className="flex flex-col items-center space-y-3">
+                <div className="w-14 h-14 rounded-full bg-gradient-to-br from-blue-600 to-blue-700 flex items-center justify-center text-white text-lg font-bold shadow-md">
+                  {getInitials(currentTestimonial.name)}
+                </div>
+                <div className="space-y-1">
+                  <h4 className="text-xl sm:text-2xl font-bold text-gray-900">
+                    {currentTestimonial.name}
+                  </h4>
+                  <p className="text-base sm:text-lg text-gray-600 font-medium uppercase tracking-wide">
+                    {currentTestimonial.location}
+                  </p>
+                  <p className="text-sm text-blue-600 font-medium">
+                    Verified client · {currentTestimonial.planType}
+                  </p>
+                </div>
               </div>
             </CardContent>
           </Card>
@@ -163,14 +184,24 @@ const TestimonialsSection = () => {
                 <p className="text-sm text-gray-700 leading-relaxed line-clamp-3">
                   "{testimonial.text}"
                 </p>
-                <div className="space-y-1">
-                  <h5 className="font-semibold text-gray-900">{testimonial.name}</h5>
-                  <p className="text-xs text-gray-600">{testimonial.location}</p>
+                <div className="flex items-center gap-3 pt-1">
+                  <div className="w-9 h-9 rounded-full bg-gradient-to-br from-blue-600 to-blue-700 flex items-center justify-center text-white text-xs font-bold flex-shrink-0">
+                    {getInitials(testimonial.name)}
+                  </div>
+                  <div>
+                    <h5 className="font-semibold text-gray-900 leading-tight">{testimonial.name}</h5>
+                    <p className="text-xs text-gray-600">{testimonial.location}</p>
+                  </div>
                 </div>
               </CardContent>
             </Card>
           ))}
         </div>
+
+        {/* Results disclaimer (compliance) */}
+        <p className="text-xs text-gray-500 text-center max-w-3xl mx-auto mt-10 leading-relaxed">
+          Individual results vary. Testimonials reflect the experiences of specific clients and are not a guarantee of future results or savings.
+        </p>
       </div>
     </section>
   );

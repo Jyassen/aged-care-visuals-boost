@@ -12,31 +12,31 @@ const benefits = [
     icon: DollarSign,
     title: "No Cost to You",
     description: "Our services are completely free - we're paid by the insurance companies",
-    color: "from-green-500 to-green-600"
+    color: "from-blue-600 to-blue-700"
   },
   {
     icon: Users,
     title: "Independent Brokers",
     description: "We represent multiple carriers to find you the best options",
-    color: "from-purple-500 to-purple-600"
+    color: "from-blue-600 to-blue-700"
   },
   {
     icon: Clock,
     title: "Save Time",
     description: "We do the research and comparison shopping for you",
-    color: "from-orange-500 to-orange-600"
+    color: "from-blue-600 to-blue-700"
   },
   {
     icon: CheckCircle,
     title: "Personalized Service",
     description: "One-on-one guidance tailored to your specific needs",
-    color: "from-teal-500 to-teal-600"
+    color: "from-blue-600 to-blue-700"
   },
   {
     icon: Star,
     title: "Ongoing Support",
     description: "We're here to help throughout your Medicare journey",
-    color: "from-indigo-500 to-indigo-600"
+    color: "from-blue-600 to-blue-700"
   }
 ];
 

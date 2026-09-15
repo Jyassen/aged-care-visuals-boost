@@ -104,7 +104,7 @@ const HowItWorksSection = () => {
                     size="lg" 
                     className="bg-gradient-primary hover:bg-primary-hover text-xl px-12 py-4 shadow-strong"
                   >
-                    Start Your Free Consultation
+                    Book My Free Review
                   </Button>
                 }
               />

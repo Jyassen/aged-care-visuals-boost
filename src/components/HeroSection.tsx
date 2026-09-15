@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Shield, Award, Users, Phone } from "lucide-react";
 import CaptureForm from "@/components/CaptureForm";
 import { useState } from "react";
@@ -26,6 +27,7 @@ const HeroSection = ({ region }: HeroSectionProps) => {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState('');
+  const [consent, setConsent] = useState(false);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -44,6 +46,10 @@ const HeroSection = ({ region }: HeroSectionProps) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!consent) {
+      setSubmitStatus('consent');
+      return;
+    }
     setIsSubmitting(true);
     setSubmitStatus('');
 
@@ -67,6 +73,7 @@ const HeroSection = ({ region }: HeroSectionProps) => {
           bestTime: '',
           message: ''
         });
+        setConsent(false);
 
         // Redirect to thank-you page for conversion tracking
         navigate(`/thank-you?src=homepage-inline`);
@@ -97,7 +104,7 @@ const HeroSection = ({ region }: HeroSectionProps) => {
     <section className="bg-white">
       <div className="max-w-7xl mx-auto">
         {/* Hero Image with Headline Overlay */}
-        <div className="relative w-full h-[500px] sm:h-[600px] lg:h-[700px]">
+        <div className="relative w-full h-[360px] sm:h-[440px] lg:h-[520px]">
           <img 
             src="/images/hero seniors .jpg" 
             alt="Diverse group of happy seniors enjoying life in the park"
@@ -116,7 +123,7 @@ const HeroSection = ({ region }: HeroSectionProps) => {
                   Medicare Made Simple
                 </h1>
                 <p className="text-2xl sm:text-3xl lg:text-4xl font-semibold text-amber-300 leading-snug">
-                  {`Review Your 2026 Options in ${regionLabelMap[region]}`}
+                  {`Review Your 2027 Options in ${regionLabelMap[region]}`}
                 </p>
               </div>
             </div>
@@ -140,7 +147,7 @@ const HeroSection = ({ region }: HeroSectionProps) => {
                 <Card className="bg-white border-2 border-blue-100 shadow-md hover:shadow-lg transition-all duration-300">
                   <div className="p-4">
                     <div className="flex items-center space-x-3">
-                      <div className="flex-shrink-0 w-12 h-12 bg-gradient-to-r from-blue-500 to-blue-600 rounded-lg flex items-center justify-center">
+                      <div className="flex-shrink-0 w-12 h-12 bg-gradient-to-r from-blue-600 to-blue-700 rounded-lg flex items-center justify-center">
                         <Shield className="h-6 w-6 text-white" />
                       </div>
                       <div>
@@ -153,7 +160,7 @@ const HeroSection = ({ region }: HeroSectionProps) => {
                 <Card className="bg-white border-2 border-blue-100 shadow-md hover:shadow-lg transition-all duration-300">
                   <div className="p-4">
                     <div className="flex items-center space-x-3">
-                      <div className="flex-shrink-0 w-12 h-12 bg-gradient-to-r from-green-500 to-green-600 rounded-lg flex items-center justify-center">
+                      <div className="flex-shrink-0 w-12 h-12 bg-gradient-to-r from-blue-600 to-blue-700 rounded-lg flex items-center justify-center">
                         <Award className="h-6 w-6 text-white" />
                       </div>
                       <div>
@@ -166,7 +173,7 @@ const HeroSection = ({ region }: HeroSectionProps) => {
                 <Card className="bg-white border-2 border-blue-100 shadow-md hover:shadow-lg transition-all duration-300">
                   <div className="p-4">
                     <div className="flex items-center space-x-3">
-                      <div className="flex-shrink-0 w-12 h-12 bg-gradient-to-r from-purple-500 to-purple-600 rounded-lg flex items-center justify-center">
+                      <div className="flex-shrink-0 w-12 h-12 bg-gradient-to-r from-blue-600 to-blue-700 rounded-lg flex items-center justify-center">
                         <Users className="h-6 w-6 text-white" />
                       </div>
                       <div>
@@ -186,7 +193,7 @@ const HeroSection = ({ region }: HeroSectionProps) => {
                       size="lg" 
                       className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-bold text-lg px-8 py-5 shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1"
                     >
-                      Book Your Consultation
+                      Book My Free Review
                     </Button>
                   }
                 />
@@ -329,18 +336,34 @@ const HeroSection = ({ region }: HeroSectionProps) => {
                   </div>
                 )}
 
-                <Button 
-                  type="submit" 
+                <div className="flex items-start space-x-3">
+                  <Checkbox
+                    id="hero-consent"
+                    checked={consent}
+                    onCheckedChange={(v) => {
+                      setConsent(v === true);
+                      if (v === true && submitStatus === 'consent') setSubmitStatus('');
+                    }}
+                    className="mt-1"
+                  />
+                  <Label htmlFor="hero-consent" className="text-sm text-gray-500 font-normal leading-relaxed cursor-pointer">
+                    By checking this box, I agree to be contacted by a licensed insurance agent from YourMedGuy about Medicare plan options by phone, email, or text message, including at the number provided using automated technology. Consent is not a condition of purchase, and message/data rates may apply.
+                  </Label>
+                </div>
+
+                {submitStatus === 'consent' && (
+                  <p className="text-sm font-medium text-red-600 text-center">
+                    Please agree to be contacted so a specialist can reach you.
+                  </p>
+                )}
+
+                <Button
+                  type="submit"
                   disabled={isSubmitting}
                   className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-bold text-lg py-4 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
                 >
                   {isSubmitting ? 'Sending...' : 'Meet Your MedGuy'}
                 </Button>
-
-                <p className="text-sm text-gray-500 text-center leading-relaxed">
-                  By submitting your information, you consent to receive communications from YourMedGuy. 
-                  This includes calls, emails, and text messages about Medicare plans and special offers.
-                </p>
               </form>
             </div>
           </Card>

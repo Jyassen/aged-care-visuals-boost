@@ -18,8 +18,8 @@ const faqs = [
     answer: "When calling to enroll, please have your red, white, and blue Medicare ID card with you. It's also helpful to have a list of your current medications and the names of your doctors if you'd like to check if they're covered under the plan. Having these details will ensure a smooth enrollment process."
   },
   {
-    question: "Is my drug spending capped at $2,100 in 2026?",
-    answer: "Yes, for covered formulary drugs only. Uncovered medications do not count toward the cap. We will help you verify for your exact meds."
+    question: "Is my drug spending capped in 2027?",
+    answer: "Yes. In 2027, your out-of-pocket spending on covered Part D drugs is capped at $2,400 — once you reach it, you pay $0 for covered drugs for the rest of the year. The cap applies to covered formulary drugs only; uncovered medications do not count toward it. We'll help you verify the cap for your exact medications."
   },
   {
     question: "My hospital is leaving my MA plan - can I switch?",

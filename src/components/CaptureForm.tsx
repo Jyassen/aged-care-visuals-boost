@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { useToast } from "@/hooks/use-toast";
 import { Heart, Phone, Mail, Clock } from "lucide-react";
@@ -29,11 +30,12 @@ type FormData = {
 
 const CaptureForm = ({ 
   trigger, 
-  title = "Book Your Consultation",
-  description = "Let us help you find the right Medicare plan for your needs"
+  title = "Book Your Free Review",
+  description = "A licensed local agent will check your doctors, prescriptions, and costs. No cost, no obligation."
 }: CaptureFormProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [consent, setConsent] = useState(false);
   const { toast } = useToast();
   const navigate = useNavigate();
   
@@ -55,8 +57,16 @@ const CaptureForm = ({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!consent) {
+      toast({
+        title: "One quick thing",
+        description: "Please agree to be contacted so a licensed specialist can reach you.",
+        variant: "destructive",
+      });
+      return;
+    }
     setIsSubmitting(true);
-    
+
     try {
       // Make actual API call to send email
       const pageUrl = typeof window !== 'undefined' ? window.location.href : '';
@@ -94,6 +104,7 @@ const CaptureForm = ({
           careType: "",
           message: ""
         });
+        setConsent(false);
 
         // Redirect to thank-you page for conversion tracking
         navigate(`/thank-you?src=homepage-dialog`);
@@ -119,7 +130,7 @@ const CaptureForm = ({
       </DialogTrigger>
       <DialogContent className="sm:max-w-[500px] max-h-[90vh] overflow-y-auto">
         <DialogHeader className="text-center space-y-3">
-          <div className="mx-auto w-16 h-16 bg-gradient-to-br from-blue-100 to-purple-100 rounded-full flex items-center justify-center">
+          <div className="mx-auto w-16 h-16 bg-gradient-to-br from-blue-100 to-blue-50 rounded-full flex items-center justify-center">
             <Heart className="h-8 w-8 text-blue-600" />
           </div>
           <DialogTitle className="text-2xl font-bold text-gray-900">{title}</DialogTitle>
@@ -255,17 +266,25 @@ const CaptureForm = ({
           </div>
           
           <div className="pt-4 space-y-4">
-            <Button 
-              type="submit" 
-              className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold py-3 text-lg"
+            <div className="flex items-start space-x-3">
+              <Checkbox
+                id="capture-consent"
+                checked={consent}
+                onCheckedChange={(v) => setConsent(v === true)}
+                className="mt-1"
+              />
+              <Label htmlFor="capture-consent" className="text-xs text-gray-500 font-normal leading-relaxed cursor-pointer">
+                By checking this box, I agree to be contacted by a licensed insurance agent from YourMedGuy about Medicare plan options by phone, email, or text message, including at the number provided using automated technology. Consent is not a condition of purchase, and message/data rates may apply. YourMedGuy is not affiliated with or endorsed by the U.S. government or the federal Medicare program.
+              </Label>
+            </div>
+
+            <Button
+              type="submit"
+              className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold py-3 text-lg"
               disabled={isSubmitting}
             >
               {isSubmitting ? "Submitting..." : "Meet Your MedGuy"}
             </Button>
-            
-            <p className="text-xs text-gray-500 text-center leading-relaxed">
-              By submitting your information, you agree to be contacted by a licensed insurance agent from YourMedGuy about Medicare plan options by phone, email, or text. Consent is not a condition of purchase. YourMedGuy is not affiliated with or endorsed by the U.S. government or the federal Medicare program.
-            </p>
           </div>
         </form>
       </DialogContent>

@@ -99,8 +99,10 @@ export default function CostCalculatorPage() {
             get information on all your options.
           </p>
           <p>
-            Your information is protected under HIPAA to the extent applicable and will be used to contact you about
-            Medicare plans by a licensed insurance agent. Consent to be contacted is not a condition of purchase.
+            Your information is kept private and secure, and is used only to contact you about Medicare plans through a
+            licensed insurance agent. We do not sell your information. Consent to be contacted is not a condition of
+            purchase. Comparing plans and enrolling with YourMedGuy is free to you; we are compensated by the insurance
+            carriers when we help you enroll, and our agents are paid the same regardless of which plan you choose.
           </p>
         </div>
       </section>

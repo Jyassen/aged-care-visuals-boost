@@ -1,4 +1,7 @@
 import Header from "@/components/Header";
+import AnnouncementBar from "@/components/AnnouncementBar";
+import TrustBar from "@/components/TrustBar";
+import MobileCTABar from "@/components/MobileCTABar";
 import HeroSection from "@/components/HeroSection";
 import ServicesSection from "@/components/ServicesSection";
 import BenefitsSection from "@/components/BenefitsSection";
@@ -41,10 +44,12 @@ const Index = () => {
   const canonicalPath = region === 'nyc' ? '/' : `/${region}`;
   const canonical = `${canonicalBase}${canonicalPath}`;
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen pb-20 lg:pb-0">
       <SEO title={seoTitleMap[region]} description={seoDescMap[region]} canonical={canonical} />
+      <AnnouncementBar />
       <Header />
       <HeroSection region={region} />
+      <TrustBar />
       <ServicesSection region={region} />
       <BenefitsSection region={region} />
       <HowItWorksSection />
@@ -54,6 +59,7 @@ const Index = () => {
       <NewsletterSection />
       <ComplianceSection />
       <Footer region={region} />
+      <MobileCTABar />
     </div>
   );
 };

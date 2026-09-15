@@ -59,7 +59,7 @@ export default function CostCalculatorResults({ estimate, inputs, onReset }: Cos
           { label: 'Doctor visits', amount: '$0 copay (after deductible)' },
           { label: 'Outpatient care', amount: '$0 copay (after deductible)' },
           { label: 'Preventive services', amount: '$0 copay' },
-          { label: 'Annual deductible', amount: '$240 (2026)' },
+          { label: 'Annual deductible', amount: '$283 (2026)' },
           { label: 'Part B coinsurance', amount: '20% of Medicare-approved amount' },
         ]
       },
@@ -155,7 +155,7 @@ export default function CostCalculatorResults({ estimate, inputs, onReset }: Cos
                 </div>
                 <div className="flex justify-between">
                   <span className="text-gray-700">Annual deductible</span>
-                  <span className="font-medium text-gray-900">$240 (2026)</span>
+                  <span className="font-medium text-gray-900">$283 (2026)</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-gray-700">Part B coinsurance</span>
@@ -190,7 +190,7 @@ export default function CostCalculatorResults({ estimate, inputs, onReset }: Cos
                   type="button"
                   className="w-full bg-amber-500 hover:bg-amber-600 text-white font-semibold"
                 >
-                  Fill Out Form
+                  Book My Free Review
                 </Button>
               }
             />
@@ -304,9 +304,9 @@ export default function CostCalculatorResults({ estimate, inputs, onReset }: Cos
           <h5 className="font-semibold text-gray-900 mb-2">Medicare Advantage Benefits:</h5>
           <ul className="space-y-2 text-sm text-gray-700">
             <li>📊 80% of New York Medicare enrollees choose Medicare Advantage</li>
-            <li className="flex items-center gap-2"><Check className="h-4 w-4 text-amber-500 flex-shrink-0" /><span>All-in-one plan with Part D prescription coverage included — No Cost to You.</span></li>
-            <li className="flex items-center gap-2"><Check className="h-4 w-4 text-amber-500 flex-shrink-0" /><span>Many $0 premium plan options in New York — No Cost to You.</span></li>
-            <li className="flex items-center gap-2"><Check className="h-4 w-4 text-amber-500 flex-shrink-0" /><span>Often includes dental, vision, and hearing — No Cost to You.</span></li>
+            <li className="flex items-center gap-2"><Check className="h-4 w-4 text-amber-500 flex-shrink-0" /><span>All-in-one plan with Part D prescription coverage included.</span></li>
+            <li className="flex items-center gap-2"><Check className="h-4 w-4 text-amber-500 flex-shrink-0" /><span>Many $0 premium plan options in New York.</span></li>
+            <li className="flex items-center gap-2"><Check className="h-4 w-4 text-amber-500 flex-shrink-0" /><span>Often includes dental, vision, and hearing.</span></li>
             <li className="flex items-center gap-2"><Check className="h-4 w-4 text-amber-500 flex-shrink-0" /><span>Copays for services (typically $0-$40 per visit)</span></li>
             <li>⚠ Must use plan's network of doctors</li>
           </ul>
@@ -393,8 +393,8 @@ export default function CostCalculatorResults({ estimate, inputs, onReset }: Cos
         <div className="mt-4 p-4 bg-purple-50 rounded-lg">
           <h5 className="font-semibold text-gray-900 mb-2">Medicare Supplement Benefits:</h5>
           <ul className="space-y-2 text-sm text-gray-700">
-            <li className="flex items-center gap-2"><Check className="h-4 w-4 text-amber-500 flex-shrink-0" /><span>See ANY doctor that accepts Medicare nationwide — No Cost to You.</span></li>
-            <li className="flex items-center gap-2"><Check className="h-4 w-4 text-amber-500 flex-shrink-0" /><span>No network restrictions — complete freedom — No Cost to You.</span></li>
+            <li className="flex items-center gap-2"><Check className="h-4 w-4 text-amber-500 flex-shrink-0" /><span>See ANY doctor that accepts Medicare nationwide.</span></li>
+            <li className="flex items-center gap-2"><Check className="h-4 w-4 text-amber-500 flex-shrink-0" /><span>No network restrictions — complete freedom.</span></li>
             <li className="flex items-center gap-2"><Check className="h-4 w-4 text-amber-500 flex-shrink-0" /><span>Predictable costs — very few surprise bills</span></li>
             <li className="flex items-center gap-2"><Check className="h-4 w-4 text-amber-500 flex-shrink-0" /><span>Covers Part B 20% coinsurance and other gaps</span></li>
             <li>⚠ Higher monthly premium than most MA plans</li>

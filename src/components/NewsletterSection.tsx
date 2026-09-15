@@ -69,11 +69,10 @@ const NewsletterSection = () => {
                 {/* Heading */}
                 <div className="text-center lg:text-left space-y-4">
                   <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 text-balance">
-                    Join Our Newsletter List
+                    Medicare Tips That Save You Money
                   </h2>
                   <p className="text-lg sm:text-xl text-gray-600 leading-relaxed text-pretty">
-                    Twice each month we deliver Medicare tips and healthcare insights straight to your email inbox. 
-                    Try it, we think you'll like it!
+                    Twice a month we send plain-English Medicare tips, enrollment deadlines, and ways to lower your costs. No jargon, no spam.
                   </p>
                   <p className="text-sm text-gray-500 uppercase tracking-wide font-medium">
                     You can unsubscribe at any time.

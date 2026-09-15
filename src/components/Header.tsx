@@ -5,7 +5,7 @@ import { useLocation } from "react-router-dom";
 import CaptureForm from "@/components/CaptureForm";
 
 type HeaderProps = {
-  /** When true, hides the primary "Book Consultation" CTA (desktop and mobile menu) */
+  /** When true, hides the primary "Book My Free Review" CTA (desktop and mobile menu) */
   hideBookButton?: boolean;
 };
 
@@ -37,13 +37,19 @@ const Header = ({ hideBookButton = false }: HeaderProps) => {
             >
               Why Choose Us
             </a>
-            <a 
+            <a
               href={isHomePage ? "#how-it-works" : "/#how-it-works"}
               className="text-gray-700 hover:text-blue-600 transition-colors duration-200 font-medium text-base"
             >
               How It Works
             </a>
-            <a 
+            <a
+              href="/tools/cost-calculator"
+              className="text-gray-700 hover:text-blue-600 transition-colors duration-200 font-medium text-base"
+            >
+              Cost Calculator
+            </a>
+            <a
               href={isHomePage ? "#contact" : "/#contact"}
               className="text-gray-700 hover:text-blue-600 transition-colors duration-200 font-medium text-base"
             >
@@ -70,7 +76,7 @@ const Header = ({ hideBookButton = false }: HeaderProps) => {
                     size="lg" 
                     className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold px-6 py-3 shadow-md hover:shadow-lg transition-all duration-200"
                   >
-                    Book Consultation
+                    Book My Free Review
                   </Button>
                 }
               />
@@ -121,14 +127,21 @@ const Header = ({ hideBookButton = false }: HeaderProps) => {
               >
                 Why Choose Us
               </a>
-              <a 
+              <a
                 href={isHomePage ? "#how-it-works" : "/#how-it-works"}
                 className="text-gray-700 hover:text-blue-600 transition-colors duration-200 font-medium text-base py-2 px-2 rounded-md hover:bg-gray-50 touch-manipulation"
                 onClick={() => setIsMenuOpen(false)}
               >
                 How It Works
               </a>
-              <a 
+              <a
+                href="/tools/cost-calculator"
+                className="text-gray-700 hover:text-blue-600 transition-colors duration-200 font-medium text-base py-2 px-2 rounded-md hover:bg-gray-50 touch-manipulation"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Cost Calculator
+              </a>
+              <a
                 href={isHomePage ? "#contact" : "/#contact"}
                 className="text-gray-700 hover:text-blue-600 transition-colors duration-200 font-medium text-base py-2 px-2 rounded-md hover:bg-gray-50 touch-manipulation"
                 onClick={() => setIsMenuOpen(false)}
@@ -149,7 +162,7 @@ const Header = ({ hideBookButton = false }: HeaderProps) => {
                 <CaptureForm 
                   trigger={
                     <Button className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold py-3 text-base shadow-md hover:shadow-lg transition-all duration-200">
-                      Book Consultation
+                      Book My Free Review
                     </Button>
                   }
                 />
