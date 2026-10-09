@@ -17,6 +17,9 @@ import CookiePolicy from "./pages/legal/CookiePolicy";
 import ConsentToContact from "./pages/legal/ConsentToContact";
 import HipaaCompliance from "./pages/legal/HipaaCompliance";
 import ScrollToTop from "./components/ScrollToTop";
+import VslFunnelPage from "./pages/funnels/VslFunnelPage";
+import PreCallPage from "./pages/funnels/PreCallPage";
+import { FUNNELS } from "./funnels/config";
 
 const queryClient = new QueryClient();
 
@@ -33,6 +36,15 @@ const App = () => (
           <Route path="/statenisland" element={<Index />} />
           <Route path="/tools/cost-calculator" element={<CostCalculatorPage />} />
           <Route path="/thank-you" element={<ThankYou />} />
+          {FUNNELS.map((funnel) => (
+            <Route
+              key={funnel.slug}
+              path={`/${funnel.slug}`}
+              element={<VslFunnelPage config={funnel} />}
+            />
+          ))}
+          <Route path="/precall" element={<PreCallPage variant="general" />} />
+          <Route path="/precall/csnp-dsnp" element={<PreCallPage variant="csnp-dsnp" />} />
           <Route path="/medicarestarterkit" element={<MedicareStarterKit />} />
           <Route path="/thank-you-medicare-kit" element={<ThankYouMedicareKit />} />
           <Route path="/legal" element={<LegalDocuments />} />
