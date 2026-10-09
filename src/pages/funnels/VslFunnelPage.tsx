@@ -24,7 +24,6 @@ export default function VslFunnelPage({ config }: VslFunnelPageProps) {
       <main>
         <section className="bg-white border-b border-slate-200">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 pt-10 pb-8 sm:pt-14 flex flex-col">
-            <p className="order-1 text-sm font-semibold uppercase tracking-[0.16em] text-blue-700 mb-3">{config.kicker}</p>
             <h1 className="order-2 text-4xl sm:text-5xl font-bold tracking-tight text-gray-900 leading-tight">
               {config.headline}{" "}
               <span className="text-blue-700">{config.headlineAccent}</span>
@@ -68,15 +67,15 @@ export default function VslFunnelPage({ config }: VslFunnelPageProps) {
           </div>
         </section>
 
-        <section className="bg-slate-900 text-white py-16">
+        <section className="bg-gradient-to-br from-blue-700 to-blue-800 py-16">
           <div className="max-w-6xl mx-auto px-4 sm:px-6">
-            <h2 className="text-3xl sm:text-4xl font-bold">{config.problemHeading}</h2>
+            <h2 className="text-3xl sm:text-4xl font-bold text-white">{config.problemHeading}</h2>
             <div className="mt-8 grid md:grid-cols-3 gap-5">
               {config.problems.map((problem, index) => (
-                <article key={problem.title} className="rounded-2xl bg-white/5 border border-white/10 p-6">
-                  <p className="text-amber-300 font-bold text-sm">{String(index + 1).padStart(2, "0")}</p>
-                  <h3 className="mt-3 text-xl font-semibold">{problem.title}</h3>
-                  <p className="mt-3 text-slate-200 leading-relaxed">{problem.body}</p>
+                <article key={problem.title} className="rounded-2xl bg-white p-6 shadow-md">
+                  <p className="text-blue-700 font-bold text-sm">{String(index + 1).padStart(2, "0")}</p>
+                  <h3 className="mt-3 text-xl font-semibold text-gray-900">{problem.title}</h3>
+                  <p className="mt-3 text-gray-700 leading-relaxed">{problem.body}</p>
                 </article>
               ))}
             </div>

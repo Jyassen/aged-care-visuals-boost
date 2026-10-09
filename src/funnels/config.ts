@@ -7,7 +7,6 @@ export type FunnelConfig = {
   topic: string;
   seoTitle: string;
   seoDescription: string;
-  kicker: string;
   headline: string;
   headlineAccent: string;
   subhead: string;
@@ -88,7 +87,6 @@ export const FUNNELS: FunnelConfig[] = [
     seoTitle: "Your Medicare Card Arrived | Free Coverage Review | YourMedGuy",
     seoDescription:
       "Your Medicare card arrived. A licensed broker in New York and New Jersey can help you check start dates, prescriptions, and whether your doctors fit the plans we offer. Free, no obligation.",
-    kicker: "Medicare card arrived",
     headline: "Your card arrived.",
     headlineAccent: "That does not settle every coverage question.",
     subhead:
@@ -126,7 +124,6 @@ export const FUNNELS: FunnelConfig[] = [
     seoTitle: "A Medicare Review You Can Question | YourMedGuy",
     seoDescription:
       "A commercial sounds certain. A friend likes their plan. Book a free review with a licensed New York and New Jersey broker who starts with your doctors, prescriptions, and costs.",
-    kicker: "Trusted advisor",
     headline: "Whose Medicare advice",
     headlineAccent: "is actually about you?",
     subhead:
@@ -164,7 +161,6 @@ export const FUNNELS: FunnelConfig[] = [
     seoTitle: "New to Medicare | Where to Start | YourMedGuy",
     seoDescription:
       "New to Medicare and every answer brings more questions. A licensed broker walks through Original Medicare, Medicare Advantage, prescriptions, and the timing that applies to you. Free review.",
-    kicker: "New to Medicare",
     headline: "New to Medicare.",
     headlineAccent: "Start with what you have.",
     subhead:
@@ -202,7 +198,6 @@ export const FUNNELS: FunnelConfig[] = [
     seoTitle: "Medicare and Medicaid Review | Dual Eligible Plans | YourMedGuy",
     seoDescription:
       "Have Medicare and Medicaid? Some Medicare Advantage plans are built for people who qualify for both. Eligibility, Medicaid category, and local availability need a check. Free review.",
-    kicker: "Dual eligible review",
     headline: "Medicare and Medicaid",
     headlineAccent: "still leave questions a headline cannot answer.",
     subhead:
@@ -240,7 +235,6 @@ export const FUNNELS: FunnelConfig[] = [
     seoTitle: "C-SNP and D-SNP Plan Review | YourMedGuy",
     seoDescription:
       "Asking about a Medicare plan for a qualifying chronic condition, or for people with Medicare and Medicaid? Eligibility and local availability need a check. Free consultation.",
-    kicker: "C-SNP and D-SNP",
     headline: "A special needs plan",
     headlineAccent: "only fits if you qualify, and if it is offered where you live.",
     subhead:
