@@ -1,10 +1,10 @@
 import { Button } from "@/components/ui/button";
-import { Phone, CalendarCheck } from "lucide-react";
+import { Mail, CalendarCheck } from "lucide-react";
 import CaptureForm from "@/components/CaptureForm";
 
 /**
  * Persistent bottom action bar for mobile. Seniors browse mostly on phones and
- * this is a call-driven business, so a fixed Call + Book bar keeps the primary
+ * this is a call-driven business, so a fixed Email + Book bar keeps the primary
  * conversion action one tap away no matter how far they scroll.
  * Hidden on lg+ where the sticky header CTA is always visible.
  */
@@ -17,9 +17,9 @@ const MobileCTABar = () => {
           variant="outline"
           className="border-2 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white font-semibold text-base h-12"
         >
-          <a href="tel:888-355-1085" className="flex items-center justify-center">
-            <Phone className="h-5 w-5 mr-2" />
-            Call Now
+          <a href="mailto:help@yourmedguy.com" className="flex items-center justify-center">
+            <Mail className="h-5 w-5 mr-2" />
+            Email Us
           </a>
         </Button>
         <CaptureForm

@@ -17,7 +17,6 @@ type FunnelFormProps = {
 const EMPTY = {
   firstName: "",
   lastName: "",
-  phone: "",
   email: "",
   bestTime: "",
 };
@@ -104,23 +103,7 @@ export default function FunnelForm({ source, topic, precall, idPrefix = "funnel"
         </div>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <div className="space-y-2">
-          <Label htmlFor={field("phone")} className="text-base font-medium text-gray-700">
-            Phone Number
-          </Label>
-          <Input
-            id={field("phone")}
-            name="phone"
-            type="tel"
-            placeholder="(555) 123-4567"
-            className="text-base py-3 px-4 border-gray-300 focus:border-blue-500 focus:ring-blue-500"
-            value={formData.phone}
-            onChange={(event) => setFormData((prev) => ({ ...prev, phone: event.target.value }))}
-            required
-            autoComplete="tel"
-          />
-        </div>
+      <div>
         <div className="space-y-2">
           <Label htmlFor={field("email")} className="text-base font-medium text-gray-700">
             Email
@@ -186,7 +169,7 @@ export default function FunnelForm({ source, topic, precall, idPrefix = "funnel"
       )}
       {submitStatus === "error" && (
         <p className="text-sm font-medium text-red-600 text-center">
-          Something went wrong. Please try again or call 888-355-1085.
+          Something went wrong. Please try again or email us at help@yourmedguy.com.
         </p>
       )}
 

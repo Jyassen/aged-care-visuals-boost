@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Phone, Menu, X } from "lucide-react";
+import { Mail, Menu, X } from "lucide-react";
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
 import CaptureForm from "@/components/CaptureForm";
@@ -60,13 +60,13 @@ const Header = ({ hideBookButton = false }: HeaderProps) => {
           {/* Contact Info & CTA - Progressive disclosure */}
           <div className="hidden xl:flex items-center space-x-4">
             <div className="text-right">
-              <p className="text-sm text-gray-500">Call Now</p>
+              <p className="text-sm text-gray-500">Email Us</p>
               <a 
-                href="tel:888-355-1085" 
+                href="mailto:help@yourmedguy.com" 
                 className="text-lg font-semibold text-blue-600 hover:text-blue-700 flex items-center transition-colors duration-200"
               >
-                <Phone className="h-4 w-4 mr-1" />
-                888-355-1085
+                <Mail className="h-4 w-4 mr-1" />
+                help@yourmedguy.com
               </a>
             </div>
             {!hideBookButton && (
@@ -152,11 +152,11 @@ const Header = ({ hideBookButton = false }: HeaderProps) => {
             
             <div className="pt-4 border-t border-gray-200 space-y-3">
               <a 
-                href="tel:888-355-1085" 
+                href="mailto:help@yourmedguy.com" 
                 className="flex items-center text-blue-600 font-semibold text-lg hover:text-blue-700 transition-colors duration-200 touch-manipulation py-2"
               >
-                <Phone className="h-5 w-5 mr-2" />
-                888-355-1085
+                <Mail className="h-5 w-5 mr-2" />
+                help@yourmedguy.com
               </a>
               {!hideBookButton && (
                 <CaptureForm 

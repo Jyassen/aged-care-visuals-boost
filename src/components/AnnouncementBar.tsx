@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Phone, X, CalendarClock } from "lucide-react";
+import { Mail, X, CalendarClock } from "lucide-react";
 
 /**
  * Slim urgency bar for the Medicare Annual Enrollment Period (Oct 15 – Dec 7).
@@ -19,11 +19,11 @@ const AnnouncementBar = () => {
             <span className="font-semibold text-amber-300">Annual Enrollment: Oct 15 – Dec 7.</span>{" "}
             <span className="text-blue-100">Book your free review before the deadline —</span>{" "}
             <a
-              href="tel:888-355-1085"
+              href="mailto:help@yourmedguy.com"
               className="font-semibold underline decoration-amber-300/60 underline-offset-2 hover:text-amber-200 inline-flex items-center"
             >
-              <Phone className="h-4 w-4 mr-1" />
-              888-355-1085
+              <Mail className="h-4 w-4 mr-1" />
+              help@yourmedguy.com
             </a>
           </p>
           <button

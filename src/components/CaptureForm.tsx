@@ -8,7 +8,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Checkbox } from "@/components/ui/checkbox";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { useToast } from "@/hooks/use-toast";
-import { Heart, Phone, Mail, Clock } from "lucide-react";
+import { Heart, Mail, Clock } from "lucide-react";
 
 interface CaptureFormProps {
   trigger: React.ReactNode;
@@ -19,7 +19,6 @@ interface CaptureFormProps {
 type FormData = {
   firstName: string;
   lastName: string;
-  phone: string;
   email: string;
   zipCode: string;
   ageRange: string;
@@ -42,7 +41,6 @@ const CaptureForm = ({
   const [formData, setFormData] = useState<FormData>({
     firstName: "",
     lastName: "",
-    phone: "",
     email: "",
     zipCode: "",
     ageRange: "",
@@ -78,7 +76,6 @@ const CaptureForm = ({
         body: JSON.stringify({
           firstName: formData.firstName,
           lastName: formData.lastName,
-          phone: formData.phone,
           email: formData.email,
           bestTime: formData.bestTimeToCall,
           message: `Age Range: ${formData.ageRange}\nZip Code: ${formData.zipCode}\nCare Type: ${formData.careType}\n\nMessage: ${formData.message}`,
@@ -96,7 +93,6 @@ const CaptureForm = ({
         setFormData({
           firstName: "",
           lastName: "",
-          phone: "",
           email: "",
           zipCode: "",
           ageRange: "",
@@ -115,7 +111,7 @@ const CaptureForm = ({
       console.error('Error submitting form:', error);
       toast({
         title: "Something went wrong",
-        description: "Please try again or call us directly at 888-355-1085.",
+        description: "Please try again or email us at help@yourmedguy.com.",
         variant: "destructive",
       });
     } finally {
@@ -162,23 +158,7 @@ const CaptureForm = ({
           </div>
           
           <div className="space-y-2">
-            <Label htmlFor="phone">Phone Number *</Label>
-            <div className="relative">
-              <Phone className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
-              <Input
-                id="phone"
-                type="tel"
-                value={formData.phone}
-                onChange={(e) => handleInputChange('phone', e.target.value)}
-                required
-                className="pl-10 border-gray-300"
-                placeholder="(123) 456-7890"
-              />
-            </div>
-          </div>
-          
-          <div className="space-y-2">
-            <Label htmlFor="email">Email Address</Label>
+            <Label htmlFor="email">Email Address *</Label>
             <div className="relative">
               <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
               <Input
@@ -186,6 +166,7 @@ const CaptureForm = ({
                 type="email"
                 value={formData.email}
                 onChange={(e) => handleInputChange('email', e.target.value)}
+                required
                 className="pl-10 border-gray-300"
                 placeholder="your@email.com"
               />

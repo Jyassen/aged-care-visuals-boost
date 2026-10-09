@@ -33,7 +33,6 @@ export default function LeadCaptureForm({ source, context, onSuccess }: LeadCapt
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
-    phone: '',
     email: '',
     bestTimeToCall: '',
   });
@@ -89,7 +88,7 @@ export default function LeadCaptureForm({ source, context, onSuccess }: LeadCapt
     } catch (error) {
       toast({
         title: "Something went wrong",
-        description: "Please try again or call us at 888-355-1085",
+        description: "Please try again or email us at help@yourmedguy.com",
         variant: "destructive",
       });
     } finally {
@@ -133,30 +132,17 @@ export default function LeadCaptureForm({ source, context, onSuccess }: LeadCapt
           </div>
         </div>
         
-        {/* Phone Number */}
-        <div className="space-y-2">
-          <Label htmlFor="phone">Phone Number *</Label>
-          <Input
-            id="phone"
-            type="tel"
-            placeholder="(555) 123-4567"
-            value={formData.phone}
-            onChange={(e) => setFormData(prev => ({ ...prev, phone: e.target.value }))}
-            required
-          />
-        </div>
-        
         {/* Email */}
         <div className="space-y-2">
-          <Label htmlFor="email">Email</Label>
+          <Label htmlFor="email">Email *</Label>
           <Input
             id="email"
             type="email"
             placeholder="your@email.com"
             value={formData.email}
             onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))}
+            required
           />
-          <p className="text-xs text-gray-500">Optional, but recommended for confirmation</p>
         </div>
         
         {/* Best Time to Call */}

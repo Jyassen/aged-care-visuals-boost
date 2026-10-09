@@ -10,12 +10,6 @@ const LegalContact = () => (
         info@yasscogroup.com
       </a>
     </p>
-    <p>
-      Phone:{" "}
-      <a href="tel:347-305-2263" className="text-primary hover:underline">
-        347-305-2263
-      </a>
-    </p>
   </div>
 );
 

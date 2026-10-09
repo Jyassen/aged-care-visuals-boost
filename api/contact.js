@@ -9,10 +9,10 @@ export default async function handler(req, res) {
   }
 
   try {
-    const { firstName, lastName, phone, email, bestTime, message, source, context, pageUrl } = req.body;
+    const { firstName, lastName, email, bestTime, message, source, context, pageUrl } = req.body;
 
     // Validate required fields
-    if (!firstName || !lastName || !phone) {
+    if (!firstName || !lastName || !email) {
       return res.status(400).json({ message: 'Missing required fields' });
     }
 
@@ -30,7 +30,6 @@ export default async function handler(req, res) {
           <div style="background-color: #f8fafc; padding: 20px; border-radius: 8px; margin: 20px 0;">
             <h3 style="color: #374151; margin-top: 0;">Contact Information</h3>
             <p><strong>Name:</strong> ${firstName} ${lastName}</p>
-            <p><strong>Phone:</strong> <a href="tel:${phone}" style="color: #1e40af;">${phone}</a></p>
             <p><strong>Email:</strong> <a href="mailto:${email}" style="color: #1e40af;">${email}</a></p>
             <p><strong>Best Time to Call:</strong> ${bestTime || 'Not specified'}</p>
           </div>
@@ -71,7 +70,7 @@ export default async function handler(req, res) {
           <div style="background-color: #1e40af; color: white; padding: 15px; border-radius: 8px; margin-top: 20px;">
             <p style="margin: 0; font-weight: bold;">⚡ Follow-up Action Required</p>
             <p style="margin: 5px 0 0 0; font-size: 14px;">
-              Call within 24 hours for best conversion rates
+              Reply by email within 24 hours for best conversion rates
             </p>
           </div>
         </div>
