@@ -41,15 +41,16 @@ export default function PreCallPage({ variant }: PreCallPageProps) {
       <SEO title={page.seoTitle} description={page.seoDescription} />
       <FunnelHeader showBook={false} />
       <main className="max-w-3xl mx-auto px-4 sm:px-6 py-12">
-        <p className="text-sm font-semibold uppercase tracking-[0.16em] text-blue-700">{page.kicker}</p>
-        <div className="mt-4 flex items-start gap-3">
-          <CheckCircle2 className="h-8 w-8 text-blue-700 flex-shrink-0 mt-1" />
-          <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 leading-tight">{page.headline}</h1>
-        </div>
-        <p className="mt-5 text-lg text-gray-700 leading-relaxed">{page.subhead}</p>
-
-        <div className="mt-8">
-          <WistiaPlayer mediaId={page.wistiaId} title={page.kicker} />
+        <div className="flex flex-col">
+          <p className="order-1 text-sm font-semibold uppercase tracking-[0.16em] text-blue-700">{page.kicker}</p>
+          <div className="order-2 mt-4 flex items-start gap-3">
+            <CheckCircle2 className="h-8 w-8 text-blue-700 flex-shrink-0 mt-1" />
+            <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 leading-tight">{page.headline}</h1>
+          </div>
+          <div className="order-3 sm:order-4 mt-6">
+            <WistiaPlayer mediaId={page.wistiaId} title={page.kicker} />
+          </div>
+          <p className="order-4 sm:order-3 mt-5 text-lg text-gray-700 leading-relaxed">{page.subhead}</p>
         </div>
 
         <section className="mt-8 rounded-2xl bg-white border border-slate-200 p-6 sm:p-8">

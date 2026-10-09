@@ -23,28 +23,30 @@ export default function VslFunnelPage({ config }: VslFunnelPageProps) {
 
       <main>
         <section className="bg-white border-b border-slate-200">
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 pt-10 pb-8 sm:pt-14">
-            <p className="text-sm font-semibold uppercase tracking-[0.16em] text-blue-700 mb-3">{config.kicker}</p>
-            <h1 className="text-4xl sm:text-5xl font-bold tracking-tight text-gray-900 leading-tight">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 pt-10 pb-8 sm:pt-14 flex flex-col">
+            <p className="order-1 text-sm font-semibold uppercase tracking-[0.16em] text-blue-700 mb-3">{config.kicker}</p>
+            <h1 className="order-2 text-4xl sm:text-5xl font-bold tracking-tight text-gray-900 leading-tight">
               {config.headline}{" "}
               <span className="text-blue-700">{config.headlineAccent}</span>
             </h1>
-            <p className="mt-5 text-lg sm:text-xl text-gray-700 leading-relaxed">{config.subhead}</p>
+            <div className="order-3 sm:order-4 mt-6" id="vsl">
+              {config.wistiaId ? (
+                <WistiaPlayer mediaId={config.wistiaId} title={config.videoTitle} />
+              ) : (
+                <div className="rounded-2xl border border-blue-100 bg-blue-50 p-6 sm:p-8">
+                  <p className="text-sm font-semibold uppercase tracking-wide text-blue-700">On the call</p>
+                  <p className="mt-2 text-lg text-gray-800 leading-relaxed">
+                    After you book, a short video on the confirmation page walks through what to have ready for a C-SNP or D-SNP conversation. You can book now without watching anything first.
+                  </p>
+                </div>
+              )}
+            </div>
+            <p className="order-4 sm:order-3 mt-5 text-lg sm:text-xl text-gray-700 leading-relaxed">{config.subhead}</p>
           </div>
         </section>
 
-        <section className="max-w-4xl mx-auto px-4 sm:px-6 -mt-2 py-8" id="vsl">
-          {config.wistiaId ? (
-            <WistiaPlayer mediaId={config.wistiaId} title={config.videoTitle} />
-          ) : (
-            <div className="rounded-2xl border border-blue-100 bg-blue-50 p-6 sm:p-8">
-              <p className="text-sm font-semibold uppercase tracking-wide text-blue-700">On the call</p>
-              <p className="mt-2 text-lg text-gray-800 leading-relaxed">
-                After you book, a short video on the confirmation page walks through what to have ready for a C-SNP or D-SNP conversation. You can book now without watching anything first.
-              </p>
-            </div>
-          )}
-          <dl className="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-3">
+        <section className="max-w-4xl mx-auto px-4 sm:px-6 py-8">
+          <dl className="grid grid-cols-1 sm:grid-cols-3 gap-3">
             {PROOF.map((item) => (
               <div key={item.value} className="rounded-xl bg-white border border-slate-200 px-4 py-3">
                 <dt className="text-lg font-bold text-gray-900">{item.value}</dt>
