@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Phone, Mail, MapPin, Shield, ExternalLink } from "lucide-react";
+import { Mail, MapPin, Shield, ExternalLink } from "lucide-react";
 import CaptureForm from "@/components/CaptureForm";
 import type { SiteRegion } from "@/types/site.types";
 
@@ -42,13 +42,6 @@ const Footer = ({ region = 'nyc' }: FooterProps) => {
           <div className="space-y-6">
             <h4 className="text-xl-accessible font-semibold">Contact Us</h4>
             <div className="space-y-4">
-              <a 
-                href="tel:888-355-1085" 
-                className="flex items-center space-x-3 text-primary-foreground/90 hover:text-accent transition-colors text-lg"
-              >
-                <Phone className="h-5 w-5" />
-                <span>888-355-1085</span>
-              </a>
               <a 
                 href="mailto:help@yourmedguy.com" 
                 className="flex items-center space-x-3 text-primary-foreground/90 hover:text-accent transition-colors text-lg"

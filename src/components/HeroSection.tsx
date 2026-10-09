@@ -5,7 +5,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Shield, Award, Users, Phone } from "lucide-react";
+import { Shield, Award, Users, Mail } from "lucide-react";
 import CaptureForm from "@/components/CaptureForm";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -20,7 +20,6 @@ const HeroSection = ({ region }: HeroSectionProps) => {
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
-    phone: '',
     email: '',
     bestTime: '',
     message: ''
@@ -68,7 +67,6 @@ const HeroSection = ({ region }: HeroSectionProps) => {
         setFormData({
           firstName: '',
           lastName: '',
-          phone: '',
           email: '',
           bestTime: '',
           message: ''
@@ -203,9 +201,9 @@ const HeroSection = ({ region }: HeroSectionProps) => {
                   className="border-2 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white font-semibold text-lg px-8 py-5 transition-all duration-300"
                   asChild
                 >
-                  <a href="tel:888-355-1085" className="flex items-center justify-center">
-                    <Phone className="h-5 w-5 mr-2" />
-                    Call 888-355-1085
+                  <a href="mailto:help@yourmedguy.com" className="flex items-center justify-center">
+                    <Mail className="h-5 w-5 mr-2" />
+                    Email Us
                   </a>
                 </Button>
               </div>
@@ -262,20 +260,7 @@ const HeroSection = ({ region }: HeroSectionProps) => {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="phone" className="text-base font-medium text-gray-700">Phone Number</Label>
-                    <Input
-                      id="phone"
-                      name="phone"
-                      type="tel"
-                      placeholder="(555) 123-4567"
-                      className="text-base py-3 px-4 border-gray-300 focus:border-blue-500 focus:ring-blue-500"
-                      value={formData.phone}
-                      onChange={handleInputChange}
-                      required
-                    />
-                  </div>
+                <div>
                   <div className="space-y-2">
                     <Label htmlFor="email" className="text-base font-medium text-gray-700">Email</Label>
                     <Input
@@ -315,7 +300,7 @@ const HeroSection = ({ region }: HeroSectionProps) => {
                         </svg>
                       </div>
                       <div className="ml-3">
-                        <p className="text-sm font-medium">Thank you! We'll call you within 24 hours.</p>
+                        <p className="text-sm font-medium">Thank you! We'll contact you within 24 hours.</p>
                       </div>
                     </div>
                   </div>
@@ -330,7 +315,7 @@ const HeroSection = ({ region }: HeroSectionProps) => {
                         </svg>
                       </div>
                       <div className="ml-3">
-                        <p className="text-sm font-medium">Something went wrong. Please try again or call us directly.</p>
+                        <p className="text-sm font-medium">Something went wrong. Please try again or email us at help@yourmedguy.com.</p>
                       </div>
                     </div>
                   </div>

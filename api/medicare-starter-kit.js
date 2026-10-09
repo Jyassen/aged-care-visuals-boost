@@ -41,7 +41,7 @@ export default async function handler(req, res) {
               <span style="font-size: 14px; color: #666;">Bust common myths with facts</span>
             </p>
           </div>
-          <p>If you have questions or need personalized help, <a href="tel:888-355-1085" style="color: #1e40af;">call us at 888-355-1085</a> – our licensed advisors are here to assist.</p>
+          <p>If you have questions or need personalized help, <a href="mailto:help@yourmedguy.com" style="color: #1e40af;">email us at help@yourmedguy.com</a> – our licensed advisors are here to assist.</p>
           <p style="text-align: center; margin: 30px 0;">
             Or visit our site to get more information:<br><br>
             <a href="https://yourmedguy.com" style="display: inline-block; background: linear-gradient(to right, #2563eb, #1e40af); color: white; padding: 14px 32px; text-decoration: none; border-radius: 8px; font-weight: bold; font-size: 16px;">Visit YourMedGuy.com</a>
@@ -73,7 +73,7 @@ export default async function handler(req, res) {
           </div>
           <div style="background-color: #1e40af; color: white; padding: 15px; border-radius: 8px; margin-top: 20px;">
             <p style="margin: 0; font-weight: bold;">Follow-up Opportunity</p>
-            <p style="margin: 5px 0 0 0; font-size: 14px;">This lead requested educational content – great for nurturing. Consider a follow-up call in 3-5 days.</p>
+            <p style="margin: 5px 0 0 0; font-size: 14px;">This lead requested educational content – great for nurturing. Consider a follow-up email in 3-5 days.</p>
           </div>
         </div>
       `,

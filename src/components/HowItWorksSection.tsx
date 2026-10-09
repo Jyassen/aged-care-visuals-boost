@@ -1,6 +1,6 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Phone, Calendar, FileCheck, Smile } from "lucide-react";
+import { Phone, Mail, Calendar, FileCheck, Smile } from "lucide-react";
 import CaptureForm from "@/components/CaptureForm";
 
 const steps = [
@@ -8,7 +8,7 @@ const steps = [
     step: "1",
     icon: Phone,
     title: "STEP 1: Contact Us",
-    description: "Call us or fill out our form. We'll schedule a convenient time to discuss your Medicare needs and current coverage.",
+    description: "Fill out our form or email us. We'll schedule a convenient time to discuss your Medicare needs and current coverage.",
     color: "bg-primary"
   },
   {
@@ -109,13 +109,13 @@ const HowItWorksSection = () => {
                 }
               />
               <div className="text-center sm:text-left">
-                <p className="text-sm text-muted-foreground">Or call us directly</p>
+                <p className="text-sm text-muted-foreground">Or email us</p>
                 <a 
-                  href="tel:888-355-1085" 
+                  href="mailto:help@yourmedguy.com" 
                   className="text-xl-accessible font-semibold text-primary hover:text-primary-hover flex items-center justify-center sm:justify-start"
                 >
-                  <Phone className="h-5 w-5 mr-2" />
-                  888-355-1085
+                  <Mail className="h-5 w-5 mr-2" />
+                  help@yourmedguy.com
                 </a>
               </div>
             </div>
