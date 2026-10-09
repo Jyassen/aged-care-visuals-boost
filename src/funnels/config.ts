@@ -18,9 +18,6 @@ export type FunnelConfig = {
   faqs: { q: string; a: string }[];
 };
 
-export const PHONE_DISPLAY = "888-355-1085";
-export const PHONE_TEL = "tel:888-355-1085";
-
 export const DISCLOSURE =
   "We do not offer every plan available in your area. Any information we provide is limited to the plans we do offer. Please contact Medicare.gov or 1-800-MEDICARE (1-800-633-4227), TTY: 1-877-486-2048, 24 hours a day, 7 days a week, to get information on all your options. This website is not connected with or endorsed by the United States Government or the federal Medicare program. Booking a review does not enroll you in a plan.";
 
@@ -34,7 +31,7 @@ export const HOW_STEPS = [
   {
     n: "01",
     title: "Pick a time",
-    body: "Use the form on this page, or call during posted hours. You can book without watching the rest of the video.",
+    body: "Use the form on this page to book your review. You can book without watching the rest of the video.",
   },
   {
     n: "02",

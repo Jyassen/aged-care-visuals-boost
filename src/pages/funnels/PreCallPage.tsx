@@ -1,10 +1,10 @@
 import { useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { CheckCircle2, Phone } from "lucide-react";
+import { CheckCircle2, Mail } from "lucide-react";
 import SEO from "@/components/SEO";
 import WistiaPlayer from "@/components/funnels/WistiaPlayer";
 import { FunnelFooter, FunnelHeader } from "@/components/funnels/FunnelChrome";
-import { PHONE_DISPLAY, PHONE_TEL, PRECALLS, type PrecallId } from "@/funnels/config";
+import { PRECALLS, type PrecallId } from "@/funnels/config";
 
 type PreCallPageProps = {
   variant: PrecallId;
@@ -66,14 +66,14 @@ export default function PreCallPage({ variant }: PreCallPageProps) {
           <p className="mt-6 text-gray-700 leading-relaxed">
             There is no charge for the consultation, and you do not have to change coverage or decide on the call.
             Check your confirmation for the time and how we will connect. Need another time? Use the rescheduling link,
-            or call us.
+            or email us.
           </p>
           <a
-            href={PHONE_TEL}
+            href="mailto:help@yourmedguy.com"
             className="mt-6 inline-flex items-center justify-center bg-blue-700 hover:bg-blue-800 text-white font-semibold px-6 py-3 rounded-lg"
           >
-            <Phone className="h-4 w-4 mr-2" />
-            Call {PHONE_DISPLAY}
+            <Mail className="h-4 w-4 mr-2" />
+            Email help@yourmedguy.com
           </a>
         </section>
 

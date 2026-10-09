@@ -182,7 +182,7 @@ export const generateCalculatorPDF = (
     doc.text('YourMedGuy | Medicare Made Simple', pageWidth / 2, yPos + 11, { align: 'center' });
     
     doc.setFontSize(10);
-    doc.text('📞 888-355-1085 | 🌐 YourMedGuy.com', pageWidth / 2, yPos + 18, { align: 'center' });
+    doc.text('✉️ help@yourmedguy.com | 🌐 YourMedGuy.com', pageWidth / 2, yPos + 18, { align: 'center' });
     
     doc.setFontSize(9);
     doc.setTextColor(75, 85, 99);

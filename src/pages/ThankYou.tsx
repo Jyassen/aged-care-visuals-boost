@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import Header from '@/components/Header';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { CheckCircle2, Phone } from 'lucide-react';
+import { CheckCircle2, Mail } from 'lucide-react';
 import { useLocation, Link } from 'react-router-dom';
 
 export default function ThankYou() {
@@ -55,14 +55,14 @@ export default function ThankYou() {
                 </div>
                 <div className="p-4 rounded-lg bg-blue-50">
                   <p className="font-semibold text-blue-700">Need help sooner?</p>
-                  <p className="text-sm text-black mt-1">Call us now and we’ll prioritize your consultation.</p>
+                  <p className="text-sm text-black mt-1">Email us and we’ll prioritize your consultation.</p>
                 </div>
               </div>
 
               <div className="flex flex-col sm:flex-row gap-3 justify-center">
                 <Button asChild className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800">
-                  <a href="tel:888-355-1085" className="flex items-center">
-                    <Phone className="w-4 h-4 mr-2" /> Call 888-355-1085
+                  <a href="mailto:help@yourmedguy.com" className="flex items-center">
+                    <Mail className="w-4 h-4 mr-2" /> Email help@yourmedguy.com
                   </a>
                 </Button>
                 <Button variant="outline" asChild>
