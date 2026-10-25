@@ -1,4 +1,4 @@
-import LegalPageLayout from "@/components/legal/LegalPageLayout";
+import LaunchLayout from "./LaunchLayout";
 
 /**
  * A2P Privacy Policy for YourMedGuy.
@@ -9,12 +9,10 @@ import LegalPageLayout from "@/components/legal/LegalPageLayout";
  * are kept exactly as on the source site.
  */
 const PrivacyPolicy = () => (
-  <LegalPageLayout
+  <LaunchLayout
     title="Privacy Policy"
     description="Privacy Policy for YourMedGuy, a subsidiary of Yassco Consulting Group LLC, including SMS messaging and opt-in data protection."
     canonicalPath="/launch/privacy"
-    backTo="/launch"
-    backLabel="Back to Request Information"
   >
     <header className="space-y-2 border-b pb-8">
       <h1 className="text-3xl md:text-4xl font-bold">Privacy Policy — YourMedGuy</h1>
@@ -228,7 +226,7 @@ const PrivacyPolicy = () => (
       <p>By using our website and services, you consent to this Privacy Policy.</p>
       <p>© YourMedGuy, a subsidiary of Yassco Consulting Group LLC</p>
     </section>
-  </LegalPageLayout>
+  </LaunchLayout>
 );
 
 export default PrivacyPolicy;

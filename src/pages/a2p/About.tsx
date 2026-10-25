@@ -1,4 +1,4 @@
-import LegalPageLayout from "@/components/legal/LegalPageLayout";
+import LaunchLayout from "./LaunchLayout";
 
 /**
  * A2P About page for YourMedGuy.
@@ -9,12 +9,10 @@ import LegalPageLayout from "@/components/legal/LegalPageLayout";
  * the source site.
  */
 const About = () => (
-  <LegalPageLayout
+  <LaunchLayout
     title="About"
     description="About YourMedGuy, a subsidiary of Yassco Consulting Group LLC, serving Queens Village, Queens County, NY."
     canonicalPath="/launch/about"
-    backTo="/launch"
-    backLabel="Back to Request Information"
   >
     <header className="space-y-2 border-b pb-8">
       <h1 className="text-3xl md:text-4xl font-bold">About — YourMedGuy</h1>
@@ -69,7 +67,7 @@ const About = () => (
       <p>21501 102nd Ave Queens Village NY 11429</p>
       <p>team@yasscoconsultinggroupllc.nebulabrandgroup.com • (917) 703-8352</p>
     </section>
-  </LegalPageLayout>
+  </LaunchLayout>
 );
 
 export default About;

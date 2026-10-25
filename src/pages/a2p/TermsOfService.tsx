@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import LegalPageLayout from "@/components/legal/LegalPageLayout";
+import LaunchLayout from "./LaunchLayout";
 
 /**
  * A2P Terms of Service for YourMedGuy.
@@ -10,12 +10,10 @@ import LegalPageLayout from "@/components/legal/LegalPageLayout";
  * are kept exactly as on the source site.
  */
 const TermsOfService = () => (
-  <LegalPageLayout
+  <LaunchLayout
     title="Terms of Service"
     description="Terms of Service for YourMedGuy, a subsidiary of Yassco Consulting Group LLC, including SMS messaging terms and compliance."
     canonicalPath="/launch/terms"
-    backTo="/launch"
-    backLabel="Back to Request Information"
   >
     <header className="space-y-2 border-b pb-8">
       <h1 className="text-3xl md:text-4xl font-bold">Terms of Service — YourMedGuy</h1>
@@ -217,7 +215,7 @@ const TermsOfService = () => (
       <p>By using our website and services, you consent to these Terms of Service.</p>
       <p>© YourMedGuy, a subsidiary of Yassco Consulting Group LLC</p>
     </section>
-  </LegalPageLayout>
+  </LaunchLayout>
 );
 
 export default TermsOfService;

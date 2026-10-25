@@ -2,7 +2,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import CostCalculatorPage from "./pages/tools/CostCalculatorPage";
@@ -62,11 +62,6 @@ const App = () => (
           <Route path="/launch/about" element={<A2pAbout />} />
           <Route path="/launch/privacy" element={<A2pPrivacyPolicy />} />
           <Route path="/launch/terms" element={<A2pTermsOfService />} />
-          {/* Old /a2p URLs redirect to /launch so any link already shared keeps working */}
-          <Route path="/a2p" element={<Navigate to="/launch" replace />} />
-          <Route path="/a2p/about" element={<Navigate to="/launch/about" replace />} />
-          <Route path="/a2p/privacy" element={<Navigate to="/launch/privacy" replace />} />
-          <Route path="/a2p/terms" element={<Navigate to="/launch/terms" replace />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
