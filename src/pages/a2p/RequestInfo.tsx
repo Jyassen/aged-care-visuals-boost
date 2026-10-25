@@ -47,7 +47,7 @@ const RequestInfo = () => {
           lastName,
           email,
           source: "YourMedGuy.com A2P Request Information Form",
-          pageUrl: typeof window !== "undefined" ? window.location.href : "https://yourmedguy.com/a2p",
+          pageUrl: typeof window !== "undefined" ? window.location.href : "https://yourmedguy.com/launch",
           message: [
             `Mobile Phone Number (Optional): ${mobile || "Not provided"}`,
             `Non-marketing consent (information request follow-ups, plan information clarification, and general inquiry updates): ${nonMarketingConsent ? "Yes" : "No"}`,
@@ -70,7 +70,7 @@ const RequestInfo = () => {
       <SEO
         title="YourMedGuy — Queens Village, Queens County, NY"
         description="Reach out to YourMedGuy for more information about Medicare options and how our guidance can help you understand coverage details."
-        canonical="https://yourmedguy.com/a2p"
+        canonical="https://yourmedguy.com/launch"
       />
       <Header />
       <main className="flex-1">
@@ -165,11 +165,11 @@ const RequestInfo = () => {
                 </div>
 
                 <p className="text-sm text-muted-foreground">
-                  <Link to="/a2p/privacy" className="text-primary hover:underline">Privacy Policy</Link>
+                  <Link to="/launch/privacy" className="text-primary hover:underline">Privacy Policy</Link>
                   {" · "}
-                  <Link to="/a2p/terms" className="text-primary hover:underline">Terms of Service</Link>
+                  <Link to="/launch/terms" className="text-primary hover:underline">Terms of Service</Link>
                   {" · "}
-                  <Link to="/a2p/about" className="text-primary hover:underline">About</Link>
+                  <Link to="/launch/about" className="text-primary hover:underline">About</Link>
                 </p>
 
                 {error && <p className="text-sm text-red-600">{error}</p>}

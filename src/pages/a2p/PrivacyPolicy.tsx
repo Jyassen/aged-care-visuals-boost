@@ -12,8 +12,8 @@ const PrivacyPolicy = () => (
   <LegalPageLayout
     title="Privacy Policy"
     description="Privacy Policy for YourMedGuy, a subsidiary of Yassco Consulting Group LLC, including SMS messaging and opt-in data protection."
-    canonicalPath="/a2p/privacy"
-    backTo="/a2p"
+    canonicalPath="/launch/privacy"
+    backTo="/launch"
     backLabel="Back to Request Information"
   >
     <header className="space-y-2 border-b pb-8">

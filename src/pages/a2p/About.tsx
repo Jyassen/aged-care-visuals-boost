@@ -12,8 +12,8 @@ const About = () => (
   <LegalPageLayout
     title="About"
     description="About YourMedGuy, a subsidiary of Yassco Consulting Group LLC, serving Queens Village, Queens County, NY."
-    canonicalPath="/a2p/about"
-    backTo="/a2p"
+    canonicalPath="/launch/about"
+    backTo="/launch"
     backLabel="Back to Request Information"
   >
     <header className="space-y-2 border-b pb-8">

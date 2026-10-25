@@ -13,8 +13,8 @@ const TermsOfService = () => (
   <LegalPageLayout
     title="Terms of Service"
     description="Terms of Service for YourMedGuy, a subsidiary of Yassco Consulting Group LLC, including SMS messaging terms and compliance."
-    canonicalPath="/a2p/terms"
-    backTo="/a2p"
+    canonicalPath="/launch/terms"
+    backTo="/launch"
     backLabel="Back to Request Information"
   >
     <header className="space-y-2 border-b pb-8">
@@ -65,7 +65,7 @@ const TermsOfService = () => (
       </p>
       <p>
         <strong>8. Privacy Policy:</strong> For privacy-related inquiries, please refer to our{" "}
-        <Link to="/a2p/privacy" className="text-primary hover:underline">Privacy Policy</Link>.
+        <Link to="/launch/privacy" className="text-primary hover:underline">Privacy Policy</Link>.
       </p>
       <p>
         We comply with all applicable laws and regulations, including the Telephone Consumer Protection Act (TCPA) and
