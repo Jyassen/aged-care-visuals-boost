@@ -16,6 +16,10 @@ import LegalDocuments from "./pages/legal/LegalDocuments";
 import CookiePolicy from "./pages/legal/CookiePolicy";
 import ConsentToContact from "./pages/legal/ConsentToContact";
 import HipaaCompliance from "./pages/legal/HipaaCompliance";
+import A2pRequestInfo from "./pages/a2p/RequestInfo";
+import A2pAbout from "./pages/a2p/About";
+import A2pPrivacyPolicy from "./pages/a2p/PrivacyPolicy";
+import A2pTermsOfService from "./pages/a2p/TermsOfService";
 import ScrollToTop from "./components/ScrollToTop";
 import VslFunnelPage from "./pages/funnels/VslFunnelPage";
 import PreCallPage from "./pages/funnels/PreCallPage";
@@ -54,6 +58,10 @@ const App = () => (
           <Route path="/cookie-policy" element={<CookiePolicy />} />
           <Route path="/consent-to-contact" element={<ConsentToContact />} />
           <Route path="/hipaa-compliance" element={<HipaaCompliance />} />
+          <Route path="/a2p" element={<A2pRequestInfo />} />
+          <Route path="/a2p/about" element={<A2pAbout />} />
+          <Route path="/a2p/privacy" element={<A2pPrivacyPolicy />} />
+          <Route path="/a2p/terms" element={<A2pTermsOfService />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
