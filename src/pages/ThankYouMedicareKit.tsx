@@ -51,8 +51,8 @@ export default function ThankYouMedicareKit() {
               </div>
               <div className="flex flex-col sm:flex-row gap-3 justify-center mb-8">
                 <Button asChild className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800">
-                  <a href="mailto:help@yourmedguy.com" className="flex items-center">
-                    <Mail className="w-4 h-4 mr-2" /> Email help@yourmedguy.com
+                  <a href="mailto:support@yourmedguy.com" className="flex items-center">
+                    <Mail className="w-4 h-4 mr-2" /> Email support@yourmedguy.com
                   </a>
                 </Button>
                 <Button variant="outline" asChild>

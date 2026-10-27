@@ -12,7 +12,6 @@ import {
   HERO_IMAGE,
   LAUNCH_PAGES,
   SERVICES,
-  UPDATED,
 } from "@/launch/brand";
 
 const page = LAUNCH_PAGES[0];
@@ -32,7 +31,7 @@ export default function LaunchHome() {
           <div className="heroLogo">M</div>
           <h1 className="h1">{HEADLINE}</h1>
           <div className="sub">
-            {BRAND} • Serving {AREA} • Updated {UPDATED}
+            {BRAND} • Serving {AREA}
           </div>
           <div className="ctaRow">
             <a className="btn" href="#optin">Sign Up For Info</a>

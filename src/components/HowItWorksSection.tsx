@@ -111,11 +111,11 @@ const HowItWorksSection = () => {
               <div className="text-center sm:text-left">
                 <p className="text-sm text-muted-foreground">Or email us</p>
                 <a 
-                  href="mailto:help@yourmedguy.com" 
+                  href="mailto:support@yourmedguy.com" 
                   className="text-xl-accessible font-semibold text-primary hover:text-primary-hover flex items-center justify-center sm:justify-start"
                 >
                   <Mail className="h-5 w-5 mr-2" />
-                  help@yourmedguy.com
+                  support@yourmedguy.com
                 </a>
               </div>
             </div>

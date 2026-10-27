@@ -54,8 +54,8 @@ const About = () => (
       <div className="rounded-lg border bg-muted/40 p-6 space-y-1">
         <p>
           Email:{" "}
-          <a href="mailto:team@yasscoconsultinggroupllc.nebulabrandgroup.com" className="text-primary hover:underline">
-            team@yasscoconsultinggroupllc.nebulabrandgroup.com
+          <a href="mailto:support@yourmedguy.com" className="text-primary hover:underline">
+            support@yourmedguy.com
           </a>
         </p>
         <p>Phone: (917) 703-8352</p>
@@ -65,7 +65,7 @@ const About = () => (
         <strong>YourMedGuy, a subsidiary of Yassco Consulting Group LLC</strong>
       </p>
       <p>21501 102nd Ave Queens Village NY 11429</p>
-      <p>team@yasscoconsultinggroupllc.nebulabrandgroup.com • (917) 703-8352</p>
+      <p>support@yourmedguy.com • (917) 703-8352</p>
     </section>
   </LaunchLayout>
 );

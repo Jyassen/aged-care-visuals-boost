@@ -169,7 +169,7 @@ export default function FunnelForm({ source, topic, precall, idPrefix = "funnel"
       )}
       {submitStatus === "error" && (
         <p className="text-sm font-medium text-red-600 text-center">
-          Something went wrong. Please try again or email us at help@yourmedguy.com.
+          Something went wrong. Please try again or email us at support@yourmedguy.com.
         </p>
       )}
 

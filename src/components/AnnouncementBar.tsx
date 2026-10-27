@@ -19,11 +19,11 @@ const AnnouncementBar = () => {
             <span className="font-semibold text-amber-300">Annual Enrollment: Oct 15 – Dec 7.</span>{" "}
             <span className="text-blue-100">Book your free review before the deadline —</span>{" "}
             <a
-              href="mailto:help@yourmedguy.com"
+              href="mailto:support@yourmedguy.com"
               className="font-semibold underline decoration-amber-300/60 underline-offset-2 hover:text-amber-200 inline-flex items-center"
             >
               <Mail className="h-4 w-4 mr-1" />
-              help@yourmedguy.com
+              support@yourmedguy.com
             </a>
           </p>
           <button

@@ -43,11 +43,11 @@ const Footer = ({ region = 'nyc' }: FooterProps) => {
             <h4 className="text-xl-accessible font-semibold">Contact Us</h4>
             <div className="space-y-4">
               <a 
-                href="mailto:help@yourmedguy.com" 
+                href="mailto:support@yourmedguy.com" 
                 className="flex items-center space-x-3 text-primary-foreground/90 hover:text-accent transition-colors text-lg"
               >
                 <Mail className="h-5 w-5" />
-                <span>help@yourmedguy.com</span>
+                <span>support@yourmedguy.com</span>
               </a>
               <div className="flex items-start space-x-3 text-primary-foreground/90 text-lg">
                 <MapPin className="h-5 w-5 mt-1" />

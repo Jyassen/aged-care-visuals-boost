@@ -201,7 +201,7 @@ const HeroSection = ({ region }: HeroSectionProps) => {
                   className="border-2 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white font-semibold text-lg px-8 py-5 transition-all duration-300"
                   asChild
                 >
-                  <a href="mailto:help@yourmedguy.com" className="flex items-center justify-center">
+                  <a href="mailto:support@yourmedguy.com" className="flex items-center justify-center">
                     <Mail className="h-5 w-5 mr-2" />
                     Email Us
                   </a>
@@ -315,7 +315,7 @@ const HeroSection = ({ region }: HeroSectionProps) => {
                         </svg>
                       </div>
                       <div className="ml-3">
-                        <p className="text-sm font-medium">Something went wrong. Please try again or email us at help@yourmedguy.com.</p>
+                        <p className="text-sm font-medium">Something went wrong. Please try again or email us at support@yourmedguy.com.</p>
                       </div>
                     </div>
                   </div>

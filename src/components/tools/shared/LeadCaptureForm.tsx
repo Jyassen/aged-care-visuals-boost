@@ -88,7 +88,7 @@ export default function LeadCaptureForm({ source, context, onSuccess }: LeadCapt
     } catch (error) {
       toast({
         title: "Something went wrong",
-        description: "Please try again or email us at help@yourmedguy.com",
+        description: "Please try again or email us at support@yourmedguy.com",
         variant: "destructive",
       });
     } finally {

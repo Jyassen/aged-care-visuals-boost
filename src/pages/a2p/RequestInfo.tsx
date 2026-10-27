@@ -59,7 +59,7 @@ const RequestInfo = () => {
       if (!response.ok) throw new Error("Failed to send form");
       setSubmitted(true);
     } catch {
-      setError("Something went wrong. Please try again or email us at team@yasscoconsultinggroupllc.nebulabrandgroup.com.");
+      setError("Something went wrong. Please try again or email us at support@yourmedguy.com.");
     } finally {
       setIsSubmitting(false);
     }
@@ -174,8 +174,8 @@ const RequestInfo = () => {
         <div className="rounded-lg border bg-muted/40 p-6 space-y-1">
           <p>
             Email:{" "}
-            <a href="mailto:team@yasscoconsultinggroupllc.nebulabrandgroup.com" className="text-primary hover:underline">
-              team@yasscoconsultinggroupllc.nebulabrandgroup.com
+            <a href="mailto:support@yourmedguy.com" className="text-primary hover:underline">
+              support@yourmedguy.com
             </a>
           </p>
           <p>Phone: (917) 703-8352</p>
@@ -183,7 +183,7 @@ const RequestInfo = () => {
         </div>
 
         <p className="text-sm text-muted-foreground">
-          Email, team@yasscoconsultinggroupllc.nebulabrandgroup.com, Phone, (917) 703-8352, Address 21501 102nd Ave
+          Email, support@yourmedguy.com, Phone, (917) 703-8352, Address 21501 102nd Ave
           Queens Village NY 11429
         </p>
       </section>

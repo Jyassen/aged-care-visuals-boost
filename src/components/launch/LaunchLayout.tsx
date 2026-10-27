@@ -10,7 +10,6 @@ import {
   LEGAL_NAME,
   PHONE_DISPLAY,
   PHONE_TEL,
-  UPDATED,
 } from "@/launch/brand";
 import "@/launch/launch.css";
 
@@ -136,8 +135,6 @@ function LaunchFooter() {
           <div className="footText">{ABOUT_BLURB}</div>
           <div className="footMeta">
             Serving {AREA}
-            <br />
-            Last updated {UPDATED}
             <br />
             {BRAND_LEGAL}
           </div>

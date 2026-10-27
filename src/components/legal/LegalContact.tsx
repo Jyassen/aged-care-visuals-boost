@@ -6,8 +6,8 @@ const LegalContact = () => (
     <p>Albany NY 12207</p>
     <p>
       Email:{" "}
-      <a href="mailto:info@yasscogroup.com" className="text-primary hover:underline">
-        info@yasscogroup.com
+      <a href="mailto:support@yourmedguy.com" className="text-primary hover:underline">
+        support@yourmedguy.com
       </a>
     </p>
   </div>

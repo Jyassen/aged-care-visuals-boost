@@ -41,8 +41,8 @@ const TermsOfService = () => (
       <p>
         <strong>3. Support Information:</strong> If you experience issues with the messaging program, reply with the
         keyword &quot;HELP&quot; for more assistance, or reach out directly to{" "}
-        <a href="mailto:team@yasscoconsultinggroupllc.nebulabrandgroup.com" className="text-primary hover:underline">
-          team@yasscoconsultinggroupllc.nebulabrandgroup.com
+        <a href="mailto:support@yourmedguy.com" className="text-primary hover:underline">
+          support@yourmedguy.com
         </a>{" "}
         or call (917) 703-8352 during business hours.
       </p>
@@ -166,8 +166,8 @@ const TermsOfService = () => (
       </p>
       <p>
         If you suspect unauthorized use of your account, notify us immediately at{" "}
-        <a href="mailto:team@yasscoconsultinggroupllc.nebulabrandgroup.com" className="text-primary hover:underline">
-          team@yasscoconsultinggroupllc.nebulabrandgroup.com
+        <a href="mailto:support@yourmedguy.com" className="text-primary hover:underline">
+          support@yourmedguy.com
         </a>
         . We are not liable for any loss or damage arising from your failure to comply with this obligation.
       </p>
@@ -208,8 +208,8 @@ const TermsOfService = () => (
       <p>Phone: (917) 703-8352</p>
       <p>
         Email:{" "}
-        <a href="mailto:team@yasscoconsultinggroupllc.nebulabrandgroup.com" className="text-primary hover:underline">
-          team@yasscoconsultinggroupllc.nebulabrandgroup.com
+        <a href="mailto:support@yourmedguy.com" className="text-primary hover:underline">
+          support@yourmedguy.com
         </a>
       </p>
       <p>By using our website and services, you consent to these Terms of Service.</p>

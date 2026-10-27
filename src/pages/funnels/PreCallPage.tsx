@@ -69,11 +69,11 @@ export default function PreCallPage({ variant }: PreCallPageProps) {
             or email us.
           </p>
           <a
-            href="mailto:help@yourmedguy.com"
+            href="mailto:support@yourmedguy.com"
             className="mt-6 inline-flex items-center justify-center bg-blue-700 hover:bg-blue-800 text-white font-semibold px-6 py-3 rounded-lg"
           >
             <Mail className="h-4 w-4 mr-2" />
-            Email help@yourmedguy.com
+            Email support@yourmedguy.com
           </a>
         </section>
 

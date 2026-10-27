@@ -23,9 +23,9 @@ export function FunnelHeader({ showBook = true }: { showBook?: boolean }) {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-4">
         <Logo />
         <div className="flex items-center gap-3">
-          <a href="mailto:help@yourmedguy.com" className="font-semibold text-blue-700 hover:text-blue-800 flex items-center text-sm sm:text-base">
+          <a href="mailto:support@yourmedguy.com" className="font-semibold text-blue-700 hover:text-blue-800 flex items-center text-sm sm:text-base">
             <Mail className="h-4 w-4 mr-1.5" />
-            help@yourmedguy.com
+            support@yourmedguy.com
           </a>
           {showBook && (
             <Button asChild className="hidden sm:inline-flex bg-blue-700 hover:bg-blue-800">
@@ -48,7 +48,7 @@ export function FunnelFooter() {
             <Link to="/privacy-policy" className="hover:text-blue-700">Privacy Policy</Link>
             <Link to="/terms-of-service" className="hover:text-blue-700">Terms</Link>
             <Link to="/consent-to-contact" className="hover:text-blue-700">Consent to Contact</Link>
-            <a href="mailto:help@yourmedguy.com" className="hover:text-blue-700">help@yourmedguy.com</a>
+            <a href="mailto:support@yourmedguy.com" className="hover:text-blue-700">support@yourmedguy.com</a>
           </div>
         </div>
         <p className="text-xs text-gray-500 leading-relaxed max-w-4xl">{DISCLOSURE}</p>
@@ -62,7 +62,7 @@ export function FunnelMobileBar() {
     <div className="sm:hidden fixed bottom-0 inset-x-0 z-40 bg-white/95 backdrop-blur-sm border-t border-gray-200 shadow-[0_-4px_16px_rgba(0,0,0,0.08)]">
       <div className="grid grid-cols-2 gap-3 px-4 py-3">
         <Button asChild variant="outline" className="border-2 border-blue-600 text-blue-700 font-semibold h-12">
-          <a href="mailto:help@yourmedguy.com" className="flex items-center justify-center">
+          <a href="mailto:support@yourmedguy.com" className="flex items-center justify-center">
             <Mail className="h-5 w-5 mr-2" />
             Email
           </a>

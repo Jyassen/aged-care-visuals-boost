@@ -98,8 +98,8 @@ const PrivacyPolicy = () => (
       <ul className="list-disc pl-6 space-y-2">
         <li>
           Reply &quot;HELP&quot; for assistance or contact us at{" "}
-          <a href="mailto:team@yasscoconsultinggroupllc.nebulabrandgroup.com" className="text-primary hover:underline">
-            team@yasscoconsultinggroupllc.nebulabrandgroup.com
+          <a href="mailto:support@yourmedguy.com" className="text-primary hover:underline">
+            support@yourmedguy.com
           </a>
         </li>
         <li>Customer support is available during regular business hours</li>
@@ -219,8 +219,8 @@ const PrivacyPolicy = () => (
       <p>Phone: (917) 703-8352</p>
       <p>
         Email:{" "}
-        <a href="mailto:team@yasscoconsultinggroupllc.nebulabrandgroup.com" className="text-primary hover:underline">
-          team@yasscoconsultinggroupllc.nebulabrandgroup.com
+        <a href="mailto:support@yourmedguy.com" className="text-primary hover:underline">
+          support@yourmedguy.com
         </a>
       </p>
       <p>By using our website and services, you consent to this Privacy Policy.</p>

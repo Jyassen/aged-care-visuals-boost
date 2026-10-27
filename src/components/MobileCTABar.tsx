@@ -17,7 +17,7 @@ const MobileCTABar = () => {
           variant="outline"
           className="border-2 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white font-semibold text-base h-12"
         >
-          <a href="mailto:help@yourmedguy.com" className="flex items-center justify-center">
+          <a href="mailto:support@yourmedguy.com" className="flex items-center justify-center">
             <Mail className="h-5 w-5 mr-2" />
             Email Us
           </a>
