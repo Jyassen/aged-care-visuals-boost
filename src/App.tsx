@@ -16,14 +16,19 @@ import LegalDocuments from "./pages/legal/LegalDocuments";
 import CookiePolicy from "./pages/legal/CookiePolicy";
 import ConsentToContact from "./pages/legal/ConsentToContact";
 import HipaaCompliance from "./pages/legal/HipaaCompliance";
-import A2pRequestInfo from "./pages/a2p/RequestInfo";
-import A2pAbout from "./pages/a2p/About";
-import A2pPrivacyPolicy from "./pages/a2p/PrivacyPolicy";
-import A2pTermsOfService from "./pages/a2p/TermsOfService";
 import ScrollToTop from "./components/ScrollToTop";
 import VslFunnelPage from "./pages/funnels/VslFunnelPage";
 import PreCallPage from "./pages/funnels/PreCallPage";
 import { FUNNELS } from "./funnels/config";
+import LaunchLayout from "./components/launch/LaunchLayout";
+import LaunchHome from "./pages/launch/LaunchHome";
+import LaunchAbout from "./pages/launch/LaunchAbout";
+import LaunchServices from "./pages/launch/LaunchServices";
+import LaunchContact from "./pages/launch/LaunchContact";
+import LaunchPrivacy from "./pages/launch/LaunchPrivacy";
+import LaunchTerms from "./pages/launch/LaunchTerms";
+import LaunchSms from "./pages/launch/LaunchSms";
+import LaunchMissing from "./pages/launch/LaunchMissing";
 
 const queryClient = new QueryClient();
 
@@ -58,10 +63,16 @@ const App = () => (
           <Route path="/cookie-policy" element={<CookiePolicy />} />
           <Route path="/consent-to-contact" element={<ConsentToContact />} />
           <Route path="/hipaa-compliance" element={<HipaaCompliance />} />
-          <Route path="/launch" element={<A2pRequestInfo />} />
-          <Route path="/launch/about" element={<A2pAbout />} />
-          <Route path="/launch/privacy" element={<A2pPrivacyPolicy />} />
-          <Route path="/launch/terms" element={<A2pTermsOfService />} />
+          <Route path="/launch" element={<LaunchLayout />}>
+            <Route index element={<LaunchHome />} />
+            <Route path="about" element={<LaunchAbout />} />
+            <Route path="services" element={<LaunchServices />} />
+            <Route path="contact" element={<LaunchContact />} />
+            <Route path="privacy" element={<LaunchPrivacy />} />
+            <Route path="terms" element={<LaunchTerms />} />
+            <Route path="sms" element={<LaunchSms />} />
+            <Route path="*" element={<LaunchMissing />} />
+          </Route>
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
