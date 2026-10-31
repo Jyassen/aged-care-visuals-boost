@@ -24,14 +24,14 @@ export const DISCLOSURE =
 export const PROOF = [
   { value: "10+ years", label: "Helping people understand Medicare" },
   { value: "NY & NJ", label: "Licensed Medicare brokers" },
-  { value: "Free", label: "No plan change required on the call" },
+  { value: "Free Consultation", label: "No plan change required on the call" },
 ];
 
 export const HOW_STEPS = [
   {
     n: "01",
     title: "Pick a time",
-    body: "Use the form on this page to book your review. You can book without watching the rest of the video.",
+    body: "Use the calendar on this page to book your review. You can book without watching the rest of the video.",
   },
   {
     n: "02",

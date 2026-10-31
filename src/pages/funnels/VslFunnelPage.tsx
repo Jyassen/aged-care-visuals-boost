@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import SEO from "@/components/SEO";
 import WistiaPlayer from "@/components/funnels/WistiaPlayer";
-import FunnelForm from "@/components/funnels/FunnelForm";
+import GhlCalendar from "@/components/funnels/GhlCalendar";
 import { FunnelFooter, FunnelHeader, FunnelMobileBar } from "@/components/funnels/FunnelChrome";
 import {
   DISCLOSURE,
@@ -18,7 +18,14 @@ type VslFunnelPageProps = {
 export default function VslFunnelPage({ config }: VslFunnelPageProps) {
   return (
     <div id="top" className="min-h-screen bg-slate-50 text-gray-900 pb-24 sm:pb-0">
-      <SEO title={config.seoTitle} description={config.seoDescription} canonical={`https://yourmedguy.com/${config.slug}`} />
+      <SEO
+        title={config.seoTitle}
+        ogTitle={`${config.headline} ${config.headlineAccent}`}
+        description={config.subhead}
+        canonical={`https://yourmedguy.com/${config.slug}`}
+        ogImage={`https://yourmedguy.com/og/${config.slug}.jpg`}
+        ogImageAlt={`${config.headline} ${config.headlineAccent}`}
+      />
       <FunnelHeader />
 
       <main>
@@ -55,15 +62,18 @@ export default function VslFunnelPage({ config }: VslFunnelPageProps) {
           </dl>
         </section>
 
-        <section id="book" className="max-w-xl mx-auto px-4 sm:px-6 pb-16">
+        <section id="book" className="max-w-3xl mx-auto px-4 sm:px-6 pb-16">
           <div className="bg-white border-2 border-blue-100 rounded-2xl p-6 sm:p-8 shadow-xl">
             <div className="text-center space-y-2 mb-6">
-              <h2 className="text-2xl sm:text-3xl font-bold text-gray-900">Get Your Consultation</h2>
+              <h2 className="text-2xl sm:text-3xl font-bold text-gray-900">Book Your Consultation below</h2>
               <p className="text-gray-600 text-base sm:text-lg">
                 Speak with a Medicare specialist today
               </p>
             </div>
-            <FunnelForm source={config.source} topic={config.topic} precall={config.precall} />
+            <GhlCalendar />
+            <p className="mt-4 text-sm text-gray-600 text-center leading-relaxed">
+              Free consultation. Booking does not enroll you in a plan, and you do not have to change coverage on the call.
+            </p>
           </div>
         </section>
 

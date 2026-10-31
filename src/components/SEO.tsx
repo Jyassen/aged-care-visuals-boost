@@ -2,36 +2,41 @@ import { useEffect } from "react";
 
 type SEOProps = {
   title: string;
+  /** Link-preview title. Falls back to the browser title. */
+  ogTitle?: string;
   description?: string;
   canonical?: string;
   ogImage?: string;
+  ogImageAlt?: string;
 };
 
-export default function SEO({ title, description, canonical, ogImage }: SEOProps) {
+function setMeta(selector: string, create: () => HTMLMetaElement, content: string) {
+  let meta = document.querySelector(selector) as HTMLMetaElement | null;
+  if (!meta) {
+    meta = create();
+    document.head.appendChild(meta);
+  }
+  meta.setAttribute("content", content);
+}
+
+export default function SEO({ title, ogTitle, description, canonical, ogImage, ogImageAlt }: SEOProps) {
   useEffect(() => {
     const defaultOgImage = 'https://yourmedguy.com/og-image.jpg';
     const imageUrl = ogImage || defaultOgImage;
 
     if (title) {
       document.title = title;
-      
-      // Update OG title
-      let ogTitle = document.querySelector('meta[property="og:title"]') as HTMLMetaElement | null;
-      if (!ogTitle) {
-        ogTitle = document.createElement('meta');
-        ogTitle.setAttribute('property', 'og:title');
-        document.head.appendChild(ogTitle);
-      }
-      ogTitle.setAttribute('content', title);
-
-      // Update Twitter title
-      let twitterTitle = document.querySelector('meta[name="twitter:title"]') as HTMLMetaElement | null;
-      if (!twitterTitle) {
-        twitterTitle = document.createElement('meta');
-        twitterTitle.setAttribute('name', 'twitter:title');
-        document.head.appendChild(twitterTitle);
-      }
-      twitterTitle.setAttribute('content', title);
+      const previewTitle = ogTitle || title;
+      setMeta('meta[property="og:title"]', () => {
+        const meta = document.createElement("meta");
+        meta.setAttribute("property", "og:title");
+        return meta;
+      }, previewTitle);
+      setMeta('meta[name="twitter:title"]', () => {
+        const meta = document.createElement("meta");
+        meta.setAttribute("name", "twitter:title");
+        return meta;
+      }, previewTitle);
     }
 
     if (typeof description === 'string') {
@@ -90,15 +95,20 @@ export default function SEO({ title, description, canonical, ogImage }: SEOProps
     }
     ogImageMeta.setAttribute('content', imageUrl);
 
-    // Update Twitter Image
-    let twitterImage = document.querySelector('meta[name="twitter:image"]') as HTMLMetaElement | null;
-    if (!twitterImage) {
-      twitterImage = document.createElement('meta');
-      twitterImage.setAttribute('name', 'twitter:image');
-      document.head.appendChild(twitterImage);
+    setMeta('meta[name="twitter:image"]', () => {
+      const meta = document.createElement("meta");
+      meta.setAttribute("name", "twitter:image");
+      return meta;
+    }, imageUrl);
+
+    if (ogImageAlt) {
+      setMeta('meta[property="og:image:alt"]', () => {
+        const meta = document.createElement("meta");
+        meta.setAttribute("property", "og:image:alt");
+        return meta;
+      }, ogImageAlt);
     }
-    twitterImage.setAttribute('content', imageUrl);
-  }, [title, description, canonical, ogImage]);
+  }, [title, ogTitle, description, canonical, ogImage, ogImageAlt]);
 
   return null;
 }
