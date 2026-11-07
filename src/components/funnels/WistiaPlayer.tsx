@@ -24,7 +24,7 @@ export default function WistiaPlayer({ mediaId, title }: WistiaPlayerProps) {
     if (!document.getElementById(styleId)) {
       const style = document.createElement("style");
       style.id = styleId;
-      style.textContent = `wistia-player[media-id='${mediaId}']:not(:defined){background:center / contain no-repeat url('https://fast.wistia.com/embed/medias/${mediaId}/swatch');display:block;filter:blur(5px);padding-top:56.25%;}`;
+      style.textContent = `wistia-player[media-id='${mediaId}']:not(:defined){background:center / contain no-repeat url('https://fast.wistia.com/embed/medias/${mediaId}/swatch');display:block;padding-top:56.25%;}`;
       document.head.appendChild(style);
     }
   }, [mediaId]);
@@ -40,3 +40,4 @@ export default function WistiaPlayer({ mediaId, title }: WistiaPlayerProps) {
     </div>
   );
 }
+

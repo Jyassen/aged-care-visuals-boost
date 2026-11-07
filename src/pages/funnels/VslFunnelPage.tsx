@@ -67,9 +67,12 @@ export default function VslFunnelPage({ config }: VslFunnelPageProps) {
             <div className="text-center space-y-2 mb-6">
               <h2 className="text-2xl sm:text-3xl font-bold text-gray-900">Book Your Consultation below</h2>
               <p className="text-gray-600 text-base sm:text-lg">
-                Speak with a Medicare specialist today
+                Pick a time that works for you
               </p>
             </div>
+            <p className="text-center text-sm font-semibold text-blue-700 mb-4">
+              Pick a day, then a time.
+            </p>
             <GhlCalendar />
             <p className="mt-4 text-sm text-gray-600 text-center leading-relaxed">
               Free consultation. Booking does not enroll you in a plan, and you do not have to change coverage on the call.
@@ -169,3 +172,4 @@ export default function VslFunnelPage({ config }: VslFunnelPageProps) {
     </div>
   );
 }
+
