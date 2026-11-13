@@ -1,5 +1,26 @@
 export type PrecallId = "general" | "csnp-dsnp";
 
+export type HighlightLine = {
+  before: string;
+  accent: string;
+  after: string;
+};
+
+export type FunnelDeadline = {
+  /** Shown in the bar, under the calendar, and in the closing band. */
+  line: string;
+  /** Replaces `line` after `endsAt`. */
+  expiredLine?: string;
+  /**
+   * Shared cutoff for every visitor. Omit when the window is personal
+   * (Initial Enrollment, a special enrollment period) so the bar does not tick.
+   */
+  endsAt?: string;
+};
+
+/** Annual Enrollment 2026 ends 11:59:59 PM Eastern on December 7. */
+export const AEP_2026_END = "2026-12-08T04:59:59.000Z";
+
 export type FunnelConfig = {
   slug: string;
   source: string;
@@ -10,6 +31,8 @@ export type FunnelConfig = {
   headline: string;
   headlineAccent: string;
   subhead: string;
+  highlights: HighlightLine[];
+  deadline: FunnelDeadline;
   /** Long-form VSL. The C-SNP / D-SNP clip is a pre-call video, so it is not used here. */
   wistiaId?: string;
   videoTitle: string;
@@ -88,6 +111,14 @@ export const FUNNELS: FunnelConfig[] = [
     headlineAccent: "That does not settle every coverage question.",
     subhead:
       "Before the first appointment, check the Part A and Part B dates on the card, how prescriptions fit, and whether the doctors you see are in a plan network. Receiving the card does not answer drug coverage or how other insurance works with Medicare.",
+    highlights: [
+      { before: "Check the dates for ", accent: "Part A and Part B", after: " before the first appointment." },
+      { before: "The card does not explain ", accent: "drug coverage", after: "." },
+      { before: "Whether your doctors are in a ", accent: "plan network", after: " is a separate question." },
+    ],
+    deadline: {
+      line: "Your enrollment window is personal. The dates on the card are the place to start.",
+    },
     wistiaId: "xvwkulo513",
     videoTitle: "Medicare Card Arrived",
     problemHeading: "What the card does not answer",
@@ -125,6 +156,16 @@ export const FUNNELS: FunnelConfig[] = [
     headlineAccent: "is actually about you?",
     subhead:
       "A commercial sounds certain. A friend likes their plan. Someone else says something different. A useful review starts with your doctors, your prescriptions, and what you need the coverage to do — and with a clear explanation of which plans we can actually offer.",
+    highlights: [
+      { before: "A commercial can sound certain. A review starts with ", accent: "your doctors", after: "." },
+      { before: "Prescriptions and costs have to be checked for ", accent: "your situation", after: "." },
+      { before: "We explain which plans ", accent: "we can actually offer", after: "." },
+    ],
+    deadline: {
+      line: "Annual Enrollment ends Sunday, December 7 at 11:59 PM ET.",
+      expiredLine: "Annual Enrollment ended on December 7.",
+      endsAt: AEP_2026_END,
+    },
     wistiaId: "5u3t0932ok",
     videoTitle: "Trusted Advisor",
     problemHeading: "Why a confident answer can still be the wrong one",
@@ -162,6 +203,14 @@ export const FUNNELS: FunnelConfig[] = [
     headlineAccent: "Start with what you have.",
     subhead:
       "The mail shows up. The commercials keep playing. People tell you what they chose. You do not have to master every letter of Medicare before asking for help. Start with what you have, what it covers, and the care you use.",
+    highlights: [
+      { before: "You do not have to master ", accent: "every letter of Medicare", after: " first." },
+      { before: "Start with the coverage you have and ", accent: "the care you use", after: "." },
+      { before: "Timing depends on ", accent: "your situation", after: ", not a neighbor’s plan." },
+    ],
+    deadline: {
+      line: "Your Initial Enrollment Period is the 7 months around your 65th birthday.",
+    },
     wistiaId: "4syz3ev89r",
     videoTitle: "New to Medicare",
     problemHeading: "Where to start when every answer adds a question",
@@ -199,6 +248,14 @@ export const FUNNELS: FunnelConfig[] = [
     headlineAccent: "still leave questions a headline cannot answer.",
     subhead:
       "Some Medicare Advantage plans are designed for people who qualify for both Medicare and Medicaid. These are called Dual Eligible Special Needs Plans. The requirements differ by plan. Having both programs does not make every plan available.",
+    highlights: [
+      { before: "Having both programs does not open ", accent: "every plan", after: "." },
+      { before: "The Medicaid category and ", accent: "service area", after: " still need a check." },
+      { before: "A plan notice does not mean you ", accent: "must switch", after: "." },
+    ],
+    deadline: {
+      line: "A dual-eligible review is not limited to Annual Enrollment.",
+    },
     wistiaId: "2zm25x5et5",
     videoTitle: "Dual Eligible Review",
     problemHeading: "What having both programs still leaves open",
@@ -236,6 +293,14 @@ export const FUNNELS: FunnelConfig[] = [
     headlineAccent: "only fits if you qualify, and if it is offered where you live.",
     subhead:
       "Chronic Condition Special Needs Plans (C-SNP) are built around a qualifying chronic condition. Dual Eligible Special Needs Plans (D-SNP) are for people with Medicare and Medicaid. Eligibility and local availability have to be checked. We discuss the details privately.",
+    highlights: [
+      { before: "A C-SNP has to match ", accent: "the plan’s condition rules", after: "." },
+      { before: "A D-SNP depends on ", accent: "Medicaid category and county", after: "." },
+      { before: "Health details stay ", accent: "on the call", after: ", not in a text or email." },
+    ],
+    deadline: {
+      line: "These reviews are not limited to Annual Enrollment. Eligibility is checked on the call.",
+    },
     videoTitle: "C-SNP and D-SNP review",
     problemHeading: "Eligibility is the first question, not the plan name",
     problems: [

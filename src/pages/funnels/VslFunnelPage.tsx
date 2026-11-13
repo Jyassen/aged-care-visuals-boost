@@ -2,6 +2,8 @@ import { Link } from "react-router-dom";
 import SEO from "@/components/SEO";
 import WistiaPlayer from "@/components/funnels/WistiaPlayer";
 import GhlCalendar from "@/components/funnels/GhlCalendar";
+import { DeadlineBar } from "@/components/funnels/DeadlineBar";
+import { useDeadlineState } from "@/funnels/useDeadline";
 import { FunnelFooter, FunnelHeader, FunnelMobileBar } from "@/components/funnels/FunnelChrome";
 import {
   DISCLOSURE,
@@ -16,6 +18,8 @@ type VslFunnelPageProps = {
 };
 
 export default function VslFunnelPage({ config }: VslFunnelPageProps) {
+  const deadline = useDeadlineState(config.deadline);
+
   return (
     <div id="top" className="min-h-screen bg-slate-50 text-gray-900 pb-24 sm:pb-0">
       <SEO
@@ -26,16 +30,19 @@ export default function VslFunnelPage({ config }: VslFunnelPageProps) {
         ogImage={`https://yourmedguy.com/og/${config.slug}.jpg`}
         ogImageAlt={`${config.headline} ${config.headlineAccent}`}
       />
-      <FunnelHeader />
+      <div className="sticky top-0 z-40">
+        <DeadlineBar line={deadline.line} showClock={deadline.showClock} remaining={deadline.remaining} />
+        <FunnelHeader embedded />
+      </div>
 
       <main>
         <section className="bg-white border-b border-slate-200">
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 pt-10 pb-8 sm:pt-14 flex flex-col">
-            <h1 className="order-2 text-4xl sm:text-5xl font-bold tracking-tight text-gray-900 leading-tight">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 pt-10 pb-8 sm:pt-14">
+            <h1 className="text-4xl sm:text-5xl font-bold tracking-tight text-gray-900 leading-tight">
               {config.headline}{" "}
               <span className="text-blue-700">{config.headlineAccent}</span>
             </h1>
-            <div className="order-3 sm:order-4 mt-6" id="vsl">
+            <div className="mt-6" id="vsl">
               {config.wistiaId ? (
                 <WistiaPlayer mediaId={config.wistiaId} title={config.videoTitle} />
               ) : (
@@ -47,7 +54,15 @@ export default function VslFunnelPage({ config }: VslFunnelPageProps) {
                 </div>
               )}
             </div>
-            <p className="order-4 sm:order-3 mt-5 text-lg sm:text-xl text-gray-700 leading-relaxed">{config.subhead}</p>
+            <ul className="mt-6 divide-y divide-slate-200 border-y border-slate-200">
+              {config.highlights.map((line) => (
+                <li key={`${line.before}${line.accent}`} className="py-3 text-lg sm:text-xl text-gray-800 leading-snug">
+                  {line.before}
+                  <span className="font-semibold text-blue-700">{line.accent}</span>
+                  {line.after}
+                </li>
+              ))}
+            </ul>
           </div>
         </section>
 
@@ -62,7 +77,7 @@ export default function VslFunnelPage({ config }: VslFunnelPageProps) {
           </dl>
         </section>
 
-        <section id="book" className="max-w-3xl mx-auto px-4 sm:px-6 pb-16">
+        <section id="book" className="scroll-mt-56 max-w-3xl mx-auto px-4 sm:px-6 pb-16">
           <div className="bg-white border-2 border-blue-100 rounded-2xl p-6 sm:p-8 shadow-xl">
             <div className="text-center space-y-2 mb-6">
               <h2 className="text-2xl sm:text-3xl font-bold text-gray-900">Book Your Consultation below</h2>
@@ -74,7 +89,8 @@ export default function VslFunnelPage({ config }: VslFunnelPageProps) {
               Pick a day, then a time.
             </p>
             <GhlCalendar />
-            <p className="mt-4 text-sm text-gray-600 text-center leading-relaxed">
+            <p className="mt-4 text-center text-sm sm:text-base font-semibold text-blue-800">{deadline.line}</p>
+            <p className="mt-2 text-sm text-gray-600 text-center leading-relaxed">
               Free consultation. Booking does not enroll you in a plan, and you do not have to change coverage on the call.
             </p>
           </div>
@@ -83,15 +99,19 @@ export default function VslFunnelPage({ config }: VslFunnelPageProps) {
         <section className="bg-gradient-to-br from-blue-700 to-blue-800 py-16">
           <div className="max-w-6xl mx-auto px-4 sm:px-6">
             <h2 className="text-3xl sm:text-4xl font-bold text-white">{config.problemHeading}</h2>
-            <div className="mt-8 grid md:grid-cols-3 gap-5">
+            <ul className="mt-8 max-w-3xl space-y-3">
               {config.problems.map((problem, index) => (
-                <article key={problem.title} className="rounded-2xl bg-white p-6 shadow-md">
-                  <p className="text-blue-700 font-bold text-sm">{String(index + 1).padStart(2, "0")}</p>
-                  <h3 className="mt-3 text-xl font-semibold text-gray-900">{problem.title}</h3>
-                  <p className="mt-3 text-gray-700 leading-relaxed">{problem.body}</p>
-                </article>
+                <li key={problem.title} className="flex overflow-hidden rounded-2xl bg-white shadow-md">
+                  <div className="flex w-16 sm:w-20 shrink-0 items-center justify-center bg-blue-950 text-lg font-bold text-white">
+                    {String(index + 1).padStart(2, "0")}
+                  </div>
+                  <div className="px-5 py-4">
+                    <h3 className="text-lg sm:text-xl font-semibold text-gray-900">{problem.title}</h3>
+                    <p className="mt-1.5 text-gray-700 leading-relaxed">{problem.body}</p>
+                  </div>
+                </li>
               ))}
-            </div>
+            </ul>
           </div>
         </section>
 
@@ -150,6 +170,7 @@ export default function VslFunnelPage({ config }: VslFunnelPageProps) {
             <p className="mt-4 text-lg text-blue-100">
               The consultation is free. We compare the plans we offer in your area and tell you where that selection stops.
             </p>
+            <p className="mt-3 text-base font-semibold text-amber-200">{deadline.line}</p>
             <a
               href="#book"
               className="inline-flex mt-8 bg-amber-400 hover:bg-amber-300 text-slate-900 font-bold text-lg px-8 py-4 rounded-lg"
