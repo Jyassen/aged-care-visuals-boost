@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Mail, MapPin, Shield, ExternalLink } from "lucide-react";
 import CaptureForm from "@/components/CaptureForm";
+import Logo from "@/components/Logo";
 import type { SiteRegion } from "@/types/site.types";
 
 type FooterProps = {
@@ -12,134 +12,68 @@ const Footer = ({ region = 'nyc' }: FooterProps) => {
   const serviceAreaMap: Record<SiteRegion, string> = {
     longisland: 'Serving Long Island: Nassau and Suffolk County',
     statenisland: 'Serving Staten Island',
-    nyc: 'Serving New York City: All five boroughs',
+    nyc: 'Serving New York City: all five boroughs',
   };
+
+  const colClass = "space-y-2 text-[14px]";
+  const linkClass = "block text-mute hover:text-ink transition-colors";
+  const headClass = "text-[13px] font-bold text-ink mb-3";
+
   return (
-    <footer className="bg-gradient-to-br from-primary to-primary/90 text-primary-foreground">
-      <div className="container mx-auto px-4 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
-          {/* Company Info */}
-          <div className="space-y-6">
-            <div className="flex items-center space-x-2">
-              <div className="w-10 h-10 bg-accent rounded-xl flex items-center justify-center">
-                <span className="text-accent-foreground font-bold text-lg">M</span>
-              </div>
-              <div>
-                <h3 className="text-xl-accessible font-bold">YourMedGuy</h3>
-                <p className="text-primary-foreground/80">Medicare Made Simple</p>
-              </div>
-            </div>
-            <p className="text-lg text-primary-foreground/90 leading-relaxed">
-              We're a subsidiary of Yassco Consulting Group LLC, dedicated to helping you navigate Medicare with confidence and ease.
-            </p>
-            <div className="flex items-center space-x-2 text-primary-foreground/90">
-              <Shield className="h-5 w-5 text-accent" />
-              <span className="text-lg">Licensed & Trusted</span>
-            </div>
-          </div>
-
-          {/* Contact Info */}
-          <div className="space-y-6">
-            <h4 className="text-xl-accessible font-semibold">Contact Us</h4>
-            <div className="space-y-4">
-              <a 
-                href="mailto:support@yourmedguy.com" 
-                className="flex items-center space-x-3 text-primary-foreground/90 hover:text-accent transition-colors text-lg"
-              >
-                <Mail className="h-5 w-5" />
-                <span>support@yourmedguy.com</span>
-              </a>
-              <div className="flex items-start space-x-3 text-primary-foreground/90 text-lg">
-                <MapPin className="h-5 w-5 mt-1" />
-                <span>{serviceAreaMap[region]}</span>
-              </div>
-            </div>
-          </div>
-
-          {/* Medicare Resources */}
+    <footer className="bg-white border-t border-rule">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-14">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1fr_1.2fr] gap-8 lg:gap-10 mb-10">
           <div className="space-y-4">
-            <h4 className="text-lg font-semibold text-accent">Free Tools & Guides</h4>
-            <div className="space-y-2">
-              <Link
-                to="/tools/cost-calculator"
-                className="flex items-center text-primary-foreground/80 hover:text-accent transition-colors"
-              >
-                <ExternalLink className="h-4 w-4 mr-2" />
-                Medicare Cost Calculator
-              </Link>
-              <Link
-                to="/medicarestarterkit"
-                className="flex items-center text-primary-foreground/80 hover:text-accent transition-colors"
-              >
-                <ExternalLink className="h-4 w-4 mr-2" />
-                Free NY Medicare Starter Kit
-              </Link>
-              <a
-                href="https://www.medicare.gov"
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="flex items-center text-primary-foreground/80 hover:text-accent transition-colors"
-              >
-                <ExternalLink className="h-4 w-4 mr-2" />
-                Medicare.gov
-              </a>
-              <a 
-                href="https://www.medicare.gov/plan-compare" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="flex items-center text-primary-foreground/80 hover:text-accent transition-colors"
-              >
-                <ExternalLink className="h-4 w-4 mr-2" />
-                Plan Finder Tool
-              </a>
-              <a 
-                href="https://www.shiptacenter.org" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="flex items-center text-primary-foreground/80 hover:text-accent transition-colors"
-              >
-                <ExternalLink className="h-4 w-4 mr-2" />
-                State Health Insurance Program
-              </a>
-            </div>
+            <Logo />
+            <p className="text-[14px] text-mute leading-relaxed max-w-[36ch]">
+              Licensed, independent New York Medicare brokers. A subsidiary of Yassco Consulting Group LLC.
+            </p>
+            <p className="text-[14px] text-mute">{serviceAreaMap[region]}</p>
+            <a href="mailto:support@yourmedguy.com" className="inline-block text-[14px] font-semibold text-brandblue hover:text-brandblue-dark">
+              support@yourmedguy.com
+            </a>
           </div>
 
-          {/* Quick CTA */}
-          <div className="space-y-6">
-            <h4 className="text-xl-accessible font-semibold">Get Started Today</h4>
-            <p className="text-primary-foreground/90 text-lg leading-relaxed">
-              Don't wait until enrollment season. Get your questions answered and explore your options now.
+          <div className={colClass}>
+            <h4 className={headClass}>Help</h4>
+            <a href="#contact" className={linkClass}>Book a free review</a>
+            <Link to="/tools/cost-calculator" className={linkClass}>Medicare cost calculator</Link>
+            <Link to="/medicarestarterkit" className={linkClass}>Free NY Medicare starter kit</Link>
+            <a href="https://www.medicare.gov" target="_blank" rel="noopener noreferrer" className={linkClass}>Medicare.gov</a>
+            <a href="https://www.medicare.gov/plan-compare" target="_blank" rel="noopener noreferrer" className={linkClass}>Plan Finder</a>
+            <a href="https://www.shiptacenter.org" target="_blank" rel="noopener noreferrer" className={linkClass}>State Health Insurance Program</a>
+          </div>
+
+          <div className={colClass}>
+            <h4 className={headClass}>Areas</h4>
+            <Link to="/" className={linkClass}>New York City</Link>
+            <Link to="/longisland" className={linkClass}>Long Island</Link>
+            <Link to="/statenisland" className={linkClass}>Staten Island</Link>
+            <h4 className={`${headClass} pt-4`}>Legal</h4>
+            <Link to="/privacy-policy" className={linkClass}>Privacy policy</Link>
+            <Link to="/terms-of-service" className={linkClass}>Terms of service</Link>
+            <Link to="/legal" className={linkClass}>Legal documents</Link>
+            <Link to="/accessibility" className={linkClass}>Accessibility</Link>
+          </div>
+
+          <div className="space-y-4">
+            <h4 className={headClass}>Get started</h4>
+            <p className="text-[14px] text-mute leading-relaxed">
+              Get your questions answered and your plan checked before the deadline.
             </p>
-            <CaptureForm 
+            <CaptureForm
               trigger={
-                <Button 
-                  className="bg-accent hover:bg-accent/90 text-accent-foreground text-lg px-8 py-3 w-full shadow-strong"
-                >
-                  Book My Free Review
+                <Button variant="amber" size="lg" className="w-full">
+                  Book my free review
                 </Button>
               }
             />
           </div>
         </div>
 
-        {/* Bottom Border */}
-        <div className="border-t border-primary-foreground/20 pt-8">
-          <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-            <div className="text-center md:text-left">
-              <p className="text-primary-foreground/80">
-                © 2025 YourMedGuy. All rights reserved. | Licensed Medicare Agent | A subsidiary of Yassco Consulting Group LLC
-              </p>
-              <p className="text-primary-foreground/70 text-sm mt-2">
-                This website is for informational purposes only and is not connected with or endorsed by the United States Government or the federal Medicare program.
-              </p>
-            </div>
-            <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-6 text-primary-foreground/80 text-sm">
-              <Link to="/privacy-policy" className="hover:text-accent transition-colors">Privacy Policy</Link>
-              <Link to="/terms-of-service" className="hover:text-accent transition-colors">Terms of Service</Link>
-              <Link to="/legal" className="hover:text-accent transition-colors">Legal Documents</Link>
-              <Link to="/accessibility" className="hover:text-accent transition-colors">Accessibility</Link>
-            </div>
-          </div>
+        <div className="border-t border-rule pt-6 text-xs text-mute leading-relaxed space-y-2">
+          <p>© {new Date().getFullYear()} YourMedGuy. All rights reserved. Licensed Medicare agents. A subsidiary of Yassco Consulting Group LLC.</p>
+          <p>We do not offer every plan available in your area. Any information we provide is limited to the plans we do offer. Please contact Medicare.gov or 1-800-MEDICARE (1-800-633-4227), TTY 1-877-486-2048, 24 hours a day, 7 days a week, to get information on all your options. This website is not connected with or endorsed by the United States Government or the federal Medicare program.</p>
         </div>
       </div>
     </footer>

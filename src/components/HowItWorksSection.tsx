@@ -1,126 +1,54 @@
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Phone, Mail, Calendar, FileCheck, Smile } from "lucide-react";
-import CaptureForm from "@/components/CaptureForm";
+import SectionHeading from "@/components/SectionHeading";
 
 const steps = [
   {
-    step: "1",
-    icon: Phone,
-    title: "STEP 1: Contact Us",
-    description: "Fill out our form or email us. We'll schedule a convenient time to discuss your Medicare needs and current coverage.",
-    color: "bg-primary"
+    title: "Book a time",
+    description: "Pick a morning, afternoon or evening slot. We call you.",
   },
   {
-    step: "2", 
-    icon: FileCheck,
-    title: "STEP 2: Plan Review",
-    description: "We'll compare plans from major insurance companies, review your medications, and check if your doctors are in-network.",
-    color: "bg-primary"
+    title: "We review your plan together",
+    description: "Doctors, prescriptions and costs, checked live while you listen.",
   },
   {
-    step: "3",
-    icon: Smile,
-    title: "STEP 3: Easy Enrollment",
-    description: "Once you've chosen the best plan for your needs, we'll handle the enrollment process and ensure you understand your new coverage.",
-    color: "bg-primary"
-  }
+    title: "You decide",
+    description: "Stay or switch. If a change makes sense for you, we handle the enrollment paperwork.",
+  },
 ];
 
 const HowItWorksSection = () => {
   return (
-    <section id="how-it-works" className="py-20 bg-background">
-      <div className="container mx-auto px-4">
-        {/* Section Header */}
-        <div className="text-center space-y-4 mb-16">
-          <h2 className="text-3xl-accessible md:text-4xl-accessible font-bold text-foreground">
-            How It Works
-          </h2>
-          <p className="text-xl-accessible text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-            Getting the right Medicare coverage is easier than you think. Here's our simple 3-step process:
-          </p>
+    <section id="how-it-works" className="bg-ground py-14 sm:py-16 lg:py-20 scroll-mt-20">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid lg:grid-cols-2 gap-10 lg:gap-14 items-center">
+          <div>
+            <SectionHeading
+              kicker="How it works"
+              title="Fifteen minutes on the phone. No pressure, no obligation."
+            />
+            <ol className="border-t border-rule">
+              {steps.map((s, i) => (
+                <li key={s.title} className="flex gap-4 py-4 border-b border-rule">
+                  <span className="flex-shrink-0 w-9 h-9 rounded-full bg-ink text-white text-sm font-bold flex items-center justify-center">
+                    {i + 1}
+                  </span>
+                  <div>
+                    <h3 className="text-base sm:text-[17px] font-bold text-ink tracking-tight">{s.title}</h3>
+                    <p className="text-[15px] text-mute leading-relaxed mt-0.5">{s.description}</p>
+                  </div>
+                </li>
+              ))}
+            </ol>
+          </div>
+          <div className="rounded-2xl overflow-hidden aspect-[4/3]">
+            <img
+              src="/images/seniors happy appointment .jpg"
+              alt="Senior couple reviewing their Medicare options with an advisor"
+              className="w-full h-full object-cover"
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
         </div>
-
-        {/* Steps */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
-          {steps.map((step, index) => (
-            <div key={index} className="relative">
-              <Card className="bg-gradient-card border-0 shadow-medium hover:shadow-strong transition-all duration-300 h-full">
-                <CardContent className="p-8 text-center space-y-6 relative">
-                  {/* Step Number */}
-                  <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                    <div className={`w-12 h-12 ${step.color} rounded-full flex items-center justify-center shadow-medium`}>
-                      <span className="text-white font-bold text-xl">{step.step}</span>
-                    </div>
-                  </div>
-                  
-                  {/* Icon */}
-                  <div className="pt-8">
-                    <div className="mx-auto w-16 h-16 bg-muted rounded-2xl flex items-center justify-center">
-                      <step.icon className="h-8 w-8 text-foreground" />
-                    </div>
-                  </div>
-                  
-                  {/* Content */}
-                  <div className="space-y-4">
-                    <h3 className="text-xl-accessible font-semibold text-foreground">
-                      {step.title}
-                    </h3>
-                    <p className="text-lg text-muted-foreground leading-relaxed">
-                      {step.description}
-                    </p>
-                  </div>
-                </CardContent>
-              </Card>
-              
-              {/* Connector Arrow (hidden on mobile) */}
-              {index < steps.length - 1 && (
-                <div className="hidden lg:block absolute top-1/2 -right-4 transform -translate-y-1/2 z-10">
-                  <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center shadow-medium">
-                    <div className="w-0 h-0 border-l-[8px] border-l-primary-foreground border-r-0 border-t-[6px] border-t-transparent border-b-[6px] border-b-transparent"></div>
-                  </div>
-                </div>
-              )}
-            </div>
-          ))}
-        </div>
-
-        {/* CTA Section */}
-        <Card className="bg-gradient-to-r from-muted to-muted/50 border-0 shadow-medium">
-          <CardContent className="p-12 text-center space-y-8">
-            <div className="space-y-4">
-              <h3 className="text-2xl-accessible md:text-3xl-accessible font-bold text-foreground">
-                Ready to Find Your Perfect Medicare Plan?
-              </h3>
-              <p className="text-xl-accessible text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-                Don't navigate Medicare alone. Our licensed specialists are standing by to help you find coverage that fits your needs and budget.
-              </p>
-            </div>
-
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <CaptureForm 
-                trigger={
-                  <Button 
-                    size="lg" 
-                    className="bg-gradient-primary hover:bg-primary-hover text-xl px-12 py-4 shadow-strong"
-                  >
-                    Book My Free Review
-                  </Button>
-                }
-              />
-              <div className="text-center sm:text-left">
-                <p className="text-sm text-muted-foreground">Or email us</p>
-                <a 
-                  href="mailto:support@yourmedguy.com" 
-                  className="text-xl-accessible font-semibold text-primary hover:text-primary-hover flex items-center justify-center sm:justify-start"
-                >
-                  <Mail className="h-5 w-5 mr-2" />
-                  support@yourmedguy.com
-                </a>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
       </div>
     </section>
   );

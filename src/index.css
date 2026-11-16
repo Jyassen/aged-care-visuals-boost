@@ -17,10 +17,10 @@
     --popover: 0 0% 100%;
     --popover-foreground: 210 24% 16%;
 
-    /* Primary - Medical Blue */
-    --primary: 214 84% 56%;
+    /* Primary - Logo Blue (#2563EB) */
+    --primary: 221 83% 53%;
     --primary-foreground: 0 0% 100%;
-    --primary-hover: 214 84% 46%;
+    --primary-hover: 224 76% 48%;
 
     /* Secondary - Trust Gray */
     --secondary: 210 20% 96%;
@@ -30,9 +30,9 @@
     --muted: 210 20% 95%;
     --muted-foreground: 210 16% 46%;
 
-    /* Accent - Success Green */
-    --accent: 142 76% 36%;
-    --accent-foreground: 0 0% 100%;
+    /* Accent - Brand Amber (#D98E1F), reserved for the primary conversion action */
+    --accent: 36 76% 49%;
+    --accent-foreground: 40 100% 5%;
 
     /* Alert & Status Colors */
     --destructive: 0 84% 60%;
@@ -50,7 +50,7 @@
     --ring: 214 84% 56%;
 
     /* Border Radius */
-    --radius: 0.75rem;
+    --radius: 0.875rem;
     
     /* Performance-optimized gradients */
     --gradient-primary: linear-gradient(135deg, hsl(214 84% 56%), hsl(214 84% 46%));
@@ -206,7 +206,7 @@
 @layer components {
   /* Performance-optimized component styles */
   .btn-primary {
-    @apply bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold shadow-md hover:shadow-lg transition-all duration-200 transform hover:-translate-y-0.5;
+    @apply bg-amber hover:bg-amber-hover text-amber-ink font-bold rounded-full transition-colors duration-200;
   }
 
   .btn-secondary {

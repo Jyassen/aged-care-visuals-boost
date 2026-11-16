@@ -36,6 +36,14 @@ export default {
 		},
 		extend: {
 			colors: {
+				/* YourMedGuy brand system (Modern Advisor) */
+				ink: '#0E1F3A',
+				ground: '#EEF3F9',
+				navy: '#0B2E7A',
+				rule: '#D9E1EC',
+				brandblue: { DEFAULT: '#2563EB', dark: '#1D4ED8' },
+				amber: { DEFAULT: '#D98E1F', hover: '#C47E15', ink: '#1C1200', light: '#F5C063' },
+				mute: '#55627A',
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',
 				ring: 'hsl(var(--ring))',

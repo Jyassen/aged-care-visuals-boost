@@ -126,7 +126,7 @@ const CaptureForm = ({
       </DialogTrigger>
       <DialogContent className="sm:max-w-[500px] max-h-[90vh] overflow-y-auto">
         <DialogHeader className="text-center space-y-3">
-          <div className="mx-auto w-16 h-16 bg-gradient-to-br from-blue-100 to-blue-50 rounded-full flex items-center justify-center">
+          <div className="mx-auto w-16 h-16 bg-[#E6EEFB] rounded-full flex items-center justify-center">
             <Heart className="h-8 w-8 text-blue-600" />
           </div>
           <DialogTitle className="text-2xl font-bold text-gray-900">{title}</DialogTitle>
@@ -261,7 +261,7 @@ const CaptureForm = ({
 
             <Button
               type="submit"
-              className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold py-3 text-lg"
+              variant="amber" size="lg" className="w-full"
               disabled={isSubmitting}
             >
               {isSubmitting ? "Submitting..." : "Meet Your MedGuy"}
