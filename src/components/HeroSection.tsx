@@ -31,7 +31,7 @@ const HeroSection = ({ region }: HeroSectionProps) => {
             </h1>
 
             <p className="mt-5 text-base sm:text-lg text-mute leading-relaxed max-w-[40ch]">
-              {`Independent, licensed New York agents compare your current plan against every major carrier. Fifteen minutes, free, and you keep your doctors. Serving ${serviceAreaMap[region]}.`}
+              {`Independent, licensed New York agents compare your current plan against every major carrier. 15 minutes, free, and you keep your doctors. Serving ${serviceAreaMap[region]}.`}
             </p>
 
             <div className="mt-7 flex flex-col sm:flex-row gap-3">

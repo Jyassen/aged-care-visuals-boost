@@ -6,6 +6,7 @@
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import { CostEstimate, CostCalculatorInput } from '@/types/medicare.types';
+import { PART_B } from './costCalculator.utils';
 
 /**
  * Generates and downloads a PDF report of the Medicare cost calculation
@@ -222,7 +223,7 @@ const addFooter = (doc: jsPDF, pageNumber: number): void => {
   doc.setTextColor(107, 114, 128);
   
   // Disclaimer
-  const disclaimer = 'This estimate is based on typical 2026 Medicare costs and your provided information. Actual costs vary by plan. ' +
+  const disclaimer = `This estimate is based on typical 2027 New York Medicare Advantage plan costs, the ${PART_B.year} Part B premium (2027 not yet announced by CMS), and your provided information. Actual costs vary by plan. ` +
     'Not affiliated with or endorsed by the U.S. government or Medicare. YourMedGuy represents multiple carriers.';
   const disclaimerLines = doc.splitTextToSize(disclaimer, pageWidth - 40);
   

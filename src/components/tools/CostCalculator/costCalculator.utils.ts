@@ -6,71 +6,95 @@
 import { CostCalculatorInput, CostEstimate, CostBreakdown } from '@/types/medicare.types';
 
 /**
- * Medicare Part B Standard Premium for 2026 (confirmed by CMS)
- * Official Rate: $202.90/month (up from $185.00 in 2025)
- * Source: CMS "2026 Medicare Parts A & B Premiums and Deductibles" fact sheet
- * Note: 2027 Part B rates are typically announced in November — update then.
+ * Medicare Part B standard premium and deductible.
+ *
+ * CMS publishes the coming year's Part A/B amounts in mid-November. As of 2026-11-16
+ * the official 2027 figures have NOT been released (the 2026 Trustees Report projects
+ * $209.50/month and a $292 deductible). Following the YourMedGuy Stress-Free Medicare
+ * Guide 2027 convention, the calculator shows the confirmed 2026 amount, clearly
+ * labeled, until CMS announces 2027.
+ *
+ * When CMS publishes the 2027 fact sheet, update `premium`, `deductible`, `year`
+ * and `label` here — every display string reads from this object.
+ * Source (2026): CMS "2026 Medicare Parts A & B Premiums and Deductibles" fact sheet.
  */
-export const PART_B_PREMIUM_2026 = 202.90; // Confirmed 2026 rate
+export const PART_B = {
+  premium: 202.90,
+  deductible: 283,
+  year: 2026,
+  label: '2026 confirmed rate. CMS has not yet announced the 2027 Part B premium.',
+} as const;
+
+/**
+ * Medicare Part D (prescription drug) 2027 program amounts.
+ * Source: YourMedGuy Stress-Free Medicare Guide 2027 (CMS 2027 Part D parameters).
+ */
+export const PART_D_2027 = {
+  maxDeductible: 700,     // Maximum annual Part D deductible; many plans charge less
+  outOfPocketCap: 2400,   // Hard yearly cap on covered drug costs
+} as const;
 
 /**
  * Premium ranges based on health status
- * Based on actual 2026 NY Medicare Advantage plan distribution
- * Source: 2026_NY_Plans.md comprehensive directory
- * 
- * REALITY: 80%+ of NY enrollees choose $0-$60 premium plans, even with chronic conditions!
- * Actual plan distribution:
- * - $0 Premium: Healthfirst 65 Plus, Elderplan Flex, VIP Value, True Choice, Gold Plus, AARP, Wellcare (MANY!)
- * - $25-$40: VNS EasyCare ($25), Anthem ($24), Humana ($37)
- * - $50-$80: VIP Gold ($54), Aetna Premier ($81)
- * - $100+: Only specialty/nursing home plans ($150-$223)
- * 
+ * Based on actual 2027 NY Medicare Advantage plan premiums
+ * Source: "2027 Plans to Sell + SOB Benefits" sheet (carrier 2027 SOBs / CMS PBP 2027)
+ *
+ * 2027 NY non-SNP MAPD premium distribution (what people actually pick):
+ * - $0 Premium: Healthfirst 65 Plus, EmblemHealth VIP Value, Humana Gold Plus (Kings/Queens),
+ *   Aetna Signature HMO, AARP/UHC HMO-POS & PPO, many Anthem plans, MetroPlus Platinum (MANY!)
+ * - $25-$50: VNS EasyCare ($25), Anthem ($29-$39), EmblemHealth VIP Saver ($40.40),
+ *   Humana Gold Plus ($45-$50)
+ * - $55-$110: Healthfirst Signature HMO ($60/$92), Aetna Enhanced ($69-$104),
+ *   Aetna Elite PPO ($79-$109), EmblemHealth VIP Gold ($40-$166 by county)
+ * - $150+: EmblemHealth VIP Core ($180), VIP Gold Plus ($216), Healthfirst Signature PPO ($155)
+ *
  * Adjusted for REALISTIC averages based on enrollment patterns:
  */
 const PREMIUM_RANGES = {
   excellent: { min: 0, max: 25 },   // Mostly $0, some choose EasyCare → avg $12.50
-  good: { min: 0, max: 40 },        // Mix of $0 and low premium → avg $20
-  fair: { min: 0, max: 60 },        // Some choose VIP Gold for benefits → avg $30
-  poor: { min: 25, max: 80 },       // Enhanced benefits, avoid $0 plans → avg $52.50
+  good: { min: 0, max: 45 },        // Mix of $0 and low premium (Saver/Humana) → avg $22.50
+  fair: { min: 0, max: 65 },        // Some choose Signature/Enhanced for benefits → avg $32.50
+  poor: { min: 25, max: 105 },      // Richer benefits, avoid $0 plans (Elite/Gold) → avg $65
 } as const;
 
 /**
  * Doctor visit frequency and costs by health status
- * Based on actual 2026 NY Medicare Advantage plan copays
- * Source: 2026_NY_Plans.md - typical copays across major carriers
- * 
- * NY 2026 Plan Copays (actual):
- * - Primary Care: $0 (most plans), up to $10-20
- * - Specialist: $0-$25 (most plans), up to $35-50
- * - Many $0 premium plans have $0 copays
+ * Based on actual 2027 NY Medicare Advantage plan copays
+ * Source: "2027 Plans to Sell + SOB Benefits" sheet - PCP / Specialist columns
+ *
+ * NY 2027 Plan Copays (actual):
+ * - Primary Care: $0 on nearly every plan; a few charge $5-$15
+ * - Specialist: $35-$55 on most plans (Humana $35-$50, Aetna $40-$55,
+ *   EmblemHealth $35-$50, Healthfirst $40-$45, Anthem $45-$60, UHC $30-$55)
+ * - D-SNP plans: $0 copays (not modeled here)
  */
 const DOCTOR_VISIT_COSTS = {
   excellent: {
     primaryCareVisits: 1,
     specialistVisits: 0,
-    primaryCareCopay: 0,      // Many $0 premium plans have $0 PCP copay
-    specialistCopay: 25,      // Typical NY specialist copay
+    primaryCareCopay: 0,      // $0 PCP copay on nearly all 2027 NY plans
+    specialistCopay: 40,      // Typical NY specialist copay
     description: 'Once a year visit only'
   },
   good: {
     primaryCareVisits: 3,
     specialistVisits: 0,
-    primaryCareCopay: 0,      // $0 copay common on HMO plans
-    specialistCopay: 30,
+    primaryCareCopay: 0,      // $0 copay standard on HMO plans
+    specialistCopay: 40,
     description: '2-3 routine checkups per year'
   },
   fair: {
     primaryCareVisits: 4,
     specialistVisits: 6,      // 1-2 specialists x 3-4 visits each
-    primaryCareCopay: 15,     // Unified average copay for clarity
-    specialistCopay: 40,      // Unified average copay for clarity
+    primaryCareCopay: 10,     // Blended: mostly $0, some plans $5-$15
+    specialistCopay: 45,      // Blended mid-point of $35-$55
     description: 'Seasonal visits, 1-2 specialists'
   },
   poor: {
     primaryCareVisits: 6,
     specialistVisits: 12,     // 3+ specialists x 4 visits each
-    primaryCareCopay: 15,     // Higher copays on some plans
-    specialistCopay: 40,      // Up to $50 on some plans
+    primaryCareCopay: 10,     // Blended: mostly $0, some plans $5-$15
+    specialistCopay: 45,      // Up to $60 on some plans
     description: 'Frequent visits, 3+ specialists'
   }
 } as const;
@@ -96,12 +120,12 @@ export function calculateMedicareCosts(input: CostCalculatorInput): CostEstimate
   const avgDoctorCostMonthly = totalDoctorCostAnnual / 12;
   
   // Calculate prescription costs
-  // More accurate range based on typical Medicare Part D copays
-  // Assumes mix of generic (Tier 1-2) and some preferred brand (Tier 3)
-  // Low estimate: mostly generics at $5-10 copay
-  // High estimate: mix with some brands at $45-60 copay
+  // Range based on 2027 NY MAPD drug tiers ("2027 Plans to Sell + SOB Benefits"):
+  // Tier 1 $0-$5, Tier 2 $0-$12, Tier 3 17-25% coinsurance, Tier 4 25-50%, Tier 5 25-33%
+  // Low estimate: mostly generics (Tier 1-2) at $0-$12 copay
+  // High estimate: mix with some preferred brands at ~17-25% coinsurance (~$45-$60/fill)
   const prescriptionRange = {
-    min: prescriptionCount * 8,   // Mostly generic drugs (Tier 1-2)
+    min: prescriptionCount * 5,   // Mostly generic drugs (Tier 1-2)
     max: prescriptionCount * 50,  // Mix of generics and preferred brands (Tier 2-3)
   };
   
@@ -121,8 +145,8 @@ export function calculateMedicareCosts(input: CostCalculatorInput): CostEstimate
   const breakdown: CostBreakdown[] = [
     {
       category: 'Medicare Part B Premium',
-      amount: PART_B_PREMIUM_2026,
-      description: 'Standard Medicare Part B premium (2026)',
+      amount: PART_B.premium,
+      description: `Standard Medicare Part B premium (${PART_B.year} rate; 2027 not yet announced)`,
     },
     {
       category: 'Medicare Advantage Plan Premium',
@@ -150,7 +174,7 @@ export function calculateMedicareCosts(input: CostCalculatorInput): CostEstimate
       max: basePremium.max,
       average: averagePremium,
     },
-    partBPremium: PART_B_PREMIUM_2026,
+    partBPremium: PART_B.premium,
     prescriptionCosts: prescriptionRange,
     totalMonthly: monthlyTotal,
     totalAnnual: {

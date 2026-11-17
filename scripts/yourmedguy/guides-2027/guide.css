@@ -1,0 +1,164 @@
+/* YourMedGuy free-guide print styles. Mirrors the Stress-Free Medicare Guide 2027 PDF:
+   Inter, navy #0f1d4d / brand blue #1e40af / amber #f59e0b, light blue tints, letter pages. */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+:root {
+  --navy: #0f1d4d;
+  --navy-2: #172554;
+  --blue: #1e40af;
+  --blue-2: #2a4bb8;
+  --amber: #f59e0b;
+  --amber-tint: #fff4dc;
+  --amber-tint-2: #ffe2a8;
+  --tint: #e8efff;
+  --tint-2: #c7d7fe;
+  --card: #f7f9fe;
+  --line: #dbe3f0;
+  --red-tint: #fdecea;
+  --green-tint: #e0f4f1;
+  --ink: #172554;
+  --body: #2b3550;
+  --mute: #6b7691;
+}
+
+@page { size: letter; margin: 0; }
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  font-family: Inter, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;
+  color: var(--body);
+  font-size: 10.2pt;
+  line-height: 1.45;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+a { color: var(--blue); text-decoration: underline; text-underline-offset: 2px; }
+p { margin: 0 0 8pt; }
+strong { color: var(--ink); font-weight: 700; }
+
+.page {
+  width: 8.5in;
+  height: 11in;
+  padding: 0.55in 0.65in 0.75in;
+  position: relative;
+  overflow: hidden;
+  page-break-after: always;
+  break-after: page;
+  background: #fff;
+}
+.page:last-child { page-break-after: auto; break-after: auto; }
+.page.dark { background: var(--navy); color: #fff; }
+.page.blue { background: var(--blue); color: #fff; }
+
+/* Logo lockup */
+.lockup {
+  display: inline-flex; align-items: center; gap: 9pt;
+  background: #fff; border-radius: 9pt; padding: 8pt 14pt 8pt 10pt;
+}
+.lockup .mark {
+  width: 30pt; height: 30pt; border-radius: 8pt; flex: 0 0 auto;
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  color: #fff; font-weight: 800; font-size: 16pt;
+  display: flex; align-items: center; justify-content: center;
+}
+.lockup .word { line-height: 1.1; }
+.lockup .word b { display: block; font-size: 15pt; font-weight: 800; color: var(--ink); letter-spacing: -0.2pt; }
+.lockup .word span { display: block; font-size: 10pt; color: #4b5675; font-weight: 500; }
+
+/* Section header */
+.kicker { display: flex; align-items: center; gap: 8pt; margin-bottom: 6pt; }
+.kicker .num {
+  width: 22pt; height: 18pt; border-radius: 9pt; background: var(--blue); color: #fff;
+  font-size: 8.5pt; font-weight: 800; display: flex; align-items: center; justify-content: center;
+}
+.kicker .label { color: var(--blue); font-size: 7.6pt; font-weight: 800; letter-spacing: 1.2pt; text-transform: uppercase; }
+h1.title { font-size: 20pt; font-weight: 900; color: var(--ink); letter-spacing: -0.5pt; margin: 0 0 8pt; line-height: 1.15; }
+h2 { font-size: 12.5pt; font-weight: 800; color: var(--ink); margin: 12pt 0 6pt; letter-spacing: -0.2pt; }
+h3 { font-size: 10.5pt; font-weight: 700; color: var(--ink); margin: 0 0 3pt; }
+.lead { font-size: 11pt; color: var(--body); margin-bottom: 10pt; }
+.small { font-size: 8.6pt; color: var(--mute); }
+.muted { color: var(--mute); }
+
+/* Pills */
+.pill {
+  display: inline-block; border-radius: 999pt; padding: 2.5pt 9pt; font-size: 7.4pt; font-weight: 800;
+  letter-spacing: 0.6pt; text-transform: uppercase;
+}
+.pill.amber { background: var(--amber); color: var(--ink); }
+.pill.blue { background: var(--tint); color: var(--blue); }
+.pill.amber-soft { background: var(--amber-tint-2); color: #7a4a00; }
+.pill.green { background: var(--green-tint); color: #116a5a; }
+
+/* Cards and callouts */
+.card { border: 1pt solid var(--line); border-radius: 8pt; padding: 10pt 12pt; background: #fff; margin-bottom: 8pt; }
+.card.soft { background: var(--card); }
+.callout { border-left: 3pt solid var(--blue); background: var(--tint); border-radius: 0 6pt 6pt 0; padding: 8pt 11pt; margin: 8pt 0; }
+.callout.amber { border-left-color: var(--amber); background: var(--amber-tint); }
+.callout.green { border-left-color: #159a84; background: var(--green-tint); }
+.callout.red { border-left-color: #d9534f; background: var(--red-tint); }
+.callout p:last-child { margin-bottom: 0; }
+
+/* Stat tiles */
+.stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8pt; margin: 6pt 0 10pt; }
+.stat { border: 1pt solid var(--line); border-radius: 8pt; padding: 9pt 11pt; background: #fff; }
+.stat.primary { background: var(--blue); border-color: var(--blue); color: #fff; }
+.stat .big { font-size: 18pt; font-weight: 800; letter-spacing: -0.5pt; color: var(--blue); line-height: 1.1; }
+.stat.primary .big { color: #fff; }
+.stat .cap { font-size: 8pt; color: var(--mute); margin-top: 2pt; line-height: 1.3; }
+.stat.primary .cap { color: #dbe3f0; }
+
+/* Tables */
+table { width: 100%; border-collapse: collapse; margin: 6pt 0 10pt; font-size: 9pt; }
+thead th { background: var(--blue); color: #fff; text-align: left; padding: 6pt 8pt; font-size: 8.4pt; font-weight: 700; }
+tbody td { padding: 6pt 8pt; border-bottom: 1pt solid var(--line); vertical-align: top; }
+tbody tr:nth-child(odd) td { background: var(--card); }
+tbody td:first-child { font-weight: 700; color: var(--ink); }
+table { border: 1pt solid var(--line); border-radius: 8pt; overflow: hidden; }
+
+/* Numbered list rows */
+.rows { display: flex; flex-direction: column; gap: 6pt; }
+.row { display: flex; gap: 9pt; align-items: flex-start; }
+.row .n {
+  flex: 0 0 auto; width: 17pt; height: 17pt; border-radius: 50%; background: var(--blue); color: #fff;
+  font-size: 8.2pt; font-weight: 800; display: flex; align-items: center; justify-content: center; margin-top: 1pt;
+}
+.row .n.amber { background: var(--amber); color: var(--ink); }
+.row p { margin: 0; }
+
+/* Two columns */
+.cols { display: grid; grid-template-columns: 1fr 1fr; gap: 10pt; }
+
+/* CTA band */
+.cta {
+  background: var(--blue); color: #fff; border-radius: 8pt; padding: 12pt 14pt;
+  display: flex; align-items: center; justify-content: space-between; gap: 12pt;
+}
+.cta h3 { color: #fff; font-size: 11.5pt; margin-bottom: 2pt; }
+.cta p { color: #dbe3f0; margin: 0; font-size: 9.2pt; }
+.cta .btn { background: var(--amber); color: var(--ink); font-weight: 800; border-radius: 999pt; padding: 8pt 14pt; white-space: nowrap; font-size: 10pt; }
+
+/* Footer */
+.foot {
+  position: absolute; left: 0.65in; right: 0.65in; bottom: 0.4in;
+  border-top: 1pt solid var(--line); padding-top: 6pt;
+  display: flex; justify-content: space-between; align-items: center; font-size: 7.4pt; color: var(--mute);
+}
+.foot .mini { display: flex; align-items: center; gap: 5pt; color: var(--ink); font-weight: 700; font-size: 8pt; }
+.foot .mini i {
+  width: 12pt; height: 12pt; border-radius: 3pt; background: var(--blue); color: #fff; font-style: normal;
+  font-size: 7pt; font-weight: 800; display: inline-flex; align-items: center; justify-content: center;
+}
+.dark .foot, .blue .foot { border-top-color: rgba(255,255,255,0.18); color: #c7d7fe; }
+.dark .foot .mini, .blue .foot .mini { color: #fff; }
+
+/* Cover */
+.cover-title { font-size: 34pt; font-weight: 900; line-height: 1.05; letter-spacing: -1pt; color: #fff; margin: 0 0 12pt; }
+.cover-title em { font-style: normal; color: var(--amber); }
+.cover-sub { font-size: 11.5pt; color: #dbe3f0; max-width: 5.2in; margin-bottom: 14pt; line-height: 1.5; }
+.skyline { position: absolute; left: 0; right: 0; bottom: 0; height: 2.3in; }
+.sun { position: absolute; width: 1.1in; height: 1.1in; border-radius: 50%; background: var(--amber); right: 1.2in; bottom: 1.7in; opacity: 0.95; }
+.cover-cities { position: absolute; left: 0.65in; bottom: 0.45in; font-size: 7.6pt; color: #c7d7fe; letter-spacing: 0.4pt; }
+
+.legal { font-size: 7.4pt; color: var(--mute); line-height: 1.4; }
+.blue .legal { color: #dbe3f0; }
+.blue .legal a { color: #fff; }

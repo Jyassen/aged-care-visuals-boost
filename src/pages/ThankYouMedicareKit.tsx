@@ -16,9 +16,8 @@ export default function ThankYouMedicareKit() {
       (window as any).gtag('event', 'generate_lead', { source, value: 1 });
     }
 
-    if (typeof window !== 'undefined' && (window as any).fbq) {
-      (window as any).fbq('track', 'Lead', { source });
-    }
+    // Deliberately no Meta pixel event here: a kit download is low-intent and must not
+    // feed the ads' Lead signal. The only pixel Lead on the booking path is on /precall.
   }, [location.search]);
 
   return (
@@ -33,8 +32,26 @@ export default function ThankYouMedicareKit() {
               </div>
               <h1 className="text-3xl md:text-4xl font-extrabold text-black mb-3">Thank You!</h1>
               <p className="text-black/80 text-lg mb-6">
-                Your NY Medicare Starter Kit has been sent to your email. Check your inbox (and spam folder) for instant access.
+                Your NY Medicare Starter Kit has been sent to your email. Check your inbox (and spam folder) for instant access, or download the guides right here.
               </p>
+              <div className="grid sm:grid-cols-3 gap-3 text-left mb-8">
+                {[
+                  { href: '/guides/YourMedGuy-10-Questions-2027.pdf', title: '10 Questions to Ask', blurb: 'Before you choose a plan' },
+                  { href: '/guides/YourMedGuy-Medicare-VIP-Contacts-NY-2027.pdf', title: 'Medicare VIP Contacts', blurb: 'New York help lines and programs' },
+                  { href: '/guides/YourMedGuy-Medicare-Myths-vs-Reality-2027.pdf', title: 'Myths vs Reality', blurb: 'Six costly myths, 2027 numbers' },
+                ].map((g) => (
+                  <a
+                    key={g.href}
+                    href={g.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block p-4 rounded-lg border border-blue-200 bg-blue-50 hover:bg-blue-100 transition-colors"
+                  >
+                    <p className="font-semibold text-blue-700">{g.title} (PDF)</p>
+                    <p className="text-sm text-black mt-1">{g.blurb}</p>
+                  </a>
+                ))}
+              </div>
               <div className="grid md:grid-cols-3 gap-4 text-left mb-8">
                 <div className="p-4 rounded-lg bg-blue-50">
                   <p className="font-semibold text-blue-700">What's next</p>

@@ -1,6 +1,10 @@
 import { Resend } from 'resend';
+import { syncStarterKitLead } from './_lib/ghl.js';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
+
+/** "exit-intent" when the popup sent the lead, otherwise "starter-kit" (the kit page). */
+const leadSourceFromUrl = (pageUrl = '') => (/[?&]src=exit-intent\b/.test(pageUrl) ? 'exit-intent' : 'starter-kit');
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
@@ -8,7 +12,7 @@ export default async function handler(req, res) {
   }
 
   try {
-    const { name, email, disclaimerAgreed, pageUrl } = req.body || {};
+    const { name, email, disclaimerAgreed, pageUrl, phone } = req.body || {};
     if (!name || !email || !disclaimerAgreed) {
       return res.status(400).json({ message: 'Missing required fields' });
     }
@@ -29,16 +33,16 @@ export default async function handler(req, res) {
           <p><strong>Click the links below to download your guides:</strong></p>
           <div style="background-color: #f8fafc; padding: 20px; border-radius: 8px; margin: 20px 0;">
             <p style="margin: 10px 0;">
-              📄 <a href="${baseUrl}/guides/Medicare-10-Questions-OnePager.pdf" style="color: #1e40af; font-weight: bold; text-decoration: none;">Medicare 10 Questions One-Pager</a><br>
-              <span style="font-size: 14px; color: #666;">Essential questions to ask before choosing a plan</span>
+              📄 <a href="${baseUrl}/guides/YourMedGuy-10-Questions-2027.pdf" style="color: #1e40af; font-weight: bold; text-decoration: none;">10 Questions to Ask Before You Choose a Plan (2027)</a><br>
+              <span style="font-size: 14px; color: #666;">The questions that reveal what a plan really costs</span>
             </p>
             <p style="margin: 10px 0;">
-              📄 <a href="${baseUrl}/guides/Medicare-VIP-ContactsFINAL.pdf" style="color: #1e40af; font-weight: bold; text-decoration: none;">Medicare VIP Contacts</a><br>
-              <span style="font-size: 14px; color: #666;">Key contacts for New York Medicare support</span>
+              📄 <a href="${baseUrl}/guides/YourMedGuy-Medicare-VIP-Contacts-NY-2027.pdf" style="color: #1e40af; font-weight: bold; text-decoration: none;">Medicare VIP Contacts, New York (2027)</a><br>
+              <span style="font-size: 14px; color: #666;">Free help lines and money-help programs, with 2027 limits</span>
             </p>
             <p style="margin: 10px 0;">
-              📄 <a href="${baseUrl}/guides/YourMedGuy-Medicare-Myths-vs-Reality.pdf" style="color: #1e40af; font-weight: bold; text-decoration: none;">Medicare Myths vs Reality</a><br>
-              <span style="font-size: 14px; color: #666;">Bust common myths with facts</span>
+              📄 <a href="${baseUrl}/guides/YourMedGuy-Medicare-Myths-vs-Reality-2027.pdf" style="color: #1e40af; font-weight: bold; text-decoration: none;">Medicare Myths vs Reality (2027)</a><br>
+              <span style="font-size: 14px; color: #666;">Six costly myths, with the 2027 numbers</span>
             </p>
           </div>
           <p>If you have questions or need personalized help, <a href="mailto:support@yourmedguy.com" style="color: #1e40af;">email us at support@yourmedguy.com</a> – our licensed advisors are here to assist.</p>
@@ -53,6 +57,11 @@ export default async function handler(req, res) {
         </div>
       `
     });
+
+    // Push the lead into HighLevel (YourMedGuy location) as an additional destination.
+    // Email-only follow-up: the kit form captures no SMS consent. No pixel/CAPI from here.
+    const source = leadSourceFromUrl(pageUrl);
+    const ghl = await syncStarterKitLead({ name, email, phone, pageUrl, source });
 
     // Notify the team
     await resend.emails.send({
@@ -69,6 +78,8 @@ export default async function handler(req, res) {
             <p><strong>Name:</strong> ${name}</p>
             <p><strong>Email:</strong> <a href="mailto:${email}" style="color: #1e40af;">${email}</a></p>
             ${pageUrl ? `<p><strong>Page URL:</strong> <a href="${pageUrl}" style="color: #1e40af;">${pageUrl}</a></p>` : ''}
+            <p><strong>Source:</strong> ${source === 'exit-intent' ? 'Exit-intent popup' : 'Starter kit page'}</p>
+            <p><strong>HighLevel:</strong> ${ghl.ok ? `Synced via ${ghl.via}${ghl.verified ? ', read-back verified' : ''}` : `Not synced (${ghl.reason || 'see logs'})`}</p>
             <p><strong>Submitted:</strong> ${new Date().toLocaleString('en-US', { timeZone: 'America/New_York', dateStyle: 'full', timeStyle: 'short' })}</p>
           </div>
           <div style="background-color: #1e40af; color: white; padding: 15px; border-radius: 8px; margin-top: 20px;">

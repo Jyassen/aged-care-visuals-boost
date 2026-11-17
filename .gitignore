@@ -35,3 +35,9 @@ test-results/
 # Ignore PDFs by default, but allow public guides to be tracked
 *.pdf
 !public/guides/*.pdf
+
+# Local AI tooling state and scratch (never commit)
+.claude-flow/
+.claude/
+.swarm/
+tmp/

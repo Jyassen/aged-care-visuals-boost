@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '@/components/Header';
+import { markStarterKitRequested } from '@/components/ExitIntentStarterKit';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -37,6 +38,7 @@ export default function MedicareStarterKit() {
         body: JSON.stringify({ name, email, disclaimerAgreed, pageUrl: window.location.href }),
       });
       if (response.ok) {
+        markStarterKitRequested();
         navigate('/thank-you-medicare-kit');
       } else {
         setError('Failed to send. Please try again.');
@@ -81,7 +83,7 @@ export default function MedicareStarterKit() {
             {/* Left Column: What's Inside + Form */}
             <div className="py-16 px-4 lg:px-8 lg:pl-16 space-y-12">
               <div>
-                <h3 className="text-2xl font-bold text-gray-900 mb-6">Here's What You Get (Instantly):</h3>
+                <h3 className="text-2xl font-bold text-gray-900 mb-6">Here's What You Get (Instantly), updated for 2027:</h3>
                 <ul className="space-y-4 text-gray-700">
                   <li className="flex items-start">
                     <span className="w-2 h-2 bg-amber-500 rounded-full mt-2.5 mr-3 flex-shrink-0"></span>

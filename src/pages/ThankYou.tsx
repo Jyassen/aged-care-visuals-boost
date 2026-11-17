@@ -78,7 +78,7 @@ export default function ThankYou() {
                   This quick guide busts the biggest myths in plain English — no email required.
                 </p>
                 <a
-                  href="/guides/YourMedGuy-Medicare-Myths-vs-Reality.pdf"
+                  href="/guides/YourMedGuy-Medicare-Myths-vs-Reality-2027.pdf"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-block text-blue-700 hover:text-blue-800 font-semibold underline"

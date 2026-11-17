@@ -4,20 +4,31 @@ import { ShieldCheck, MapPin, Users } from "lucide-react";
  * Carrier strip directly under the hero plus three proof points. Carrier
  * names are rendered as text wordmarks (no logo assets in the repo), which
  * stays accurate to the "we compare major carriers" claim made in the FAQ.
+ *
+ * Full list of carriers with 2027 New York or New Jersey plans Jamal is ready
+ * to sell, per the "2027 Plans to Sell + SOB Benefits" sheet (Can Sell = Yes).
+ * Not listed: Wellcare (no writable plan), Elderplan (MAP approval pending),
+ * Horizon BCBS NJ and Clover (contracting pending). Update when the sheet changes.
  */
 const carriers = [
   "UnitedHealthcare",
   "Humana",
   "Aetna",
-  "Empire BCBS",
-  "Cigna",
-  "Wellcare",
+  "Anthem",
+  "Wellpoint",
+  "EmblemHealth",
+  "Healthfirst",
+  "VNS Health",
+  "MetroPlus",
+  "VillageCareMAX",
+  "HealthSpring (Cigna)",
+  "Jefferson Health Plans",
 ];
 
 const proof = [
-  { icon: ShieldCheck, label: "Licensed NY Medicare brokers" },
+  { icon: ShieldCheck, label: "Licensed NY & NJ Medicare brokers" },
   { icon: Users, label: "Independent. We work for you, not the carrier." },
-  { icon: MapPin, label: "Local help across NYC, Long Island & Staten Island" },
+  { icon: MapPin, label: "Local help across NYC, Long Island, Staten Island & New Jersey" },
 ];
 
 const TrustBar = () => {

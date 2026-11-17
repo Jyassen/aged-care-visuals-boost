@@ -17,6 +17,7 @@ import CookiePolicy from "./pages/legal/CookiePolicy";
 import ConsentToContact from "./pages/legal/ConsentToContact";
 import HipaaCompliance from "./pages/legal/HipaaCompliance";
 import ScrollToTop from "./components/ScrollToTop";
+import ExitIntentStarterKit from "./components/ExitIntentStarterKit";
 import VslFunnelPage from "./pages/funnels/VslFunnelPage";
 import PreCallPage from "./pages/funnels/PreCallPage";
 import { FUNNELS } from "./funnels/config";
@@ -39,6 +40,7 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <ScrollToTop />
+        <ExitIntentStarterKit />
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/longisland" element={<Index />} />

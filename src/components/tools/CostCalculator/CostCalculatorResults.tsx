@@ -11,6 +11,7 @@ import { CostEstimate, CostCalculatorInput } from '@/types/medicare.types';
 import LeadCaptureForm from '../shared/LeadCaptureForm';
 import CaptureForm from '@/components/CaptureForm';
 import { generateCalculatorPDF } from './pdfGenerator.utils';
+import { PART_B, PART_D_2027 } from './costCalculator.utils';
 
 interface CostCalculatorResultsProps {
   /** Calculated cost estimate to display */
@@ -50,7 +51,8 @@ export default function CostCalculatorResults({ estimate, inputs, onReset }: Cos
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
   
-  // Detailed copay information for NY 2026 Medicare plans
+  // Detailed copay information for NY 2027 Medicare plans
+  // Source: "2027 Plans to Sell + SOB Benefits" sheet (carrier 2027 SOBs / CMS PBP 2027)
   const getCopayDetails = (category: string) => {
     const details: Record<string, { title: string; items: { label: string; amount: string }[] }> = {
       'Medicare Part B Premium': {
@@ -59,41 +61,43 @@ export default function CostCalculatorResults({ estimate, inputs, onReset }: Cos
           { label: 'Doctor visits', amount: '$0 copay (after deductible)' },
           { label: 'Outpatient care', amount: '$0 copay (after deductible)' },
           { label: 'Preventive services', amount: '$0 copay' },
-          { label: 'Annual deductible', amount: '$283 (2026)' },
+          { label: 'Annual deductible', amount: `$${PART_B.deductible} (${PART_B.year}; 2027 not yet announced)` },
           { label: 'Part B coinsurance', amount: '20% of Medicare-approved amount' },
         ]
       },
       'Medicare Advantage Plan Premium': {
-        title: 'Real NY 2026 Medicare Advantage Plan Premiums',
+        title: 'Real NY 2027 Medicare Advantage Plan Premiums',
         items: [
-          { label: '$0 Premium Plans (Commonly selected)', amount: 'Healthfirst, Elderplan, VIP Value, True Choice' },
-          { label: 'Low Premium Plans ($25-$40)', amount: 'VNS EasyCare ($25), Anthem ($24), Humana ($37)' },
-          { label: 'Mid Premium Plans ($50-$80)', amount: 'EmblemHealth VIP Gold ($54), Aetna Premier ($81)' },
+          { label: '$0 Premium Plans (Commonly selected)', amount: 'Healthfirst 65 Plus, EmblemHealth VIP Value, Humana Gold Plus, Aetna Signature, AARP/UHC, Anthem' },
+          { label: 'Low Premium Plans ($25-$50)', amount: 'VNS EasyCare ($25), Anthem ($29-$39), EmblemHealth VIP Saver ($40), Humana ($45-$50)' },
+          { label: 'Mid Premium Plans ($55-$110)', amount: 'Healthfirst Signature ($60), Aetna Enhanced ($69-$104), Aetna Elite PPO ($79-$109)' },
           { label: 'What\'s Included', amount: 'Part D prescription coverage' },
           { label: 'Extra Benefits', amount: 'Dental, vision, hearing often included' },
           { label: 'Network', amount: 'Must use plan doctors and hospitals' },
         ]
       },
       'Doctor Visits & Copays': {
-        title: 'Your Estimated Annual Visit Costs (NY 2026 Plans)',
+        title: 'Your Estimated Annual Visit Costs (NY 2027 Plans)',
         items: [
-          { label: 'Based on health status', amount: 'Actual 2026 NY plan copays' },
+          { label: 'Based on health status', amount: 'Actual 2027 NY plan copays' },
           { label: 'Very healthy (1 PCP visit)', amount: '$0/year ($0 copay)' },
           { label: 'Pretty healthy (3 PCP visits)', amount: '$0/year ($0 copay)' },
-          { label: 'Managing conditions (4 PCP + 6 specialist)', amount: '$390/year ($15 PCP + $40 specialist)' },
-          { label: 'Multiple conditions (6 PCP + 12 specialist)', amount: '$690/year ($15 PCP + $40 specialist)' },
-          { label: 'Additional urgent care visit', amount: '$40 - $75 per visit' },
+          { label: 'Managing conditions (4 PCP + 6 specialist)', amount: '$310/year ($10 PCP + $45 specialist)' },
+          { label: 'Multiple conditions (6 PCP + 12 specialist)', amount: '$600/year ($10 PCP + $45 specialist)' },
+          { label: 'Additional urgent care visit', amount: '$40 - $50 per visit' },
+          { label: 'Emergency room visit', amount: '$115 - $130 per visit' },
         ]
       },
       'Prescription Drugs (Part D)': {
-        title: 'Actual NY 2026 Drug Costs per Prescription',
+        title: 'Actual NY 2027 Drug Costs per Prescription',
         items: [
-          { label: 'Tier 1 (Generic)', amount: '$0 - $10 copay' },
-          { label: 'Tier 2 (Preferred Generic)', amount: '$5 - $15 copay' },
-          { label: 'Tier 3 (Preferred Brand)', amount: '$40 - $60 copay' },
-          { label: 'Tier 4 (Non-Preferred)', amount: '$85 - $120 copay' },
-          { label: 'Tier 5 (Specialty)', amount: '25-33% coinsurance' },
-          { label: 'Annual Part D deductible', amount: 'Up to $615 (2026 max)' },
+          { label: 'Tier 1 (Preferred Generic)', amount: '$0 - $5 copay' },
+          { label: 'Tier 2 (Generic)', amount: '$0 - $12 copay' },
+          { label: 'Tier 3 (Preferred Brand)', amount: '17% - 25% coinsurance' },
+          { label: 'Tier 4 (Non-Preferred)', amount: '25% - 50% coinsurance' },
+          { label: 'Tier 5 (Specialty)', amount: '25% - 33% coinsurance' },
+          { label: 'Annual Part D deductible', amount: `Up to $${PART_D_2027.maxDeductible} (2027 max; $0 on Tier 1-2 for most plans)` },
+          { label: 'Yearly out-of-pocket cap', amount: `$${PART_D_2027.outOfPocketCap.toLocaleString()} (2027), then $0 for covered drugs` },
           { label: 'Your estimate assumes', amount: 'Mix of generic & brand drugs' },
         ]
       }
@@ -129,7 +133,7 @@ export default function CostCalculatorResults({ estimate, inputs, onReset }: Cos
           >
             <div>
               <p className="font-bold text-gray-900 text-xl">${estimate.partBPremium.toFixed(2)} per month</p>
-              <p className="text-sm text-gray-600 mt-1">2026 verified premium amount</p>
+              <p className="text-sm text-gray-600 mt-1">{PART_B.label}</p>
             </div>
             {expandedSections[-1] ? 
               <ChevronUp className="h-5 w-5 text-blue-600" /> : 
@@ -155,7 +159,7 @@ export default function CostCalculatorResults({ estimate, inputs, onReset }: Cos
                 </div>
                 <div className="flex justify-between">
                   <span className="text-gray-700">Annual deductible</span>
-                  <span className="font-medium text-gray-900">$283 (2026)</span>
+                  <span className="font-medium text-gray-900">${PART_B.deductible} ({PART_B.year}; 2027 not yet announced)</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-gray-700">Part B coinsurance</span>

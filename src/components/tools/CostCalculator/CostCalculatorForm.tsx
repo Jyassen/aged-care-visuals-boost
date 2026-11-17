@@ -3,9 +3,8 @@ import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Card } from '@/components/ui/card';
-import { MapPin, Stethoscope, Users, Pill, Calculator, Check } from 'lucide-react';
+import { MapPin, Stethoscope, Users, Pill, Calculator, Check, ChevronDown } from 'lucide-react';
 import { CostCalculatorInput } from '@/types/medicare.types';
 import { validateZipCode } from './costCalculator.utils';
 
@@ -14,6 +13,44 @@ interface CostCalculatorFormProps {
 }
 
 type DoctorVisits = 'minimal' | 'moderate' | 'frequent';
+
+/**
+ * Native <select> with a large, always-visible arrow. Uses the phone's own
+ * picker, which seniors recognise, and never clips long option text the way
+ * the custom dropdown did on narrow screens.
+ */
+const NativeSelect = ({
+  id,
+  value,
+  onChange,
+  options,
+}: {
+  id: string;
+  value: string;
+  onChange: (value: string) => void;
+  options: { value: string; label: string }[];
+}) => (
+  <div className="relative">
+    <select
+      id={id}
+      value={value}
+      onChange={(e) => onChange(e.target.value)}
+      className="w-full min-h-[3.25rem] appearance-none rounded-lg border-2 border-gray-300 bg-white py-3 pl-3 pr-12 text-[15px] sm:text-lg font-medium text-gray-900 leading-snug focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-200"
+    >
+      {options.map((o) => (
+        <option key={o.value} value={o.value}>
+          {o.label}
+        </option>
+      ))}
+    </select>
+    <span
+      aria-hidden="true"
+      className="pointer-events-none absolute inset-y-0 right-0 flex w-11 items-center justify-center rounded-r-lg border-l-2 border-gray-200 bg-gray-50 text-blue-700"
+    >
+      <ChevronDown className="h-6 w-6" strokeWidth={2.5} />
+    </span>
+  </div>
+);
 
 export default function CostCalculatorForm({ onCalculate }: CostCalculatorFormProps) {
   const [zipCode, setZipCode] = useState('');
@@ -94,7 +131,7 @@ export default function CostCalculatorForm({ onCalculate }: CostCalculatorFormPr
   ];
 
   return (
-    <div className="bg-white rounded-2xl shadow-2xl p-8 w-full">
+    <div className="bg-white rounded-2xl shadow-2xl p-4 sm:p-8 w-full">
       <form onSubmit={handleSubmit} className="space-y-6">
         {/* ZIP Code - Modern Card Style */}
         <motion.div
@@ -102,9 +139,9 @@ export default function CostCalculatorForm({ onCalculate }: CostCalculatorFormPr
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.1, duration: 0.5 }}
         >
-          <Card className="p-6 border-2 border-gray-200 hover:border-blue-400 transition-all duration-300 hover:shadow-lg">
-            <div className="flex items-start gap-4">
-              <div className="p-3 bg-blue-100 rounded-lg">
+          <Card className="p-4 sm:p-6 border-2 border-gray-200 hover:border-blue-400 transition-all duration-300 hover:shadow-lg">
+            <div className="flex flex-col sm:flex-row sm:items-start gap-3 sm:gap-4">
+              <div className="p-3 bg-blue-100 rounded-lg self-start">
                 <MapPin className="h-6 w-6 text-blue-600" />
               </div>
               <div className="flex-1 space-y-3">
@@ -139,9 +176,9 @@ export default function CostCalculatorForm({ onCalculate }: CostCalculatorFormPr
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.2, duration: 0.5 }}
         >
-          <Card className="p-6 border-2 border-gray-200 hover:border-green-400 transition-all duration-300 hover:shadow-lg">
-            <div className="flex items-start gap-4">
-              <div className="p-3 bg-green-100 rounded-lg">
+          <Card className="p-4 sm:p-6 border-2 border-gray-200 hover:border-green-400 transition-all duration-300 hover:shadow-lg">
+            <div className="flex flex-col sm:flex-row sm:items-start gap-3 sm:gap-4">
+              <div className="p-3 bg-green-100 rounded-lg self-start">
                 <Stethoscope className="h-6 w-6 text-green-600" />
               </div>
               <div className="flex-1 space-y-3">
@@ -149,19 +186,19 @@ export default function CostCalculatorForm({ onCalculate }: CostCalculatorFormPr
                   <Label htmlFor="healthStatus" className="text-lg font-semibold text-gray-900">
                     Overall Health Status *
                   </Label>
-                  <p className="text-sm text-gray-600 mt-1">How would you describe your health?</p>
+                  <p className="text-sm text-gray-600 mt-1">How would you describe your health? Visits are per year.</p>
                 </div>
-                <Select value={healthStatus} onValueChange={(value: any) => setHealthStatus(value)}>
-                  <SelectTrigger id="healthStatus" className="text-lg h-12">
-                    <SelectValue placeholder="Select your health status" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="excellent">Very healthy - Once a year visit</SelectItem>
-                    <SelectItem value="good">Pretty healthy - 2-3 routine visits per year</SelectItem>
-                    <SelectItem value="fair">Managing some conditions - 4-6 visits per year</SelectItem>
-                    <SelectItem value="poor">Managing multiple conditions - 8+ visits per year</SelectItem>
-                  </SelectContent>
-                </Select>
+                <NativeSelect
+                  id="healthStatus"
+                  value={healthStatus}
+                  onChange={(value) => setHealthStatus(value as 'excellent' | 'good' | 'fair' | 'poor')}
+                  options={[
+                    { value: 'excellent', label: 'Very healthy (1 visit a year)' },
+                    { value: 'good', label: 'Pretty healthy (2-3 visits)' },
+                    { value: 'fair', label: 'Some conditions (4-6 visits)' },
+                    { value: 'poor', label: 'Many conditions (8+ visits)' },
+                  ]}
+                />
               </div>
             </div>
           </Card>
@@ -173,10 +210,10 @@ export default function CostCalculatorForm({ onCalculate }: CostCalculatorFormPr
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.3, duration: 0.5 }}
         >
-          <Card className="p-6 border-2 border-gray-200 hover:border-purple-400 transition-all duration-300 hover:shadow-lg">
+          <Card className="p-4 sm:p-6 border-2 border-gray-200 hover:border-purple-400 transition-all duration-300 hover:shadow-lg">
             <div className="space-y-4">
-              <div className="flex items-start gap-4 mb-4">
-                <div className="p-3 bg-purple-100 rounded-lg">
+              <div className="flex flex-col sm:flex-row sm:items-start gap-3 sm:gap-4 mb-4">
+                <div className="p-3 bg-purple-100 rounded-lg self-start">
                   <Users className="h-6 w-6 text-purple-600" />
                 </div>
                 <div>
@@ -248,9 +285,9 @@ export default function CostCalculatorForm({ onCalculate }: CostCalculatorFormPr
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.4, duration: 0.5 }}
         >
-          <Card className="p-6 border-2 border-gray-200 hover:border-orange-400 transition-all duration-300 hover:shadow-lg">
-            <div className="flex items-start gap-4">
-              <div className="p-3 bg-orange-100 rounded-lg">
+          <Card className="p-4 sm:p-6 border-2 border-gray-200 hover:border-orange-400 transition-all duration-300 hover:shadow-lg">
+            <div className="flex flex-col sm:flex-row sm:items-start gap-3 sm:gap-4">
+              <div className="p-3 bg-orange-100 rounded-lg self-start">
                 <Pill className="h-6 w-6 text-orange-600" />
               </div>
               <div className="flex-1 space-y-3">
@@ -260,24 +297,12 @@ export default function CostCalculatorForm({ onCalculate }: CostCalculatorFormPr
                   </Label>
                   <p className="text-sm text-gray-600 mt-1">How many medications do you take regularly?</p>
                 </div>
-                <Select value={prescriptionCount} onValueChange={(value) => setPrescriptionCount(value)}>
-                  <SelectTrigger id="prescriptionCount" className="text-lg h-12">
-                    <SelectValue placeholder="Select number" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="0">0</SelectItem>
-                    <SelectItem value="1">1</SelectItem>
-                    <SelectItem value="2">2</SelectItem>
-                    <SelectItem value="3">3</SelectItem>
-                    <SelectItem value="4">4</SelectItem>
-                    <SelectItem value="5">5</SelectItem>
-                    <SelectItem value="6">6</SelectItem>
-                    <SelectItem value="7">7</SelectItem>
-                    <SelectItem value="8">8</SelectItem>
-                    <SelectItem value="9">9</SelectItem>
-                    <SelectItem value="10">10+</SelectItem>
-                  </SelectContent>
-                </Select>
+                <NativeSelect
+                  id="prescriptionCount"
+                  value={prescriptionCount}
+                  onChange={setPrescriptionCount}
+                  options={[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((n) => ({ value: String(n), label: String(n) })).concat({ value: '10', label: '10 or more' })}
+                />
                 {errors.prescriptionCount && (
                   <p className="text-sm text-red-600 flex items-center gap-1">
                     ⚠️ {errors.prescriptionCount}
