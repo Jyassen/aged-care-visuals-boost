@@ -8,12 +8,14 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } f
 import { BookOpen, Mail } from "lucide-react";
 
 /**
- * Exit-intent offer for the free NY Medicare Starter Kit (2027 edition).
+ * Exit-intent offer for the free Stress-Free Medicare Guide 2027,
+ * the plain-English NY + NJ guide (NYC, Long Island, New Jersey).
  *
  * Shows once when a visitor is about to leave: on desktop when the cursor
  * leaves through the top of the window, on touch devices on a fast scroll
  * back up after reading part of the page. Captures name + email and sends
- * the kit through the existing /api/medicare-starter-kit endpoint.
+ * the guide through the existing /api/medicare-starter-kit endpoint, which
+ * delivers this single guide (not the three-guide kit) for src=exit-intent.
  *
  * Frequency: at most once every SNOOZE_DAYS per browser, never within the
  * first ARM_DELAY_MS of a page view, and never again once a kit was requested.
@@ -124,7 +126,7 @@ const ExitIntentStarterKit = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!name.trim() || !email.trim() || !consent) {
-      setError("Please add your name and email and tick the box so we can send the kit.");
+      setError("Please add your name and email and tick the box so we can send the guide.");
       return;
     }
     setSubmitting(true);
@@ -155,18 +157,18 @@ const ExitIntentStarterKit = () => {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent className="sm:max-w-[480px] p-0 overflow-hidden border-0">
+      <DialogContent className="sm:max-w-[480px] max-h-[90vh] overflow-y-auto p-0 border-0">
         <div className="bg-gradient-to-br from-blue-600 to-blue-800 text-white px-6 pt-7 pb-6">
           <span className="inline-block rounded-full bg-amber px-3 py-1 text-[11px] font-extrabold uppercase tracking-wide text-amber-ink mb-3">
             2027 Edition
           </span>
           <DialogHeader className="text-left space-y-2">
             <DialogTitle className="text-2xl font-extrabold leading-tight text-white">
-              Before you go, grab the free NY Medicare Starter Kit
+              Before you go, take the free Stress-Free Medicare Guide
             </DialogTitle>
             <DialogDescription className="text-blue-100 text-base">
-              Three plain-English guides New Yorkers use before picking a plan: the 10 questions to ask, the VIP contact
-              list, and Medicare myths vs reality, updated with the 2027 numbers.
+              The plain-English guide to Medicare in New York and New Jersey: 2027 costs, supplement versus Medicare
+              Advantage, the deadlines that carry lifetime penalties, and the programs that help pay for it.
             </DialogDescription>
           </DialogHeader>
         </div>
@@ -174,7 +176,7 @@ const ExitIntentStarterKit = () => {
         <form onSubmit={handleSubmit} className="px-6 py-5 space-y-4 bg-white">
           <div className="flex items-center gap-2 text-sm text-gray-600">
             <BookOpen className="h-4 w-4 text-blue-600" />
-            <span>Sent to your inbox in under a minute. No sales pitch, no obligation.</span>
+            <span>NYC, Long Island and New Jersey. Sent to your inbox in under a minute, no sales pitch.</span>
           </div>
           {error && (
             <p className="text-sm text-red-600" role="alert">
@@ -210,7 +212,7 @@ const ExitIntentStarterKit = () => {
               className="mt-1"
             />
             <label htmlFor="exit-kit-consent" className="text-xs leading-relaxed text-gray-600">
-              Yes, send me the starter kit. I understand I'll also receive helpful Medicare tips (unsubscribe anytime).
+              Yes, send me the free guide. I understand I'll also receive helpful Medicare tips (unsubscribe anytime).
               These are general Medicare information and resources. For personalized plan options, please speak with one
               of our licensed Medicare brokers.
             </label>
@@ -221,7 +223,7 @@ const ExitIntentStarterKit = () => {
             className="w-full bg-amber hover:bg-amber-hover text-amber-ink font-bold text-base py-6"
           >
             <Mail className="w-5 h-5 mr-2" />
-            {submitting ? "Sending..." : "Send me the free kit"}
+            {submitting ? "Sending..." : "Send me the free guide"}
           </Button>
           <button
             type="button"
