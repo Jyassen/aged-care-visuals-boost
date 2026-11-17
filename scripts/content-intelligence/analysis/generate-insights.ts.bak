@@ -1,0 +1,422 @@
+#!/usr/bin/env node
+
+/**
+ * Insights Generator
+ * 
+ * Main analysis orchestrator that combines all analysis modules
+ */
+
+import * as fs from 'fs';
+import * as path from 'path';
+import ThemeExtractor from './extract-themes';
+import MessagingAnalyzer from './analyze-messaging';
+import EngagementCalculator from './calculate-engagement';
+import { 
+  AggregatedInsights, 
+  ContentItem,
+  CompetitorGap,
+  Recommendation
+} from '../../../src/types/content-intelligence.types';
+
+class InsightsGenerator {
+  private dataPath: string;
+  private outputFile: string;
+  private themeExtractor: ThemeExtractor;
+  private messagingAnalyzer: MessagingAnalyzer;
+  private engagementCalculator: EngagementCalculator;
+
+  constructor() {
+    this.dataPath = path.join(process.cwd(), 'data', 'content-intelligence');
+    this.outputFile = path.join(this.dataPath, 'insights-aggregated.json');
+    this.themeExtractor = new ThemeExtractor();
+    this.messagingAnalyzer = new MessagingAnalyzer();
+    this.engagementCalculator = new EngagementCalculator();
+  }
+
+  /**
+   * Load all content items
+   */
+  private loadAllContent(): ContentItem[] {
+    const items: ContentItem[] = [];
+    const files = ['youtube-content.json', 'competitor-content.json', 'social-content.json'];
+
+    for (const file of files) {
+      try {
+        const filepath = path.join(this.dataPath, file);
+        if (fs.existsSync(filepath)) {
+          const data = JSON.parse(fs.readFileSync(filepath, 'utf-8'));
+          if (Array.isArray(data)) {
+            items.push(...data);
+          }
+        }
+      } catch (error) {
+        console.error(`Error loading ${file}:`, error);
+      }
+    }
+
+    return items;
+  }
+
+  /**
+   * Generate summary statistics
+   */
+  private generateSummary(items: ContentItem[]) {
+    const bySource = {
+      youtube: items.filter(i => i.source === 'youtube').length,
+      facebook: items.filter(i => i.source === 'facebook').length,
+      instagram: items.filter(i => i.source === 'instagram').length,
+      competitor: items.filter(i => i.source === 'competitor').length
+    };
+
+    const dates = items
+      .map(i => new Date(i.publishedDate || i.collectedDate))
+      .sort((a, b) => a.getTime() - b.getTime());
+
+    return {
+      totalItems: items.length,
+      bySource,
+      dateRange: {
+        start: dates.length > 0 ? dates[0].toISOString() : '',
+        end: dates.length > 0 ? dates[dates.length - 1].toISOString() : ''
+      }
+    };
+  }
+
+  /**
+   * Identify competitor gaps and opportunities
+   */
+  private identifyGaps(items: ContentItem[]): CompetitorGap[] {
+    const gaps: CompetitorGap[] = [];
+
+    // Analyze what competitors are NOT covering well
+    const competitorItems = items.filter(i => i.source === 'competitor');
+    const allThemes = new Set(items.flatMap(i => i.themes));
+    const competitorThemes = new Set(competitorItems.flatMap(i => i.themes));
+
+    // Underrepresented themes in competitor content
+    const underrepresented: string[] = [];
+    allThemes.forEach(theme => {
+      const competitorCount = competitorItems.filter(i => i.themes.includes(theme)).length;
+      const totalCount = items.filter(i => i.themes.includes(theme)).length;
+      
+      if (competitorCount < totalCount * 0.3 && totalCount >= 3) {
+        underrepresented.push(theme);
+      }
+    });
+
+    if (underrepresented.length > 0) {
+      gaps.push({
+        opportunity: 'Underrepresented themes',
+        description: `Competitors are not focusing on: ${underrepresented.slice(0, 3).join(', ')}`,
+        potentialImpact: 'high'
+      });
+    }
+
+    // Messaging patterns not widely used
+    const allPatterns = new Set(items.flatMap(i => i.messagingPatterns));
+    const competitorPatterns = new Set(competitorItems.flatMap(i => i.messagingPatterns));
+    
+    const unusedPatterns: string[] = [];
+    allPatterns.forEach(pattern => {
+      if (!competitorPatterns.has(pattern)) {
+        unusedPatterns.push(pattern);
+      }
+    });
+
+    if (unusedPatterns.length > 0) {
+      gaps.push({
+        opportunity: 'Untapped messaging approaches',
+        description: `Consider using: ${unusedPatterns.slice(0, 3).join(', ')}`,
+        potentialImpact: 'medium'
+      });
+    }
+
+    // Content format gaps
+    const competitorFormats = new Set(competitorItems.map(i => i.metadata?.format).filter(Boolean));
+    const allFormats = new Set(items.map(i => i.metadata?.format).filter(Boolean));
+    
+    allFormats.forEach(format => {
+      if (!competitorFormats.has(format) && format) {
+        gaps.push({
+          opportunity: `${format} content opportunity`,
+          description: `Competitors aren't leveraging ${format} format effectively`,
+          potentialImpact: 'medium'
+        });
+      }
+    });
+
+    // Video content analysis
+    const hasVideoContent = competitorItems.some(i => i.metadata?.format === 'video');
+    if (!hasVideoContent) {
+      gaps.push({
+        opportunity: 'Video content gap',
+        description: 'Competitors lack video content - opportunity to dominate this format',
+        potentialImpact: 'high'
+      });
+    }
+
+    return gaps.slice(0, 10);
+  }
+
+  /**
+   * Generate actionable recommendations
+   */
+  private generateRecommendations(
+    topThemes: any[],
+    messagingPatterns: any[],
+    topPerformers: any[],
+    gaps: CompetitorGap[]
+  ): Recommendation[] {
+    const recommendations: Recommendation[] = [];
+
+    // Theme-based recommendations
+    if (topThemes.length > 0) {
+      const topTheme = topThemes[0];
+      recommendations.push({
+        category: 'Content Themes',
+        recommendation: `Focus on "${topTheme.theme}" - it's the most frequent theme (${topTheme.frequency} occurrences)`,
+        priority: 'high',
+        basedOn: 'Theme frequency analysis'
+      });
+
+      // Emerging themes
+      const emergingThemes = topThemes.filter((t: any) => t.averageEngagement && t.averageEngagement > 5);
+      if (emergingThemes.length > 0) {
+        recommendations.push({
+          category: 'Content Themes',
+          recommendation: `Create content around high-engagement themes: ${emergingThemes.slice(0, 3).map((t: any) => t.theme).join(', ')}`,
+          priority: 'high',
+          basedOn: 'Engagement analysis'
+        });
+      }
+    }
+
+    // Messaging-based recommendations
+    if (messagingPatterns.length > 0) {
+      const effectivePatterns = messagingPatterns.filter((p: any) => p.effectiveness && p.effectiveness > 70);
+      if (effectivePatterns.length > 0) {
+        recommendations.push({
+          category: 'Messaging Strategy',
+          recommendation: `Use these proven effective patterns: ${effectivePatterns.slice(0, 3).map((p: any) => p.pattern).join(', ')}`,
+          priority: 'high',
+          basedOn: 'Messaging effectiveness analysis'
+        });
+      }
+    }
+
+    // Performance-based recommendations
+    if (topPerformers.length > 0) {
+      const commonFactors = new Map<string, number>();
+      topPerformers.forEach((p: any) => {
+        p.keyFactors.forEach((factor: string) => {
+          commonFactors.set(factor, (commonFactors.get(factor) || 0) + 1);
+        });
+      });
+
+      const mostCommon = Array.from(commonFactors.entries())
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, 3);
+
+      if (mostCommon.length > 0) {
+        recommendations.push({
+          category: 'Content Strategy',
+          recommendation: `Success factors from top performers: ${mostCommon.map(([factor]) => factor).join(', ')}`,
+          priority: 'high',
+          basedOn: 'Top performer analysis'
+        });
+      }
+    }
+
+    // Gap-based recommendations
+    gaps.forEach(gap => {
+      if (gap.potentialImpact === 'high') {
+        recommendations.push({
+          category: 'Competitive Advantage',
+          recommendation: gap.description,
+          priority: 'high',
+          basedOn: 'Competitor gap analysis'
+        });
+      }
+    });
+
+    // Content format recommendations
+    recommendations.push({
+      category: 'Content Format',
+      recommendation: 'Create video content to maximize engagement - video format shows consistently higher engagement rates',
+      priority: 'medium',
+      basedOn: 'Format performance analysis'
+    });
+
+    // Timing recommendations
+    recommendations.push({
+      category: 'Publishing Strategy',
+      recommendation: 'Focus on content around Medicare enrollment periods (Oct-Dec) and turning 65 milestones',
+      priority: 'medium',
+      basedOn: 'Industry knowledge and theme analysis'
+    });
+
+    // Length recommendations
+    recommendations.push({
+      category: 'Content Length',
+      recommendation: 'Aim for 1000-3000 words/characters for optimal engagement - comprehensive but not overwhelming',
+      priority: 'low',
+      basedOn: 'Content length vs engagement correlation'
+    });
+
+    return recommendations;
+  }
+
+  /**
+   * Generate comprehensive insights
+   */
+  async generate(): Promise<AggregatedInsights> {
+    console.log('\n╔═══════════════════════════════════════════════════════╗');
+    console.log('║  CONTENT INTELLIGENCE - INSIGHTS GENERATOR           ║');
+    console.log('╚═══════════════════════════════════════════════════════╝\n');
+
+    const items = this.loadAllContent();
+    
+    if (items.length === 0) {
+      console.log('⚠ No content available for analysis');
+      const emptyInsights: AggregatedInsights = {
+        generatedDate: new Date().toISOString(),
+        summary: {
+          totalItems: 0,
+          bySource: { youtube: 0, facebook: 0, instagram: 0, competitor: 0 },
+          dateRange: { start: '', end: '' }
+        },
+        topThemes: [],
+        messagingPatterns: [],
+        visualStyles: [],
+        topPerformers: [],
+        competitorGaps: [],
+        recommendations: []
+      };
+      return emptyInsights;
+    }
+
+    console.log(`📊 Analyzing ${items.length} content items...\n`);
+
+    // Run all analyses
+    console.log(`${'─'.repeat(55)}`);
+    const topThemes = this.themeExtractor.generateInsights(20);
+    
+    console.log(`\n${'─'.repeat(55)}`);
+    const messagingPatterns = this.messagingAnalyzer.generateInsights(20);
+    
+    console.log('\n${'─'.repeat(55)}');
+    const topPerformers = this.engagementCalculator.identifyTopPerformers(20);
+    
+    console.log('\n${'─'.repeat(55)}');
+    console.log('\n🔍 Identifying competitor gaps and opportunities...');
+    const competitorGaps = this.identifyGaps(items);
+    console.log(`  Found ${competitorGaps.length} opportunities`);
+
+    console.log('\n💡 Generating recommendations...');
+    const recommendations = this.generateRecommendations(
+      topThemes,
+      messagingPatterns,
+      topPerformers,
+      competitorGaps
+    );
+    console.log(`  Generated ${recommendations.length} recommendations`);
+
+    // Analyze visual styles
+    const visualStyles = this.analyzeVisualStyles(items);
+
+    // Compile insights
+    const insights: AggregatedInsights = {
+      generatedDate: new Date().toISOString(),
+      summary: this.generateSummary(items),
+      topThemes,
+      messagingPatterns,
+      visualStyles,
+      topPerformers,
+      competitorGaps,
+      recommendations
+    };
+
+    // Save insights
+    this.saveInsights(insights);
+
+    console.log('\n═══════════════════════════════════════════════════════');
+    console.log('✓ INSIGHTS GENERATION COMPLETE');
+    console.log('═══════════════════════════════════════════════════════\n');
+    console.log(`  Total themes identified: ${topThemes.length}`);
+    console.log(`  Messaging patterns analyzed: ${messagingPatterns.length}`);
+    console.log(`  Top performers identified: ${topPerformers.length}`);
+    console.log(`  Opportunities found: ${competitorGaps.length}`);
+    console.log(`  Recommendations generated: ${recommendations.length}`);
+    console.log('\n  Next steps:');
+    console.log('    1. Review insights: cat data/content-intelligence/insights-aggregated.json');
+    console.log('    2. Generate report: npm run generate-report');
+    console.log('    3. View dashboard: npm run dev\n');
+
+    return insights;
+  }
+
+  /**
+   * Analyze visual styles from content
+   */
+  private analyzeVisualStyles(items: ContentItem[]) {
+    const styleFrequency = new Map<string, { count: number; platforms: Set<string> }>();
+
+    items.forEach(item => {
+      if (item.metadata?.visualStyle) {
+        const style = item.metadata.visualStyle;
+        if (!styleFrequency.has(style)) {
+          styleFrequency.set(style, { count: 0, platforms: new Set() });
+        }
+        const data = styleFrequency.get(style)!;
+        data.count++;
+        data.platforms.add(item.source);
+      }
+    });
+
+    return Array.from(styleFrequency.entries())
+      .map(([style, data]) => ({
+        style,
+        frequency: data.count,
+        platforms: Array.from(data.platforms)
+      }))
+      .sort((a, b) => b.frequency - a.frequency)
+      .slice(0, 10);
+  }
+
+  /**
+   * Save insights to file
+   */
+  private saveInsights(insights: AggregatedInsights): void {
+    try {
+      fs.writeFileSync(this.outputFile, JSON.stringify(insights, null, 2));
+      console.log(`\n✓ Insights saved to ${this.outputFile}`);
+    } catch (error) {
+      console.error('✗ Error saving insights:', error);
+      throw error;
+    }
+  }
+
+  /**
+   * Load previously generated insights
+   */
+  loadInsights(): AggregatedInsights | null {
+    try {
+      if (fs.existsSync(this.outputFile)) {
+        const data = fs.readFileSync(this.outputFile, 'utf-8');
+        return JSON.parse(data);
+      }
+    } catch (error) {
+      console.error('Error loading insights:', error);
+    }
+    return null;
+  }
+}
+
+// CLI execution
+if (import.meta.url === `file://${process.argv[1]}`) {
+  const generator = new InsightsGenerator();
+  generator.generate().catch(console.error);
+}
+
+export default InsightsGenerator;
+

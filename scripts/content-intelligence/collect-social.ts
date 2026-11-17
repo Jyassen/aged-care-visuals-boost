@@ -1,0 +1,315 @@
+#!/usr/bin/env node
+
+/**
+ * Social Media Content Collector
+ * 
+ * Collects content from Facebook and Instagram using Supadata scraping
+ */
+
+import * as fs from 'fs';
+import * as path from 'path';
+import { ContentItem } from '../../src/types/content-intelligence.types';
+
+interface SocialConfig {
+  name: string;
+  platform: 'facebook' | 'instagram';
+  url: string;
+  type: 'profile' | 'page' | 'post';
+}
+
+interface ScrapedSocialContent {
+  url: string;
+  platform: string;
+  content: string;
+  author?: string;
+  publishedDate?: string;
+  engagement?: {
+    likes?: number;
+    comments?: number;
+    shares?: number;
+  };
+  metadata?: {
+    postType?: string;
+    hashtags?: string[];
+  };
+}
+
+class SocialCollector {
+  private dataPath: string;
+  private outputFile: string;
+
+  constructor() {
+    this.dataPath = path.join(process.cwd(), 'data', 'content-intelligence');
+    this.outputFile = path.join(this.dataPath, 'social-content.json');
+    this.ensureDataDirectory();
+  }
+
+  private ensureDataDirectory(): void {
+    if (!fs.existsSync(this.dataPath)) {
+      fs.mkdirSync(this.dataPath, { recursive: true });
+    }
+  }
+
+  private loadExistingData(): ContentItem[] {
+    try {
+      if (fs.existsSync(this.outputFile)) {
+        const data = fs.readFileSync(this.outputFile, 'utf-8');
+        return JSON.parse(data);
+      }
+    } catch (error) {
+      console.error('Error loading existing data:', error);
+    }
+    return [];
+  }
+
+  private saveData(items: ContentItem[]): void {
+    fs.writeFileSync(this.outputFile, JSON.stringify(items, null, 2));
+    console.log(`✓ Saved ${items.length} items to ${this.outputFile}`);
+  }
+
+  /**
+   * Scrape social media content using Supadata
+   */
+  private async scrapeSocialContent(url: string, platform: string): Promise<ScrapedSocialContent | null> {
+    console.log(`  → Scraping ${platform} content: ${url}`);
+    console.log('  ⚠ Using Supadata MCP tool (supadata_scrape) to extract social content');
+    console.log('  ⚠ Note: Social media access may be limited due to platform restrictions');
+    
+    // Placeholder - actual implementation uses MCP tools
+    return null;
+  }
+
+  /**
+   * Extract themes from social content
+   */
+  private extractThemes(content: string, hashtags: string[] = []): string[] {
+    const themes: Set<string> = new Set();
+    
+    // Include hashtags as themes
+    hashtags.forEach(tag => themes.add(tag.replace('#', '')));
+
+    const keywords = [
+      'Medicare',
+      'insurance',
+      'health coverage',
+      'enrollment',
+      'benefits',
+      'senior care',
+      'retirement',
+      'healthcare',
+      'Medicare Advantage',
+      'supplement',
+      'prescription',
+      'wellness',
+      'preventive care',
+      'cost savings',
+      'plan comparison'
+    ];
+
+    const lowerContent = content.toLowerCase();
+    keywords.forEach(keyword => {
+      if (lowerContent.includes(keyword.toLowerCase())) {
+        themes.add(keyword);
+      }
+    });
+
+    return Array.from(themes);
+  }
+
+  /**
+   * Extract messaging patterns from social content
+   */
+  private extractMessagingPatterns(content: string, platform: string): string[] {
+    const patterns: Set<string> = new Set();
+    const lowerContent = content.toLowerCase();
+
+    const patternIndicators = [
+      { pattern: 'story-telling', keywords: ['story', 'journey', 'experience', 'my', 'our'] },
+      { pattern: 'question-hook', keywords: ['?', 'did you know', 'wondering', 'confused'] },
+      { pattern: 'tip-sharing', keywords: ['tip', 'hack', 'how to', 'guide', 'steps'] },
+      { pattern: 'testimonial', keywords: ['review', 'testimonial', 'helped me', 'grateful', 'thank you'] },
+      { pattern: 'urgency', keywords: ['deadline', 'today', 'now', 'limited', 'ending soon'] },
+      { pattern: 'empathy', keywords: ['understand', 'relate', 'feel', 'know how', 'been there'] },
+      { pattern: 'celebration', keywords: ['congratulations', 'celebrate', 'milestone', 'birthday'] },
+      { pattern: 'call-to-action', keywords: ['call', 'visit', 'click', 'learn more', 'contact'] },
+      { pattern: 'educational', keywords: ['learn', 'understand', 'explain', 'difference', 'between'] },
+      { pattern: 'comparison', keywords: ['vs', 'versus', 'compare', 'better than', 'difference'] }
+    ];
+
+    patternIndicators.forEach(({ pattern, keywords }) => {
+      if (keywords.some(keyword => lowerContent.includes(keyword))) {
+        patterns.add(pattern);
+      }
+    });
+
+    // Platform-specific patterns
+    if (platform === 'instagram') {
+      if (content.includes('#') && content.split('#').length > 3) {
+        patterns.add('hashtag-heavy');
+      }
+      if (lowerContent.includes('swipe') || lowerContent.includes('carousel')) {
+        patterns.add('carousel-post');
+      }
+    }
+
+    if (platform === 'facebook') {
+      if (content.length > 500) {
+        patterns.add('long-form');
+      }
+      if (lowerContent.includes('live') || lowerContent.includes('webinar')) {
+        patterns.add('live-content');
+      }
+    }
+
+    return Array.from(patterns);
+  }
+
+  /**
+   * Calculate engagement rate
+   */
+  private calculateEngagementRate(engagement: any): number | undefined {
+    if (!engagement) return undefined;
+    
+    const { likes = 0, comments = 0, shares = 0 } = engagement;
+    const totalEngagement = likes + comments + shares;
+    
+    // Without follower count, we can't calculate true rate
+    // Return raw engagement as a proxy
+    return totalEngagement;
+  }
+
+  /**
+   * Extract hashtags from content
+   */
+  private extractHashtags(content: string): string[] {
+    const hashtagRegex = /#[\w]+/g;
+    const matches = content.match(hashtagRegex);
+    return matches || [];
+  }
+
+  /**
+   * Process a single social media source
+   */
+  async processSocialSource(config: SocialConfig): Promise<ContentItem[]> {
+    console.log(`\n📱 Processing: ${config.platform} - ${config.name}`);
+    console.log(`   Type: ${config.type}`);
+    console.log(`   URL: ${config.url}`);
+
+    const items: ContentItem[] = [];
+
+    try {
+      const scraped = await this.scrapeSocialContent(config.url, config.platform);
+      
+      if (!scraped) {
+        console.log('  ⚠ Content not accessible or scraping failed');
+        return items;
+      }
+
+      const hashtags = this.extractHashtags(scraped.content);
+      const themes = this.extractThemes(scraped.content, hashtags);
+      const messagingPatterns = this.extractMessagingPatterns(scraped.content, config.platform);
+
+      const item: ContentItem = {
+        id: `social-${config.platform}-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+        source: config.platform === 'facebook' ? 'facebook' : 'instagram',
+        platform: config.name,
+        url: config.url,
+        title: `${config.platform} ${config.type} - ${config.name}`,
+        content: scraped.content,
+        publishedDate: scraped.publishedDate,
+        collectedDate: new Date().toISOString(),
+        engagement: {
+          likes: scraped.engagement?.likes,
+          comments: scraped.engagement?.comments,
+          shares: scraped.engagement?.shares,
+          engagementRate: this.calculateEngagementRate(scraped.engagement)
+        },
+        metadata: {
+          format: 'post',
+          author: scraped.author,
+          tags: hashtags
+        },
+        themes,
+        messagingPatterns
+      };
+
+      items.push(item);
+      console.log(`  ✓ Collected content with ${themes.length} themes, ${messagingPatterns.length} patterns`);
+
+    } catch (error) {
+      console.error(`  ✗ Error processing ${config.name}:`, error);
+    }
+
+    return items;
+  }
+
+  /**
+   * Collect content from multiple social sources
+   */
+  async collect(sources: SocialConfig[]): Promise<void> {
+    console.log(`\n📲 Starting social media collection for ${sources.length} sources...\n`);
+
+    const existingData = this.loadExistingData();
+    const newItems: ContentItem[] = [];
+
+    for (const source of sources) {
+      const items = await this.processSocialSource(source);
+      newItems.push(...items);
+      
+      // Rate limiting between requests
+      await new Promise(resolve => setTimeout(resolve, 3000));
+    }
+
+    // Merge with existing data (avoid duplicates by URL)
+    const allItems = [...existingData];
+    newItems.forEach(newItem => {
+      const exists = allItems.some(item => item.url === newItem.url);
+      if (!exists) {
+        allItems.push(newItem);
+      } else {
+        console.log(`  ↻ Skipping duplicate: ${newItem.url}`);
+      }
+    });
+
+    this.saveData(allItems);
+    console.log(`\n✓ Collection complete! Added ${newItems.length} new items.`);
+  }
+}
+
+// CLI execution
+if (import.meta.url === `file://${process.argv[1]}`) {
+  const collector = new SocialCollector();
+
+  // Example social media sources
+  const sources: SocialConfig[] = [
+    {
+      name: 'Medicare.gov',
+      platform: 'facebook',
+      url: 'https://www.facebook.com/Medicare',
+      type: 'page'
+    },
+    {
+      name: 'Sample Medicare Advisor',
+      platform: 'instagram',
+      url: 'https://www.instagram.com/example',
+      type: 'profile'
+    }
+  ];
+
+  console.log('═══════════════════════════════════════════════════════');
+  console.log('  Social Media Content Collector');
+  console.log('  Using Supadata for social content scraping');
+  console.log('═══════════════════════════════════════════════════════');
+  console.log('\n⚠ To use this script:');
+  console.log('  1. Add social media URLs to config/content-sources.json');
+  console.log('  2. Run via orchestrator: npm run collect-content');
+  console.log('  3. Or directly: ts-node scripts/content-intelligence/collect-social.ts');
+  console.log('\n⚠ Note: Social media platforms may restrict automated access');
+  console.log('  Consider manual collection or official APIs where available\n');
+
+  // For demonstration
+  collector.collect(sources).catch(console.error);
+}
+
+export default SocialCollector;
+

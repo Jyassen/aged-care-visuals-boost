@@ -1,0 +1,154 @@
+{
+  "videoId": "kZwuZAZcTfo",
+  "campaign": "AEP2025",
+  "utm": {
+    "source": "meta",
+    "medium": "paid_social",
+    "campaign": "aep2025"
+  },
+  "variants": [
+    {
+      "name": "VariantA_NewToMedicare",
+      "primary_text": "Turning 65? Everything is okay. Here’s your simple Medicare timeline—no pressure, no hype. Independent, no‑cost guidance in Nassau County to make sure your plan fits your doctors and budget.",
+      "cta": "SCHEDULE_CONSULTATION",
+      "cards": [
+        {
+          "index": 1,
+          "headline": "Your 7‑Month Window",
+          "overlay_text": "3 + 1 + 3",
+          "alt_text": "Calendar showing 3 months before, birthday month, 3 months after",
+          "image_brief": "Clean calendar visual with highlighted 7‑month enrollment window",
+          "destination_url": "https://yourmedguy.com/consult?utm_source=meta&utm_medium=paid_social&utm_campaign=aep2025&utm_content=variantA_card1"
+        },
+        {
+          "index": 2,
+          "headline": "Step 1 — Parts A & B",
+          "overlay_text": "Enroll on time",
+          "alt_text": "Medicare card close‑up for Parts A & B",
+          "image_brief": "Medicare card with subtle “avoid penalties” badge",
+          "destination_url": "https://yourmedguy.com/consult?utm_source=meta&utm_medium=paid_social&utm_campaign=aep2025&utm_content=variantA_card2"
+        },
+        {
+          "index": 3,
+          "headline": "Pick Your Path",
+          "overlay_text": "Advantage vs Supplement + Part D",
+          "alt_text": "Split graphic showing MA vs Supplement + Part D",
+          "image_brief": "Two‑column comparison; neutral, educational tone",
+          "destination_url": "https://yourmedguy.com/consult?utm_source=meta&utm_medium=paid_social&utm_campaign=aep2025&utm_content=variantA_card3"
+        },
+        {
+          "index": 4,
+          "headline": "Check Doctors & Prescriptions",
+          "overlay_text": "No surprises",
+          "alt_text": "Checklist: doctors, drugs, copays",
+          "image_brief": "Simple checklist with checkmarks; readable on mobile",
+          "destination_url": "https://yourmedguy.com/consult?utm_source=meta&utm_medium=paid_social&utm_campaign=aep2025&utm_content=variantA_card4"
+        },
+        {
+          "index": 5,
+          "headline": "Book Your No‑Cost Consult",
+          "overlay_text": "Independent, local help",
+          "alt_text": "Friendly advisor in local office setting",
+          "image_brief": "Warm, calm, approachable portrait; no salesy vibe",
+          "destination_url": "https://yourmedguy.com/consult?utm_source=meta&utm_medium=paid_social&utm_campaign=aep2025&utm_content=variantA_card5"
+        }
+      ]
+    },
+    {
+      "name": "VariantB_AEPConfusionEmpathy",
+      "primary_text": "Feeling overwhelmed by AEP ads? Everything is okay. If you’re happy with your plan, you can stay—it auto‑renews. Not sure? Read your ANOC letter or get a no‑cost, independent review with [[BROKER_NAME]] in Nassau County.",
+      "cta": "SCHEDULE_CONSULTATION",
+      "cards": [
+        {
+          "index": 1,
+          "headline": "Everything Is Okay",
+          "overlay_text": "Stay if happy",
+          "alt_text": "Calm reassurance graphic with auto‑renews note",
+          "image_brief": "Soothing visual; large “Everything is okay”",
+          "destination_url": "https://yourmedguy.com/consult?utm_source=meta&utm_medium=paid_social&utm_campaign=aep2025&utm_content=variantB_card1"
+        },
+        {
+          "index": 2,
+          "headline": "Check Your ANOC",
+          "overlay_text": "Know what changed",
+          "alt_text": "ANOC letter icon with premiums, benefits, drugs",
+          "image_brief": "Letter/document motif; “September” tag",
+          "destination_url": "https://yourmedguy.com/consult?utm_source=meta&utm_medium=paid_social&utm_campaign=aep2025&utm_content=variantB_card2"
+        },
+        {
+          "index": 3,
+          "headline": "Independent, No‑Cost Help",
+          "overlay_text": "Many carriers, many plans",
+          "alt_text": "Advisor comparing multiple carriers and plan types",
+          "image_brief": "Independent badge; educational layout",
+          "destination_url": "https://yourmedguy.com/consult?utm_source=meta&utm_medium=paid_social&utm_campaign=aep2025&utm_content=variantB_card3"
+        },
+        {
+          "index": 4,
+          "headline": "Big Benefits? It Depends",
+          "overlay_text": "ZIP‑specific availability",
+          "alt_text": "Map/ZIP icon with availability note",
+          "image_brief": "Geographic pin; disclaimer: Not available in all ZIPs",
+          "destination_url": "https://yourmedguy.com/consult?utm_source=meta&utm_medium=paid_social&utm_campaign=aep2025&utm_content=variantB_card4"
+        },
+        {
+          "index": 5,
+          "headline": "Book Your Review",
+          "overlay_text": "AEP ends Dec 7",
+          "alt_text": "Clean CTA card Schedule Consultation",
+          "image_brief": "Minimal, high‑contrast CTA; No‑pressure subtext",
+          "destination_url": "https://yourmedguy.com/consult?utm_source=meta&utm_medium=paid_social&utm_campaign=aep2025&utm_content=variantB_card5"
+        }
+      ]
+    },
+    {
+      "name": "VariantC_AntiPressure",
+      "primary_text": "No hype. No fear. Just facts. If your plan still fits, we’ll tell you to stay. If you’re unsure, we’ll check your ANOC and options—independent, no‑cost, and no pressure in Nassau County.",
+      "cta": "SCHEDULE_CONSULTATION",
+      "cards": [
+        {
+          "index": 1,
+          "headline": "Tired of the Hype?",
+          "overlay_text": "Everything is okay",
+          "alt_text": "Split noise vs calm visual",
+          "image_brief": "Before/after mood contrast (stress → relief)",
+          "destination_url": "https://yourmedguy.com/consult?utm_source=meta&utm_medium=paid_social&utm_campaign=aep2025&utm_content=variantC_card1"
+        },
+        {
+          "index": 2,
+          "headline": "Read Your ANOC",
+          "overlay_text": "Premiums • Benefits • Drugs",
+          "alt_text": "ANOC letter close‑up",
+          "image_brief": "Document visual with clear bullet trio",
+          "destination_url": "https://yourmedguy.com/consult?utm_source=meta&utm_medium=paid_social&utm_campaign=aep2025&utm_content=variantC_card2"
+        },
+        {
+          "index": 3,
+          "headline": "Independent Matters",
+          "overlay_text": "Many carriers, one advocate",
+          "alt_text": "Advisor reviewing multiple plan types",
+          "image_brief": "Independent seal; trustworthy, neutral vibe",
+          "destination_url": "https://yourmedguy.com/consult?utm_source=meta&utm_medium=paid_social&utm_campaign=aep2025&utm_content=variantC_card3"
+        },
+        {
+          "index": 4,
+          "headline": "Truth About “Extras”",
+          "overlay_text": "ZIP‑specific benefits",
+          "alt_text": "Map pin icon with availability note",
+          "image_brief": "Geographic availability disclaimer; readable on mobile",
+          "destination_url": "https://yourmedguy.com/consult?utm_source=meta&utm_medium=paid_social&utm_campaign=aep2025&utm_content=variantC_card4"
+        },
+        {
+          "index": 5,
+          "headline": "Talk With [[BROKER_NAME]]",
+          "overlay_text": "No‑cost consult • Dec 7 info",
+          "alt_text": "Friendly, local advisor CTA",
+          "image_brief": "Simple CTA; No‑pressure micro‑copy",
+          "destination_url": "https://yourmedguy.com/consult?utm_source=meta&utm_medium=paid_social&utm_campaign=aep2025&utm_content=variantC_card5"
+        }
+      ]
+    }
+  ]
+}
+
+

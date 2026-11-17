@@ -500,5 +500,23 @@ All scripts are production-ready with:
 
 **Total Pages:** 2,500+ lines of production-ready content
 
+---
+
+## 📣 **STANDALONE ADS & SHORT SCRIPTS**
+
+### **Ad 1: Russell Brunson Style - "The Call"**
+**File:** `Medicare-Calls-Russell-Brunson-Ad-Script.md`
+**Style:** Raw, authentic, UGC
+**Hook:** Behind-the-scenes of making calls
+**Focus:** Complexity of choice (Doctors, Meds, Copays)
+**CTA:** "Fill out the form, Ask for Jamal!"
+
+### **Ad 1 (Variant B): "Quit the Stress"**
+**File:** `Medicare-Calls-Russell-Brunson-Ad-Script-Variant-B.md`
+**Added Line:** "Quit the stress and guess work, find out all the benefits you may qualify for"
+**Focus:** Emotional relief + Benefit discovery
+
+---
+
 **Let's make Medicare simple!** 💙
 

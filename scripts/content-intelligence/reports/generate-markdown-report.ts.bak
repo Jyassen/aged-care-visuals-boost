@@ -1,0 +1,482 @@
+#!/usr/bin/env node
+
+/**
+ * Markdown Report Generator
+ * 
+ * Creates comprehensive markdown reports from insights data
+ */
+
+import * as fs from 'fs';
+import * as path from 'path';
+import { format } from 'date-fns';
+import { AggregatedInsights } from '../../../src/types/content-intelligence.types';
+
+class MarkdownReportGenerator {
+  private insightsPath: string;
+  private reportsPath: string;
+
+  constructor() {
+    this.insightsPath = path.join(process.cwd(), 'data', 'content-intelligence', 'insights-aggregated.json');
+    this.reportsPath = path.join(process.cwd(), 'docs', 'content-intelligence', 'reports');
+    this.ensureReportsDirectory();
+  }
+
+  /**
+   * Ensure reports directory exists
+   */
+  private ensureReportsDirectory(): void {
+    if (!fs.existsSync(this.reportsPath)) {
+      fs.mkdirSync(this.reportsPath, { recursive: true });
+    }
+  }
+
+  /**
+   * Load insights data
+   */
+  private loadInsights(): AggregatedInsights | null {
+    try {
+      if (fs.existsSync(this.insightsPath)) {
+        const data = fs.readFileSync(this.insightsPath, 'utf-8');
+        return JSON.parse(data);
+      }
+    } catch (error) {
+      console.error('Error loading insights:', error);
+    }
+    return null;
+  }
+
+  /**
+   * Generate text-based bar chart
+   */
+  private generateBarChart(data: { label: string; value: number }[], maxWidth: number = 40): string {
+    const maxValue = Math.max(...data.map(d => d.value));
+    const lines: string[] = [];
+
+    data.forEach(({ label, value }) => {
+      const barLength = Math.round((value / maxValue) * maxWidth);
+      const bar = '█'.repeat(barLength);
+      const padding = ' '.repeat(Math.max(0, 25 - label.length));
+      lines.push(`${label}${padding} ${bar} ${value}`);
+    });
+
+    return lines.join('\n');
+  }
+
+  /**
+   * Format date range
+   */
+  private formatDateRange(start: string, end: string): string {
+    if (!start || !end) return 'N/A';
+    
+    try {
+      const startDate = format(new Date(start), 'MMM d, yyyy');
+      const endDate = format(new Date(end), 'MMM d, yyyy');
+      return `${startDate} - ${endDate}`;
+    } catch {
+      return 'N/A';
+    }
+  }
+
+  /**
+   * Generate executive summary section
+   */
+  private generateExecutiveSummary(insights: AggregatedInsights): string {
+    const { summary } = insights;
+    
+    return `## Executive Summary
+
+### Collection Overview
+
+- **Total Content Items Analyzed:** ${summary.totalItems}
+- **Date Range:** ${this.formatDateRange(summary.dateRange.start, summary.dateRange.end)}
+- **Analysis Date:** ${format(new Date(insights.generatedDate), 'MMMM d, yyyy \'at\' h:mm a')}
+
+### Content Distribution by Source
+
+\`\`\`
+${this.generateBarChart([
+  { label: 'YouTube', value: summary.bySource.youtube },
+  { label: 'Facebook', value: summary.bySource.facebook },
+  { label: 'Instagram', value: summary.bySource.instagram },
+  { label: 'Competitor Sites', value: summary.bySource.competitor }
+])}
+\`\`\`
+
+### Key Findings
+
+- **${insights.topThemes.length}** major content themes identified
+- **${insights.messagingPatterns.length}** messaging patterns analyzed
+- **${insights.topPerformers.length}** high-performing content pieces discovered
+- **${insights.competitorGaps.length}** competitive opportunities identified
+- **${insights.recommendations.length}** actionable recommendations generated
+`;
+  }
+
+  /**
+   * Generate themes section
+   */
+  private generateThemesSection(insights: AggregatedInsights): string {
+    const { topThemes } = insights;
+    
+    if (topThemes.length === 0) {
+      return '## Content Themes\n\n*No themes data available*\n';
+    }
+
+    let section = `## Content Themes
+
+### Top ${Math.min(10, topThemes.length)} Most Frequent Themes
+
+\`\`\`
+${this.generateBarChart(
+  topThemes.slice(0, 10).map(t => ({ label: t.theme, value: t.frequency }))
+)}
+\`\`\`
+
+### Detailed Theme Analysis
+
+| Rank | Theme | Frequency | Avg Engagement | Examples |
+|------|-------|-----------|----------------|----------|
+`;
+
+    topThemes.slice(0, 15).forEach((theme, i) => {
+      const engagement = theme.averageEngagement ? theme.averageEngagement.toFixed(2) + '%' : 'N/A';
+      const exampleCount = theme.examples.length;
+      section += `| ${i + 1} | ${theme.theme} | ${theme.frequency} | ${engagement} | ${exampleCount} items |\n`;
+    });
+
+    section += `\n### Theme Insights
+
+`;
+
+    // Add insights about themes
+    const highEngagementThemes = topThemes.filter(t => t.averageEngagement && t.averageEngagement > 5);
+    if (highEngagementThemes.length > 0) {
+      section += `**High-Engagement Themes:** The following themes show above-average engagement (>5%):\n`;
+      highEngagementThemes.slice(0, 5).forEach(t => {
+        section += `- **${t.theme}** (${t.averageEngagement?.toFixed(2)}% avg engagement)\n`;
+      });
+      section += '\n';
+    }
+
+    const frequentThemes = topThemes.slice(0, 3);
+    section += `**Most Frequent Themes:** Content consistently focuses on:\n`;
+    frequentThemes.forEach(t => {
+      section += `- **${t.theme}** (${t.frequency} occurrences)\n`;
+    });
+
+    return section + '\n';
+  }
+
+  /**
+   * Generate messaging section
+   */
+  private generateMessagingSection(insights: AggregatedInsights): string {
+    const { messagingPatterns } = insights;
+    
+    if (messagingPatterns.length === 0) {
+      return '## Messaging Patterns\n\n*No messaging patterns data available*\n';
+    }
+
+    let section = `## Messaging Patterns
+
+### Pattern Effectiveness & Frequency
+
+| Rank | Pattern | Frequency | Effectiveness Score | Examples |
+|------|---------|-----------|---------------------|----------|
+`;
+
+    messagingPatterns.slice(0, 15).forEach((pattern, i) => {
+      const effectiveness = pattern.effectiveness ? `${pattern.effectiveness}/100` : 'N/A';
+      const exampleCount = pattern.examples.length;
+      section += `| ${i + 1} | ${pattern.pattern} | ${pattern.frequency} | ${effectiveness} | ${exampleCount} items |\n`;
+    });
+
+    section += `\n### Pattern Analysis
+
+`;
+
+    // Most effective patterns
+    const effectivePatterns = messagingPatterns
+      .filter(p => p.effectiveness && p.effectiveness > 70)
+      .sort((a, b) => (b.effectiveness || 0) - (a.effectiveness || 0))
+      .slice(0, 5);
+
+    if (effectivePatterns.length > 0) {
+      section += `#### 🏆 Most Effective Patterns (70+ score)
+
+`;
+      effectivePatterns.forEach((p, i) => {
+        section += `${i + 1}. **${p.pattern}** - Score: ${p.effectiveness}/100, Used ${p.frequency} times\n`;
+      });
+      section += '\n';
+    }
+
+    // Most common patterns
+    section += `#### 📊 Most Common Patterns
+
+`;
+    messagingPatterns.slice(0, 5).forEach((p, i) => {
+      section += `${i + 1}. **${p.pattern}** - ${p.frequency} uses\n`;
+    });
+
+    return section + '\n';
+  }
+
+  /**
+   * Generate top performers section
+   */
+  private generateTopPerformersSection(insights: AggregatedInsights): string {
+    const { topPerformers } = insights;
+    
+    if (topPerformers.length === 0) {
+      return '## Top Performing Content\n\n*No top performers data available*\n';
+    }
+
+    let section = `## Top Performing Content
+
+### Highest Engagement Scores
+
+`;
+
+    topPerformers.slice(0, 10).forEach((performer, i) => {
+      section += `#### ${i + 1}. ${performer.title}
+
+- **Engagement Score:** ${performer.engagementScore}/100
+- **Source:** ${performer.source}
+- **URL:** [View Content](${performer.url})
+- **Success Factors:**
+${performer.keyFactors.map(f => `  - ${f}`).join('\n')}
+
+`;
+    });
+
+    // Aggregate success factors
+    section += `### Common Success Factors
+
+Analysis of success factors across top performers:
+
+`;
+
+    const factorFrequency = new Map<string, number>();
+    topPerformers.forEach(p => {
+      p.keyFactors.forEach(factor => {
+        factorFrequency.set(factor, (factorFrequency.get(factor) || 0) + 1);
+      });
+    });
+
+    const sortedFactors = Array.from(factorFrequency.entries())
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 10);
+
+    section += '\`\`\`\n';
+    section += this.generateBarChart(
+      sortedFactors.map(([factor, count]) => ({ label: factor.substring(0, 25), value: count }))
+    );
+    section += '\n\`\`\`\n';
+
+    return section + '\n';
+  }
+
+  /**
+   * Generate opportunities section
+   */
+  private generateOpportunitiesSection(insights: AggregatedInsights): string {
+    const { competitorGaps } = insights;
+    
+    if (competitorGaps.length === 0) {
+      return '## Competitive Opportunities\n\n*No gaps identified*\n';
+    }
+
+    let section = `## Competitive Opportunities
+
+### Identified Gaps & Opportunities
+
+`;
+
+    // Group by impact
+    const highImpact = competitorGaps.filter(g => g.potentialImpact === 'high');
+    const mediumImpact = competitorGaps.filter(g => g.potentialImpact === 'medium');
+    const lowImpact = competitorGaps.filter(g => g.potentialImpact === 'low');
+
+    if (highImpact.length > 0) {
+      section += `#### 🎯 High Impact Opportunities
+
+`;
+      highImpact.forEach((gap, i) => {
+        section += `${i + 1}. **${gap.opportunity}**\n   ${gap.description}\n\n`;
+      });
+    }
+
+    if (mediumImpact.length > 0) {
+      section += `#### 📌 Medium Impact Opportunities
+
+`;
+      mediumImpact.forEach((gap, i) => {
+        section += `${i + 1}. **${gap.opportunity}**\n   ${gap.description}\n\n`;
+      });
+    }
+
+    if (lowImpact.length > 0) {
+      section += `#### 💡 Additional Opportunities
+
+`;
+      lowImpact.forEach((gap, i) => {
+        section += `${i + 1}. **${gap.opportunity}**\n   ${gap.description}\n\n`;
+      });
+    }
+
+    return section;
+  }
+
+  /**
+   * Generate recommendations section
+   */
+  private generateRecommendationsSection(insights: AggregatedInsights): string {
+    const { recommendations } = insights;
+    
+    if (recommendations.length === 0) {
+      return '## Recommendations\n\n*No recommendations available*\n';
+    }
+
+    let section = `## Actionable Recommendations
+
+`;
+
+    // Group by priority
+    const highPriority = recommendations.filter(r => r.priority === 'high');
+    const mediumPriority = recommendations.filter(r => r.priority === 'medium');
+    const lowPriority = recommendations.filter(r => r.priority === 'low');
+
+    if (highPriority.length > 0) {
+      section += `### 🔴 High Priority
+
+`;
+      highPriority.forEach((rec, i) => {
+        section += `${i + 1}. **${rec.category}**\n`;
+        section += `   ${rec.recommendation}\n`;
+        section += `   *Based on: ${rec.basedOn}*\n\n`;
+      });
+    }
+
+    if (mediumPriority.length > 0) {
+      section += `### 🟡 Medium Priority
+
+`;
+      mediumPriority.forEach((rec, i) => {
+        section += `${i + 1}. **${rec.category}**\n`;
+        section += `   ${rec.recommendation}\n`;
+        section += `   *Based on: ${rec.basedOn}*\n\n`;
+      });
+    }
+
+    if (lowPriority.length > 0) {
+      section += `### 🟢 Low Priority
+
+`;
+      lowPriority.forEach((rec, i) => {
+        section += `${i + 1}. **${rec.category}**\n`;
+        section += `   ${rec.recommendation}\n`;
+        section += `   *Based on: ${rec.basedOn}*\n\n`;
+      });
+    }
+
+    return section;
+  }
+
+  /**
+   * Generate complete markdown report
+   */
+  generateReport(): string | null {
+    console.log('\n📝 Generating markdown report...\n');
+
+    const insights = this.loadInsights();
+    if (!insights) {
+      console.log('✗ No insights data available. Run analysis first.');
+      return null;
+    }
+
+    let report = `# Content Intelligence Report
+# Medicare & Aged Care Niche
+
+**Generated:** ${format(new Date(), 'MMMM d, yyyy \'at\' h:mm a')}
+
+---
+
+`;
+
+    report += this.generateExecutiveSummary(insights);
+    report += '\n---\n\n';
+    report += this.generateThemesSection(insights);
+    report += '\n---\n\n';
+    report += this.generateMessagingSection(insights);
+    report += '\n---\n\n';
+    report += this.generateTopPerformersSection(insights);
+    report += '\n---\n\n';
+    report += this.generateOpportunitiesSection(insights);
+    report += '\n---\n\n';
+    report += this.generateRecommendationsSection(insights);
+    report += '\n---\n\n';
+
+    report += `## Appendix
+
+### Methodology
+
+This report was generated through automated content intelligence analysis:
+
+1. **Data Collection:** Content gathered from YouTube, Facebook, Instagram, and competitor websites using Supadata
+2. **Theme Extraction:** NLP-based keyword and phrase extraction to identify recurring topics
+3. **Messaging Analysis:** Pattern recognition for hooks, pain points, and CTAs
+4. **Engagement Scoring:** Multi-factor analysis of views, likes, comments, and shares
+5. **Gap Identification:** Comparative analysis of competitor content to find opportunities
+6. **Recommendation Engine:** Data-driven suggestions based on performance patterns
+
+### Data Sources
+
+- **YouTube:** Video transcripts and engagement metrics
+- **Social Media:** Facebook and Instagram posts (where accessible)
+- **Competitor Sites:** Humana, Aetna, HealthFirst, and other Medicare providers
+- **Total Items Analyzed:** ${insights.summary.totalItems}
+
+### Next Steps
+
+1. Review high-priority recommendations and create content calendar
+2. Implement top-performing messaging patterns in new content
+3. Develop content for identified opportunity areas
+4. Monitor performance and re-run analysis monthly
+5. A/B test different messaging approaches based on insights
+
+---
+
+*Generated by YourMedGuy Content Intelligence System*
+`;
+
+    // Save report
+    const timestamp = format(new Date(), 'yyyy-MM-dd-HHmmss');
+    const filename = `content-intelligence-report-${timestamp}.md`;
+    const filepath = path.join(this.reportsPath, filename);
+
+    fs.writeFileSync(filepath, report);
+    console.log(`✓ Report generated: ${filepath}\n`);
+
+    // Also save as latest
+    const latestPath = path.join(this.reportsPath, 'latest-report.md');
+    fs.writeFileSync(latestPath, report);
+    console.log(`✓ Latest report updated: ${latestPath}\n`);
+
+    return report;
+  }
+}
+
+// CLI execution
+if (require.main === module) {
+  const generator = new MarkdownReportGenerator();
+
+  console.log('═══════════════════════════════════════════════════════');
+  console.log('  Markdown Report Generator');
+  console.log('═══════════════════════════════════════════════════════');
+
+  generator.generateReport();
+}
+
+export default MarkdownReportGenerator;
+

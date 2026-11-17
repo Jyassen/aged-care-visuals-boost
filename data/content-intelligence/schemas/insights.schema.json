@@ -1,0 +1,121 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "generatedDate": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Date when insights were generated"
+    },
+    "summary": {
+      "type": "object",
+      "properties": {
+        "totalItems": {
+          "type": "number"
+        },
+        "bySource": {
+          "type": "object",
+          "properties": {
+            "youtube": { "type": "number" },
+            "facebook": { "type": "number" },
+            "instagram": { "type": "number" },
+            "competitor": { "type": "number" }
+          }
+        },
+        "dateRange": {
+          "type": "object",
+          "properties": {
+            "start": { "type": "string", "format": "date-time" },
+            "end": { "type": "string", "format": "date-time" }
+          }
+        }
+      }
+    },
+    "topThemes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "theme": { "type": "string" },
+          "frequency": { "type": "number" },
+          "averageEngagement": { "type": "number" },
+          "examples": {
+            "type": "array",
+            "items": { "type": "string" }
+          }
+        }
+      }
+    },
+    "messagingPatterns": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "pattern": { "type": "string" },
+          "frequency": { "type": "number" },
+          "effectiveness": { "type": "number" },
+          "examples": {
+            "type": "array",
+            "items": { "type": "string" }
+          }
+        }
+      }
+    },
+    "visualStyles": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "style": { "type": "string" },
+          "frequency": { "type": "number" },
+          "platforms": {
+            "type": "array",
+            "items": { "type": "string" }
+          }
+        }
+      }
+    },
+    "topPerformers": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "title": { "type": "string" },
+          "url": { "type": "string" },
+          "source": { "type": "string" },
+          "engagementScore": { "type": "number" },
+          "keyFactors": {
+            "type": "array",
+            "items": { "type": "string" }
+          }
+        }
+      }
+    },
+    "competitorGaps": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "opportunity": { "type": "string" },
+          "description": { "type": "string" },
+          "potentialImpact": { "type": "string", "enum": ["high", "medium", "low"] }
+        }
+      }
+    },
+    "recommendations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "category": { "type": "string" },
+          "recommendation": { "type": "string" },
+          "priority": { "type": "string", "enum": ["high", "medium", "low"] },
+          "basedOn": { "type": "string" }
+        }
+      }
+    }
+  },
+  "required": ["generatedDate", "summary", "topThemes", "messagingPatterns", "topPerformers", "recommendations"]
+}
+

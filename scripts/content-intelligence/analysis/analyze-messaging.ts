@@ -1,0 +1,404 @@
+#!/usr/bin/env node
+
+/**
+ * Messaging Analysis Module
+ * 
+ * Analyzes messaging patterns, hooks, pain points, and CTAs from collected content
+ */
+
+import * as fs from 'fs';
+import * as path from 'path';
+import { ContentItem, MessagingPattern } from '../../../src/types/content-intelligence.types';
+
+interface MessagingData {
+  [pattern: string]: {
+    count: number;
+    sources: Set<string>;
+    effectivenessScores: number[];
+    examples: Array<{ url: string; snippet: string }>;
+  };
+}
+
+interface Hook {
+  type: string;
+  text: string;
+  source: string;
+  engagement?: number;
+}
+
+interface PainPoint {
+  description: string;
+  frequency: number;
+  relatedContent: string[];
+}
+
+class MessagingAnalyzer {
+  private dataPath: string;
+
+  constructor() {
+    this.dataPath = path.join(process.cwd(), 'data', 'content-intelligence');
+  }
+
+  /**
+   * Load all content items
+   */
+  private loadAllContent(): ContentItem[] {
+    const items: ContentItem[] = [];
+    const files = ['youtube-content.json', 'competitor-content.json', 'social-content.json'];
+
+    for (const file of files) {
+      try {
+        const filepath = path.join(this.dataPath, file);
+        if (fs.existsSync(filepath)) {
+          const data = JSON.parse(fs.readFileSync(filepath, 'utf-8'));
+          if (Array.isArray(data)) {
+            items.push(...data);
+          }
+        }
+      } catch (error) {
+        console.error(`Error loading ${file}:`, error);
+      }
+    }
+
+    return items;
+  }
+
+  /**
+   * Extract opening hooks from content
+   */
+  private extractHooks(content: string, url: string, engagement?: number): Hook[] {
+    const hooks: Hook[] = [];
+    const lines = content.split('\n').filter(line => line.trim().length > 0);
+    
+    if (lines.length === 0) return hooks;
+
+    // Get first few lines as potential hooks
+    const openingLines = lines.slice(0, 3).join(' ').substring(0, 200);
+
+    // Identify hook types
+    const hookPatterns = [
+      { type: 'question', regex: /^[^.!?]*\?/i },
+      { type: 'statistic', regex: /\d+%|\d+ out of \d+|\d+ million|\d+ billion/i },
+      { type: 'pain-point', regex: /confused|frustrated|overwhelmed|struggling|worried/i },
+      { type: 'promise', regex: /discover|learn how|find out|revealed|secret/i },
+      { type: 'urgency', regex: /deadline|now|today|limited|ending/i },
+      { type: 'story', regex: /when I|my client|one day|imagine/i },
+      { type: 'contrast', regex: /but|however|unlike|while most/i }
+    ];
+
+    for (const { type, regex } of hookPatterns) {
+      if (regex.test(openingLines)) {
+        hooks.push({
+          type,
+          text: openingLines,
+          source: url,
+          engagement
+        });
+      }
+    }
+
+    return hooks;
+  }
+
+  /**
+   * Identify pain points from content
+   */
+  private identifyPainPoints(content: string): string[] {
+    const painPoints: string[] = [];
+    const lowerContent = content.toLowerCase();
+
+    const painPointIndicators = [
+      { point: 'Confusion about Medicare options', keywords: ['confused about', 'don\'t understand', 'complicated', 'overwhelming options'] },
+      { point: 'Fear of making wrong choice', keywords: ['worried about', 'afraid of', 'wrong decision', 'regret'] },
+      { point: 'High costs and unexpected bills', keywords: ['expensive', 'can\'t afford', 'high costs', 'unexpected bills'] },
+      { point: 'Losing current doctor', keywords: ['keep my doctor', 'losing doctor', 'switch doctors', 'provider not covered'] },
+      { point: 'Missing enrollment deadlines', keywords: ['deadline', 'running out of time', 'late enrollment', 'penalty'] },
+      { point: 'Too many phone calls/pressure', keywords: ['too many calls', 'pressure', 'harassment', 'pushy salespeople'] },
+      { point: 'Prescription not covered', keywords: ['medication not covered', 'prescription costs', 'formulary', 'drug coverage'] },
+      { point: 'Limited network', keywords: ['limited network', 'out-of-network', 'no providers nearby', 'travel far'] },
+      { point: 'Complex paperwork', keywords: ['paperwork', 'forms', 'bureaucracy', 'red tape'] },
+      { point: 'Lack of transparency', keywords: ['hidden costs', 'fine print', 'not clear', 'lack of information'] }
+    ];
+
+    painPointIndicators.forEach(({ point, keywords }) => {
+      if (keywords.some(keyword => lowerContent.includes(keyword))) {
+        painPoints.push(point);
+      }
+    });
+
+    return painPoints;
+  }
+
+  /**
+   * Extract CTAs from content
+   */
+  private extractCTAs(content: string): string[] {
+    const ctas: string[] = [];
+    const ctaPatterns = [
+      /call (us |now |today )?at [\d\-\(\) ]+/gi,
+      /schedule (a|your) (free |no-cost )?consultation/gi,
+      /get (a|your) (free )?quote/gi,
+      /enroll (now|today|online)/gi,
+      /find (your|a) plan/gi,
+      /compare plans/gi,
+      /speak with (an|our) agent/gi,
+      /contact us/gi,
+      /learn more/gi,
+      /download (our|the) guide/gi,
+      /join (our|the) webinar/gi,
+      /sign up/gi,
+      /get started/gi
+    ];
+
+    ctaPatterns.forEach(pattern => {
+      const matches = content.match(pattern);
+      if (matches) {
+        matches.forEach(match => {
+          if (!ctas.includes(match.trim())) {
+            ctas.push(match.trim());
+          }
+        });
+      }
+    });
+
+    return ctas.slice(0, 5); // Limit to top 5
+  }
+
+  /**
+   * Calculate effectiveness score based on engagement
+   */
+  private calculateEffectiveness(item: ContentItem): number {
+    let score = 50; // Base score
+
+    // Engagement factors
+    if (item.engagement) {
+      if (item.engagement.engagementRate !== undefined && item.engagement.engagementRate > 0) {
+        score += Math.min(item.engagement.engagementRate * 5, 30);
+      }
+      
+      if (item.engagement.views && item.engagement.views > 1000) {
+        score += 10;
+      }
+      
+      if (item.engagement.comments && item.engagement.comments > 50) {
+        score += 10;
+      }
+    }
+
+    // Content quality factors
+    if (item.content.length > 500) score += 5;
+    if (item.themes.length >= 3) score += 5;
+    if (item.messagingPatterns.length >= 2) score += 5;
+
+    return Math.min(score, 100);
+  }
+
+  /**
+   * Analyze messaging patterns
+   */
+  private analyzePatterns(items: ContentItem[]): MessagingData {
+    const messagingData: MessagingData = {};
+
+    items.forEach(item => {
+      item.messagingPatterns.forEach(pattern => {
+        if (!messagingData[pattern]) {
+          messagingData[pattern] = {
+            count: 0,
+            sources: new Set(),
+            effectivenessScores: [],
+            examples: []
+          };
+        }
+
+        messagingData[pattern].count++;
+        messagingData[pattern].sources.add(item.source);
+        messagingData[pattern].effectivenessScores.push(this.calculateEffectiveness(item));
+
+        // Add example snippet
+        if (messagingData[pattern].examples.length < 3) {
+          const snippet = item.content.substring(0, 150) + '...';
+          messagingData[pattern].examples.push({
+            url: item.url,
+            snippet
+          });
+        }
+      });
+    });
+
+    return messagingData;
+  }
+
+  /**
+   * Generate messaging insights
+   */
+  generateInsights(limit: number = 20): MessagingPattern[] {
+    console.log('\n💬 Analyzing messaging patterns...\n');
+
+    const items = this.loadAllContent();
+    console.log(`  Loaded ${items.length} content items`);
+
+    if (items.length === 0) {
+      console.log('  ⚠ No content available for messaging analysis');
+      return [];
+    }
+
+    const messagingData = this.analyzePatterns(items);
+    console.log(`  Identified ${Object.keys(messagingData).length} messaging patterns`);
+
+    // Convert to MessagingPattern array
+    const patterns: MessagingPattern[] = Object.entries(messagingData).map(([pattern, data]) => {
+      const avgEffectiveness = data.effectivenessScores.reduce((a, b) => a + b, 0) / data.effectivenessScores.length;
+      
+      return {
+        pattern,
+        frequency: data.count,
+        effectiveness: Math.round(avgEffectiveness),
+        examples: data.examples.map(ex => ex.url)
+      };
+    });
+
+    // Sort by effectiveness then frequency
+    patterns.sort((a, b) => {
+      if (a.effectiveness && b.effectiveness) {
+        return b.effectiveness - a.effectiveness;
+      }
+      return b.frequency - a.frequency;
+    });
+
+    const topPatterns = patterns.slice(0, limit);
+
+    // Display results
+    console.log('\n  Top Messaging Patterns:');
+    topPatterns.slice(0, 10).forEach((pattern, i) => {
+      const effectiveness = pattern.effectiveness ? ` (${pattern.effectiveness}/100)` : '';
+      console.log(`    ${i + 1}. ${pattern.pattern} - ${pattern.frequency} uses${effectiveness}`);
+    });
+
+    console.log(`\n✓ Messaging analysis complete`);
+    return topPatterns;
+  }
+
+  /**
+   * Analyze hooks used in content
+   */
+  analyzeHooks(): { [type: string]: Hook[] } {
+    const items = this.loadAllContent();
+    const hooksByType: { [type: string]: Hook[] } = {};
+
+    items.forEach(item => {
+      const hooks = this.extractHooks(
+        item.content, 
+        item.url, 
+        item.engagement?.engagementRate
+      );
+
+      hooks.forEach(hook => {
+        if (!hooksByType[hook.type]) {
+          hooksByType[hook.type] = [];
+        }
+        hooksByType[hook.type].push(hook);
+      });
+    });
+
+    return hooksByType;
+  }
+
+  /**
+   * Analyze pain points
+   */
+  analyzePainPoints(): PainPoint[] {
+    const items = this.loadAllContent();
+    const painPointFrequency: { [point: string]: { count: number; urls: string[] } } = {};
+
+    items.forEach(item => {
+      const painPoints = this.identifyPainPoints(item.content);
+      
+      painPoints.forEach(point => {
+        if (!painPointFrequency[point]) {
+          painPointFrequency[point] = { count: 0, urls: [] };
+        }
+        painPointFrequency[point].count++;
+        if (painPointFrequency[point].urls.length < 5) {
+          painPointFrequency[point].urls.push(item.url);
+        }
+      });
+    });
+
+    const painPoints: PainPoint[] = Object.entries(painPointFrequency).map(([description, data]) => ({
+      description,
+      frequency: data.count,
+      relatedContent: data.urls
+    }));
+
+    painPoints.sort((a, b) => b.frequency - a.frequency);
+    return painPoints;
+  }
+
+  /**
+   * Analyze CTAs
+   */
+  analyzeCTAs(): { cta: string; frequency: number; sources: string[] }[] {
+    const items = this.loadAllContent();
+    const ctaFrequency: { [cta: string]: { count: number; sources: Set<string> } } = {};
+
+    items.forEach(item => {
+      const ctas = this.extractCTAs(item.content);
+      
+      ctas.forEach(cta => {
+        const normalized = cta.toLowerCase().trim();
+        if (!ctaFrequency[normalized]) {
+          ctaFrequency[normalized] = { count: 0, sources: new Set() };
+        }
+        ctaFrequency[normalized].count++;
+        ctaFrequency[normalized].sources.add(item.source);
+      });
+    });
+
+    const ctas = Object.entries(ctaFrequency).map(([cta, data]) => ({
+      cta,
+      frequency: data.count,
+      sources: Array.from(data.sources)
+    }));
+
+    ctas.sort((a, b) => b.frequency - a.frequency);
+    return ctas.slice(0, 15);
+  }
+}
+
+// CLI execution
+if (import.meta.url === `file://${process.argv[1]}`) {
+  const analyzer = new MessagingAnalyzer();
+
+  console.log('═══════════════════════════════════════════════════════');
+  console.log('  Messaging Analysis Module');
+  console.log('═══════════════════════════════════════════════════════');
+
+  const patterns = analyzer.generateInsights(20);
+
+  if (patterns.length > 0) {
+    console.log('\n🎯 Analyzing hooks...');
+    const hooks = analyzer.analyzeHooks();
+    Object.entries(hooks).forEach(([type, hookList]) => {
+      console.log(`\n  ${type.charAt(0).toUpperCase() + type.slice(1)} Hooks: ${hookList.length}`);
+    });
+
+    console.log('\n😰 Analyzing pain points...');
+    const painPoints = analyzer.analyzePainPoints();
+    console.log('\n  Top Pain Points:');
+    painPoints.slice(0, 5).forEach((point, i) => {
+      console.log(`    ${i + 1}. ${point.description} (${point.frequency} mentions)`);
+    });
+
+    console.log('\n📣 Analyzing CTAs...');
+    const ctas = analyzer.analyzeCTAs();
+    console.log('\n  Most Common CTAs:');
+    ctas.slice(0, 5).forEach((cta, i) => {
+      console.log(`    ${i + 1}. "${cta.cta}" (${cta.frequency} uses)`);
+    });
+  }
+
+  console.log('\n');
+}
+
+export default MessagingAnalyzer;
+

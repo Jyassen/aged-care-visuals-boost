@@ -1,0 +1,349 @@
+#!/usr/bin/env node
+
+/**
+ * Theme Extraction Module
+ * 
+ * Analyzes collected content to identify recurring themes and topics
+ */
+
+import * as fs from 'fs';
+import * as path from 'path';
+import { ContentItem, ThemeInsight } from '../../../src/types/content-intelligence.types';
+
+interface ThemeFrequency {
+  [theme: string]: {
+    count: number;
+    sources: Set<string>;
+    engagementTotal: number;
+    engagementCount: number;
+    examples: string[];
+  };
+}
+
+class ThemeExtractor {
+  private dataPath: string;
+
+  constructor() {
+    this.dataPath = path.join(process.cwd(), 'data', 'content-intelligence');
+  }
+
+  /**
+   * Load all content items from data files
+   */
+  private loadAllContent(): ContentItem[] {
+    const items: ContentItem[] = [];
+    const files = ['youtube-content.json', 'competitor-content.json', 'social-content.json'];
+
+    for (const file of files) {
+      try {
+        const filepath = path.join(this.dataPath, file);
+        if (fs.existsSync(filepath)) {
+          const data = JSON.parse(fs.readFileSync(filepath, 'utf-8'));
+          if (Array.isArray(data)) {
+            items.push(...data);
+          }
+        }
+      } catch (error) {
+        console.error(`Error loading ${file}:`, error);
+      }
+    }
+
+    return items;
+  }
+
+  /**
+   * Extract keyword phrases from text
+   */
+  private extractKeyPhrases(text: string): string[] {
+    const phrases: Set<string> = new Set();
+    const lowerText = text.toLowerCase();
+
+    // Multi-word Medicare-specific phrases
+    const medicareKeyPhrases = [
+      'medicare advantage',
+      'original medicare',
+      'medicare part a',
+      'medicare part b',
+      'medicare part c',
+      'medicare part d',
+      'medigap plan',
+      'supplemental insurance',
+      'annual enrollment period',
+      'initial enrollment period',
+      'special enrollment period',
+      'prescription drug coverage',
+      'preventive care',
+      'out-of-pocket maximum',
+      'prior authorization',
+      'step therapy',
+      'donut hole',
+      'coverage gap',
+      'formulary',
+      'preferred pharmacy',
+      'copayment',
+      'coinsurance',
+      'deductible',
+      'premium',
+      'network provider',
+      'out-of-network',
+      'primary care physician',
+      'specialist',
+      'referral',
+      'chronic condition',
+      'durable medical equipment',
+      'home health care',
+      'skilled nursing',
+      'hospice care',
+      'telehealth',
+      'virtual visit',
+      'fitness benefit',
+      'gym membership',
+      'dental coverage',
+      'vision coverage',
+      'hearing aid',
+      'transportation benefit',
+      'over-the-counter',
+      'otc allowance',
+      'star rating',
+      'quality measures',
+      'customer satisfaction',
+      'plan comparison',
+      'cost calculator',
+      'enrollment deadline',
+      'income-related monthly adjustment amount',
+      'irmaa',
+      'social security',
+      'retirement',
+      'turning 65',
+      'aging',
+      'senior care',
+      'caregiver',
+      'long-term care'
+    ];
+
+    medicareKeyPhrases.forEach(phrase => {
+      if (lowerText.includes(phrase)) {
+        phrases.add(phrase);
+      }
+    });
+
+    return Array.from(phrases);
+  }
+
+  /**
+   * Categorize themes into broader topics
+   */
+  private categorizeTheme(theme: string): string {
+    const categories: { [key: string]: string[] } = {
+      'Plan Types': ['medicare advantage', 'original medicare', 'medigap', 'part a', 'part b', 'part c', 'part d', 'supplemental'],
+      'Enrollment': ['enrollment period', 'annual enrollment', 'initial enrollment', 'special enrollment', 'deadline', 'turning 65'],
+      'Costs': ['premium', 'copay', 'coinsurance', 'deductible', 'out-of-pocket', 'cost', 'save', 'affordable', 'irmaa'],
+      'Coverage': ['prescription', 'dental', 'vision', 'hearing', 'preventive care', 'coverage', 'benefits'],
+      'Providers': ['doctor', 'physician', 'specialist', 'network', 'provider'],
+      'Extra Benefits': ['fitness', 'gym', 'transportation', 'otc', 'over-the-counter', 'telehealth'],
+      'Quality': ['star rating', 'quality', 'satisfaction', 'customer service'],
+      'Health Conditions': ['chronic', 'diabetes', 'heart', 'cancer', 'arthritis'],
+      'Tools & Resources': ['calculator', 'comparison', 'guide', 'tool', 'resource']
+    };
+
+    const lowerTheme = theme.toLowerCase();
+    
+    for (const [category, keywords] of Object.entries(categories)) {
+      if (keywords.some(keyword => lowerTheme.includes(keyword))) {
+        return category;
+      }
+    }
+
+    return 'General';
+  }
+
+  /**
+   * Analyze theme frequency and engagement
+   */
+  private analyzeThemes(items: ContentItem[]): ThemeFrequency {
+    const themeData: ThemeFrequency = {};
+
+    items.forEach(item => {
+      // Extract additional themes from content
+      const extractedThemes = this.extractKeyPhrases(item.content);
+      const allThemes = [...new Set([...item.themes, ...extractedThemes])];
+
+      allThemes.forEach(theme => {
+        if (!themeData[theme]) {
+          themeData[theme] = {
+            count: 0,
+            sources: new Set(),
+            engagementTotal: 0,
+            engagementCount: 0,
+            examples: []
+          };
+        }
+
+        themeData[theme].count++;
+        themeData[theme].sources.add(item.source);
+
+        // Track engagement if available
+        if (item.engagement?.engagementRate) {
+          themeData[theme].engagementTotal += item.engagement.engagementRate;
+          themeData[theme].engagementCount++;
+        }
+
+        // Collect examples (limit to 3 per theme)
+        if (themeData[theme].examples.length < 3) {
+          themeData[theme].examples.push(item.url);
+        }
+      });
+    });
+
+    return themeData;
+  }
+
+  /**
+   * Generate theme insights
+   */
+  generateInsights(limit: number = 20): ThemeInsight[] {
+    console.log('\n📊 Extracting themes from collected content...\n');
+
+    const items = this.loadAllContent();
+    console.log(`  Loaded ${items.length} content items`);
+
+    if (items.length === 0) {
+      console.log('  ⚠ No content available for theme extraction');
+      return [];
+    }
+
+    const themeData = this.analyzeThemes(items);
+    console.log(`  Identified ${Object.keys(themeData).length} unique themes`);
+
+    // Convert to ThemeInsight array
+    const insights: ThemeInsight[] = Object.entries(themeData).map(([theme, data]) => ({
+      theme,
+      frequency: data.count,
+      averageEngagement: data.engagementCount > 0 
+        ? data.engagementTotal / data.engagementCount 
+        : undefined,
+      examples: data.examples
+    }));
+
+    // Sort by frequency
+    insights.sort((a, b) => b.frequency - a.frequency);
+
+    // Limit results
+    const topInsights = insights.slice(0, limit);
+
+    // Display results
+    console.log('\n  Top Themes:');
+    topInsights.slice(0, 10).forEach((insight, i) => {
+      const category = this.categorizeTheme(insight.theme);
+      const engagement = insight.averageEngagement 
+        ? ` (avg engagement: ${insight.averageEngagement.toFixed(2)})` 
+        : '';
+      console.log(`    ${i + 1}. ${insight.theme} - ${insight.frequency} occurrences ${engagement} [${category}]`);
+    });
+
+    console.log(`\n✓ Theme extraction complete`);
+    return topInsights;
+  }
+
+  /**
+   * Get theme trends over time
+   */
+  getThemeTrends(items: ContentItem[]): { [theme: string]: { date: string; count: number }[] } {
+    const trends: { [theme: string]: { [date: string]: number } } = {};
+
+    items.forEach(item => {
+      const date = item.publishedDate 
+        ? new Date(item.publishedDate).toISOString().split('T')[0]
+        : new Date(item.collectedDate).toISOString().split('T')[0];
+
+      item.themes.forEach(theme => {
+        if (!trends[theme]) {
+          trends[theme] = {};
+        }
+        trends[theme][date] = (trends[theme][date] || 0) + 1;
+      });
+    });
+
+    // Convert to array format
+    const trendArrays: { [theme: string]: { date: string; count: number }[] } = {};
+    Object.entries(trends).forEach(([theme, dates]) => {
+      trendArrays[theme] = Object.entries(dates)
+        .map(([date, count]) => ({ date, count }))
+        .sort((a, b) => a.date.localeCompare(b.date));
+    });
+
+    return trendArrays;
+  }
+
+  /**
+   * Identify emerging themes
+   */
+  identifyEmergingThemes(windowDays: number = 30): ThemeInsight[] {
+    const items = this.loadAllContent();
+    const cutoffDate = new Date();
+    cutoffDate.setDate(cutoffDate.getDate() - windowDays);
+
+    const recentItems = items.filter(item => {
+      const itemDate = new Date(item.publishedDate || item.collectedDate);
+      return itemDate >= cutoffDate;
+    });
+
+    if (recentItems.length === 0) {
+      return [];
+    }
+
+    const recentThemeData = this.analyzeThemes(recentItems);
+    const allThemeData = this.analyzeThemes(items);
+
+    // Find themes that are more frequent in recent content
+    const emergingThemes: ThemeInsight[] = [];
+
+    Object.entries(recentThemeData).forEach(([theme, recentData]) => {
+      const allData = allThemeData[theme];
+      const recentFrequency = recentData.count / recentItems.length;
+      const overallFrequency = allData.count / items.length;
+
+      // Theme is emerging if it's at least 50% more frequent recently
+      if (recentFrequency > overallFrequency * 1.5) {
+        emergingThemes.push({
+          theme,
+          frequency: recentData.count,
+          examples: recentData.examples
+        });
+      }
+    });
+
+    emergingThemes.sort((a, b) => b.frequency - a.frequency);
+    return emergingThemes.slice(0, 10);
+  }
+}
+
+// CLI execution
+if (require.main === module) {
+  const extractor = new ThemeExtractor();
+
+  console.log('═══════════════════════════════════════════════════════');
+  console.log('  Theme Extraction Module');
+  console.log('═══════════════════════════════════════════════════════');
+
+  const insights = extractor.generateInsights(20);
+
+  if (insights.length > 0) {
+    console.log('\n📈 Identifying emerging themes...');
+    const emerging = extractor.identifyEmergingThemes(30);
+    
+    if (emerging.length > 0) {
+      console.log('\n  Emerging Themes (last 30 days):');
+      emerging.forEach((insight, i) => {
+        console.log(`    ${i + 1}. ${insight.theme} (${insight.frequency} recent occurrences)`);
+      });
+    } else {
+      console.log('  ℹ No emerging themes identified');
+    }
+  }
+
+  console.log('\n');
+}
+
+export default ThemeExtractor;
+

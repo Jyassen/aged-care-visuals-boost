@@ -1,0 +1,347 @@
+#!/usr/bin/env node
+
+/**
+ * Engagement Calculator Module
+ * 
+ * Processes engagement metrics and identifies high-performing content
+ */
+
+import * as fs from 'fs';
+import * as path from 'path';
+import { ContentItem, TopPerformer } from '../../../src/types/content-intelligence.types';
+
+interface EngagementScore {
+  item: ContentItem;
+  score: number;
+  breakdown: {
+    viewsScore: number;
+    likesScore: number;
+    commentsScore: number;
+    sharesScore: number;
+    rateScore: number;
+  };
+}
+
+interface PerformanceMetrics {
+  averageViews: number;
+  averageLikes: number;
+  averageComments: number;
+  averageShares: number;
+  averageEngagementRate: number;
+}
+
+class EngagementCalculator {
+  private dataPath: string;
+
+  constructor() {
+    this.dataPath = path.join(process.cwd(), 'data', 'content-intelligence');
+  }
+
+  /**
+   * Load all content items
+   */
+  private loadAllContent(): ContentItem[] {
+    const items: ContentItem[] = [];
+    const files = ['youtube-content.json', 'competitor-content.json', 'social-content.json'];
+
+    for (const file of files) {
+      try {
+        const filepath = path.join(this.dataPath, file);
+        if (fs.existsSync(filepath)) {
+          const data = JSON.parse(fs.readFileSync(filepath, 'utf-8'));
+          if (Array.isArray(data)) {
+            items.push(...data);
+          }
+        }
+      } catch (error) {
+        console.error(`Error loading ${file}:`, error);
+      }
+    }
+
+    return items;
+  }
+
+  /**
+   * Calculate baseline metrics
+   */
+  private calculateBaseline(items: ContentItem[]): PerformanceMetrics {
+    const itemsWithEngagement = items.filter(item => item.engagement);
+    
+    if (itemsWithEngagement.length === 0) {
+      return {
+        averageViews: 0,
+        averageLikes: 0,
+        averageComments: 0,
+        averageShares: 0,
+        averageEngagementRate: 0
+      };
+    }
+
+    const sum = (arr: (number | undefined)[]): number => {
+      return arr.reduce((a, b) => a + (b || 0), 0);
+    };
+
+    const count = (arr: (number | undefined)[]): number => {
+      return arr.filter(v => v !== undefined && v > 0).length;
+    };
+
+    const views = itemsWithEngagement.map(i => i.engagement?.views);
+    const likes = itemsWithEngagement.map(i => i.engagement?.likes);
+    const comments = itemsWithEngagement.map(i => i.engagement?.comments);
+    const shares = itemsWithEngagement.map(i => i.engagement?.shares);
+    const rates = itemsWithEngagement.map(i => i.engagement?.engagementRate);
+
+    return {
+      averageViews: count(views) > 0 ? sum(views) / count(views) : 0,
+      averageLikes: count(likes) > 0 ? sum(likes) / count(likes) : 0,
+      averageComments: count(comments) > 0 ? sum(comments) / count(comments) : 0,
+      averageShares: count(shares) > 0 ? sum(shares) / count(shares) : 0,
+      averageEngagementRate: count(rates) > 0 ? sum(rates) / count(rates) : 0
+    };
+  }
+
+  /**
+   * Normalize a metric to 0-100 scale
+   */
+  private normalize(value: number | undefined, average: number, weight: number = 1): number {
+    if (value === undefined || value === 0 || average === 0) return 0;
+    
+    // Score relative to average
+    const ratio = value / average;
+    let score = 0;
+
+    if (ratio >= 2) score = 100;
+    else if (ratio >= 1.5) score = 80;
+    else if (ratio >= 1.2) score = 60;
+    else if (ratio >= 1) score = 50;
+    else if (ratio >= 0.8) score = 40;
+    else if (ratio >= 0.5) score = 20;
+    else score = 10;
+
+    return score * weight;
+  }
+
+  /**
+   * Calculate engagement score for an item
+   */
+  private calculateScore(item: ContentItem, baseline: PerformanceMetrics): EngagementScore {
+    const engagement = item.engagement || {};
+
+    const breakdown = {
+      viewsScore: this.normalize(engagement.views, baseline.averageViews, 0.2),
+      likesScore: this.normalize(engagement.likes, baseline.averageLikes, 0.25),
+      commentsScore: this.normalize(engagement.comments, baseline.averageComments, 0.25),
+      sharesScore: this.normalize(engagement.shares, baseline.averageShares, 0.15),
+      rateScore: this.normalize(engagement.engagementRate, baseline.averageEngagementRate, 0.15)
+    };
+
+    const score = Object.values(breakdown).reduce((a, b) => a + b, 0);
+
+    return {
+      item,
+      score,
+      breakdown
+    };
+  }
+
+  /**
+   * Identify success factors for high performers
+   */
+  private identifySuccessFactors(item: ContentItem, score: number): string[] {
+    const factors: string[] = [];
+
+    // Theme analysis
+    if (item.themes.length >= 3) {
+      factors.push(`Multiple relevant themes (${item.themes.length})`);
+    }
+
+    // Messaging patterns
+    const strongPatterns = ['question-hook', 'story-telling', 'empathy', 'educational', 'testimonial'];
+    const hasStrongPattern = item.messagingPatterns.some(p => strongPatterns.includes(p));
+    if (hasStrongPattern) {
+      factors.push('Effective messaging pattern');
+    }
+
+    // Content length
+    if (item.content.length > 1000 && item.content.length < 3000) {
+      factors.push('Optimal content length');
+    } else if (item.content.length >= 3000) {
+      factors.push('Comprehensive content');
+    }
+
+    // Format
+    if (item.metadata?.format === 'video') {
+      factors.push('Video format');
+    }
+
+    // Call to action
+    if (item.metadata?.cta) {
+      factors.push('Clear call-to-action');
+    }
+
+    // Engagement
+    if (item.engagement?.engagementRate && item.engagement.engagementRate > 5) {
+      factors.push('High engagement rate');
+    }
+
+    // Recency
+    const publishDate = item.publishedDate ? new Date(item.publishedDate) : new Date(item.collectedDate);
+    const daysSince = (Date.now() - publishDate.getTime()) / (1000 * 60 * 60 * 24);
+    if (daysSince < 30) {
+      factors.push('Recent content');
+    }
+
+    return factors;
+  }
+
+  /**
+   * Identify top performers
+   */
+  identifyTopPerformers(limit: number = 20): TopPerformer[] {
+    console.log('\n📈 Calculating engagement scores...\n');
+
+    const items = this.loadAllContent();
+    console.log(`  Loaded ${items.length} content items`);
+
+    if (items.length === 0) {
+      console.log('  ⚠ No content available for engagement analysis');
+      return [];
+    }
+
+    // Calculate baseline
+    const baseline = this.calculateBaseline(items);
+    console.log(`  Baseline metrics calculated`);
+    console.log(`    Avg views: ${Math.round(baseline.averageViews)}`);
+    console.log(`    Avg engagement rate: ${baseline.averageEngagementRate.toFixed(2)}%`);
+
+    // Score all items
+    const scoredItems = items
+      .map(item => this.calculateScore(item, baseline))
+      .sort((a, b) => b.score - a.score);
+
+    // Convert to TopPerformer format
+    const topPerformers: TopPerformer[] = scoredItems.slice(0, limit).map(scored => ({
+      id: scored.item.id,
+      title: scored.item.title,
+      url: scored.item.url,
+      source: scored.item.source,
+      engagementScore: Math.round(scored.score),
+      keyFactors: this.identifySuccessFactors(scored.item, scored.score)
+    }));
+
+    // Display results
+    console.log(`\n  Top ${Math.min(10, topPerformers.length)} Performers:`);
+    topPerformers.slice(0, 10).forEach((performer, i) => {
+      console.log(`\n    ${i + 1}. ${performer.title}`);
+      console.log(`       Score: ${performer.engagementScore}/100`);
+      console.log(`       Source: ${performer.source}`);
+      console.log(`       Key factors: ${performer.keyFactors.slice(0, 3).join(', ')}`);
+    });
+
+    console.log(`\n✓ Engagement analysis complete`);
+    return topPerformers;
+  }
+
+  /**
+   * Compare performance by source
+   */
+  compareBySource(): { [source: string]: PerformanceMetrics } {
+    const items = this.loadAllContent();
+    const bySource: { [source: string]: ContentItem[] } = {
+      youtube: [],
+      facebook: [],
+      instagram: [],
+      competitor: []
+    };
+
+    items.forEach(item => {
+      if (bySource[item.source]) {
+        bySource[item.source].push(item);
+      }
+    });
+
+    const comparison: { [source: string]: PerformanceMetrics } = {};
+    Object.entries(bySource).forEach(([source, sourceItems]) => {
+      comparison[source] = this.calculateBaseline(sourceItems);
+    });
+
+    return comparison;
+  }
+
+  /**
+   * Identify performance trends over time
+   */
+  analyzeTrends(windowDays: number = 30): {
+    current: PerformanceMetrics;
+    previous: PerformanceMetrics;
+    change: { [key: string]: number };
+  } {
+    const items = this.loadAllContent();
+    const now = Date.now();
+    const windowMs = windowDays * 24 * 60 * 60 * 1000;
+
+    const currentItems = items.filter(item => {
+      const date = new Date(item.publishedDate || item.collectedDate).getTime();
+      return now - date <= windowMs;
+    });
+
+    const previousItems = items.filter(item => {
+      const date = new Date(item.publishedDate || item.collectedDate).getTime();
+      return now - date > windowMs && now - date <= windowMs * 2;
+    });
+
+    const current = this.calculateBaseline(currentItems);
+    const previous = this.calculateBaseline(previousItems);
+
+    const calculateChange = (curr: number, prev: number): number => {
+      if (prev === 0) return 0;
+      return ((curr - prev) / prev) * 100;
+    };
+
+    const change = {
+      views: calculateChange(current.averageViews, previous.averageViews),
+      likes: calculateChange(current.averageLikes, previous.averageLikes),
+      comments: calculateChange(current.averageComments, previous.averageComments),
+      shares: calculateChange(current.averageShares, previous.averageShares),
+      engagementRate: calculateChange(current.averageEngagementRate, previous.averageEngagementRate)
+    };
+
+    return { current, previous, change };
+  }
+}
+
+// CLI execution
+if (import.meta.url === `file://${process.argv[1]}`) {
+  const calculator = new EngagementCalculator();
+
+  console.log('═══════════════════════════════════════════════════════');
+  console.log('  Engagement Calculator Module');
+  console.log('═══════════════════════════════════════════════════════');
+
+  const topPerformers = calculator.identifyTopPerformers(20);
+
+  if (topPerformers.length > 0) {
+    console.log('\n📊 Comparing performance by source...');
+    const bySource = calculator.compareBySource();
+    console.log('\n  Average Engagement by Source:');
+    Object.entries(bySource).forEach(([source, metrics]) => {
+      if (metrics.averageEngagementRate > 0) {
+        console.log(`    ${source}: ${metrics.averageEngagementRate.toFixed(2)}%`);
+      }
+    });
+
+    console.log('\n📈 Analyzing trends...');
+    const trends = calculator.analyzeTrends(30);
+    console.log('\n  Performance Change (last 30 days vs previous 30 days):');
+    Object.entries(trends.change).forEach(([metric, change]) => {
+      const arrow = change > 0 ? '↑' : change < 0 ? '↓' : '→';
+      const sign = change > 0 ? '+' : '';
+      console.log(`    ${metric}: ${arrow} ${sign}${change.toFixed(1)}%`);
+    });
+  }
+
+  console.log('\n');
+}
+
+export default EngagementCalculator;
+

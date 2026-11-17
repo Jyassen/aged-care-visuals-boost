@@ -1,0 +1,89 @@
+{
+  "competitors": [
+    {
+      "name": "Humana",
+      "type": "competitor",
+      "url": "https://www.humana.com/medicare",
+      "active": true
+    },
+    {
+      "name": "Aetna",
+      "type": "competitor",
+      "url": "https://www.aetna.com/individuals-families/medicare.html",
+      "active": true
+    },
+    {
+      "name": "HealthFirst",
+      "type": "competitor",
+      "url": "https://www.healthfirst.org/medicare/",
+      "active": true
+    },
+    {
+      "name": "UnitedHealthcare",
+      "type": "competitor",
+      "url": "https://www.uhc.com/medicare",
+      "active": true
+    },
+    {
+      "name": "Cigna",
+      "type": "competitor",
+      "url": "https://www.cigna.com/medicare",
+      "active": false
+    }
+  ],
+  "youtubeChannels": [
+    {
+      "name": "Medicare on Video - Official",
+      "type": "youtube",
+      "url": "https://www.youtube.com/@MedicareOnVideo",
+      "active": true
+    },
+    {
+      "name": "Boomer Benefits",
+      "type": "youtube",
+      "url": "https://www.youtube.com/@boomerbenefits",
+      "active": true
+    },
+    {
+      "name": "Medicare Nationwide",
+      "type": "youtube",
+      "url": "https://www.youtube.com/@medicarenationwide",
+      "active": true
+    },
+    {
+      "name": "Medicare School",
+      "type": "youtube",
+      "url": "https://www.youtube.com/@medicareschool",
+      "active": false
+    }
+  ],
+  "socialProfiles": [
+    {
+      "name": "Medicare.gov Official",
+      "type": "facebook",
+      "url": "https://www.facebook.com/Medicare",
+      "active": true
+    },
+    {
+      "name": "AARP",
+      "type": "facebook",
+      "url": "https://www.facebook.com/AARP",
+      "active": true
+    },
+    {
+      "name": "Medicare Instagram",
+      "type": "instagram",
+      "url": "https://www.instagram.com/medicare/",
+      "active": false
+    }
+  ],
+  "collectionInterval": 86400000,
+  "maxItemsPerSource": 50,
+  "notes": {
+    "collectionInterval": "Time in milliseconds between automated collections (86400000 = 24 hours)",
+    "maxItemsPerSource": "Maximum number of items to collect per source",
+    "active": "Set to false to temporarily disable a source without removing it",
+    "usage": "Edit this file to add/remove sources or adjust collection settings"
+  }
+}
+
