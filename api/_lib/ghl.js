@@ -44,6 +44,12 @@ const splitName = (fullName = '') => {
 export const buildStarterKitLead = ({ name, email, phone, pageUrl, source, submittedAt }) => {
   const { firstName, lastName } = splitName(name);
   const origin = source === 'exit-intent' ? 'exit-intent popup' : 'starter kit page';
+  // The two paths hand out different assets; the note has to say which one, because it is
+  // what Jamal reads before calling the lead.
+  const asset =
+    source === 'exit-intent'
+      ? 'the Stress-Free Medicare Guide 2027 (NY + NJ)'
+      : 'the NY Medicare Starter Kit (2027)';
   return {
     first_name: firstName,
     last_name: lastName,
@@ -57,7 +63,7 @@ export const buildStarterKitLead = ({ name, email, phone, pageUrl, source, submi
     tag: STARTER_KIT_TAG,
     email_consent: true, // kit form: "send me the starter kit + helpful Medicare tips"
     sms_consent: false, // the kit form has no SMS consent checkbox: email-only follow-up
-    note: `Requested the NY Medicare Starter Kit (2027) via the ${origin}${pageUrl ? ` at ${pageUrl}` : ''}. Email consent: yes. SMS consent: not captured (email-only follow-up).`,
+    note: `Requested ${asset} via the ${origin}${pageUrl ? ` at ${pageUrl}` : ''}. Email consent: yes. SMS consent: not captured (email-only follow-up).`,
   };
 };
 
